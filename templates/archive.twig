@@ -1,0 +1,32 @@
+{# This file demonstrates using most of the index.twig template and modifying
+   just a small part. See `search.twig` for an example of another approach #}
+
+{% extends "index.twig" %}
+
+{% block head %}
+<style>
+    .content-wrapper {
+        margin: 0 auto;
+        padding: 30px;
+        max-width: 768px;
+    }
+    article {
+        padding: 50px 0;
+    }
+    article img {
+		width: 100%;
+		max-height: 300px;
+		object-fit: cover;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<pre style="display:none">{{ print_r(post) }}</pre>
+
+    {% for post in posts %}
+        {% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
+    {% endfor %}
+
+    {% include 'partial/pagination.twig' with { pagination: posts.pagination({show_all: false, mid_size: 3, end_size: 2}) } %}
+{% endblock %}

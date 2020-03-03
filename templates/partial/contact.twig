@@ -1,0 +1,78 @@
+<form id="contact-us-form">
+  <ul id="contact-us-errors-list"></ul>
+  <div class="form-group">
+    <label>First Name <span>*</span></label>
+    <input type="text" name="first_name" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Last Name <span>*</span></label>
+    <input type="text" name="last_name" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Phone <span>*</span></label>
+    <input type="text" name="phone" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Email Address <span>*</span></label>
+    <input type="email" name="email" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Zip Code <span>*</span></label>
+    <input type="text" name="zip" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Message <span>*</span></label>
+    <textarea class="form-control" name="message" rows="5"></textarea>
+  </div>
+  <button type="submit" id="submit-button" class="btn btn-primary">Submit</button>
+</form>
+
+<div id="contact-submitted" style="display:none">
+    <p><strong>Thank you for getting in touch!</strong></p>
+    <p>
+        We appreciate you contacting us. One of our colleagues will get back in touch with you soon!
+        <br />
+        Have a great day!
+    </p>
+</div>
+
+<script>
+    (function() {
+        $('#contact-us-form').submit((e) => {
+            e.preventDefault();
+            clearErrors();
+            $('#submit-button').attr('disabled', true);
+            $.ajax({
+                method: 'POST',
+                url: '{{ post_url }}',
+                data: $('#contact-us-form').serialize()
+            }).done((data, sdf, jqXHR) => {
+                $('#contact-us-form').hide();
+                $('#contact-submitted').fadeIn();
+                scrollTo('body');
+            }).fail((jqXHR, textStatus, errorThrown) => {
+                let errors = Object.values(jqXHR.responseJSON);
+                errors = [].concat.apply([], errors);
+                errors.map(error => {
+                    appendError(error);
+                });
+                $('#submit-button').attr('disabled', false);
+                scrollTo('#contact-us-errors-list');
+            });
+        });
+
+        const appendError = (errorText) =>  {
+            $('#contact-us-errors-list').append(`<li class="text-danger">${errorText}</li>`);
+        }
+
+        const clearErrors = () => {
+            $('#contact-us-errors-list').html('');
+        }
+
+        function scrollTo(el) {
+            $("html, body").animate({
+                 scrollTop: $(el).offset().top - 100
+             }, 600);
+        }
+    })();
+</script>

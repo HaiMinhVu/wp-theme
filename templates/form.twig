@@ -1,0 +1,31 @@
+{% extends "base.twig" %}
+
+{% block head %}
+<style>.support-sidebar{list-style:none;margin:0;padding:0}  .support-sidebar li{display:block;padding:0}  .support-sidebar li a{color:#333;display:block;position:relative;padding:.75rem 1.25rem .75rem 1.55rem;text-decoration:none;transition:.5s ease-in-out}  .support-sidebar li a i.fa{position:absolute;left:10px;top:16px}  .support-sidebar li a:hover{background-color:#e7e7e7}  .support-sidebar li .active{background-color:#006eba;color:#fff}  .support-sidebar li .active:hover{background-color:#006eba}
+</style>
+{% endblock %}
+
+{% block content %}
+<section _ngcontent-c14="" class="section2 ng-trigger ng-trigger-routerTransition">
+    <div _ngcontent-c14="" class="container container_warranty_Box">
+        <div _ngcontent-c14="" class="row justify-content-between">
+            <div _ngcontent-c14="" class="col-md-4 col-xl-3 mb-4 mb-md-0">
+                <app-support-sidebar _ngcontent-c14="" class="ng-tns-c14-6" _nghost-c15="">
+                    <h3 _ngcontent-c15="">{{ parent_title }}</h3>
+                    <ul _ngcontent-c15="" class="support-sidebar list-group">
+                        {% for item in side_menu_items %}
+                        <li _ngcontent-c15="" class="list-group-item ng-star-inserted">
+                            <a _ngcontent-c15="" href="{{ item.permalink }}" class="{{ (permalink == item.permalink) ? 'active' : '' }}"><i _ngcontent-c15="" aria-hidden="true" class="fa fa-angle-right"></i>{{ item.title }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </app-support-sidebar>
+            </div>
+            <div _ngcontent-c14="" class="col-md-8 col-xl-9">
+                {{ post.content|shortcodes }}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

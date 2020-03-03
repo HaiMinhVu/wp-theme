@@ -1,0 +1,38 @@
+.support-sidebar {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: block;
+    padding: 0;
+
+    a {
+      color: #333;
+      display: block;
+      position: relative;
+      padding: .75rem 1.25rem .75rem 1.55rem;
+      text-decoration: none;
+      transition: .5s ease-in-out;
+
+      i.fa {
+        position: absolute;
+        left: 10px;
+        top: 16px;
+      }
+
+      &:hover {
+        background-color: #e7e7e7;
+      }
+    }
+
+    .active {
+      background-color: #006eba;
+      color: #fff;
+
+      &:hover {
+        background-color: #006eba;
+      }
+    }
+  }
+}

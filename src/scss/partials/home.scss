@@ -1,0 +1,504 @@
+.section-featured {
+  background-color: #f2f2f2;
+
+  .col-sec-pull {
+    position: relative;
+    margin-top: -150px;
+    z-index: 1;
+
+    &::before {
+      position: absolute;
+      content: '';
+      background-color: #fff;
+      height: 350px;
+      width: 100%;
+      left: 0;
+      top: 0;
+      z-index: -1;
+    }
+
+    #featured-tablist {
+      .nav-tabs {
+        justify-content: center !important;
+        border: 0;
+        margin-bottom: 70px;
+
+        .nav-item {
+          margin-bottom: 0;
+
+          .nav-link {
+            color: #646988;
+            text-transform: uppercase;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 0 2rem;
+            border-radius: 0;
+            border: 0;
+            border-right: 1px solid #646988;
+            display: flex;
+            align-items: center;
+
+            .icon {
+              display: inline-block;
+              width: 30px;
+              height: 30px;
+              background-image: url('https://pulsarnv-ds.com/pulsarnv2020/sprite.bc1ace54e5cdd862b78f.png');
+              border: 0 solid red;
+              margin-right: 10px;
+            }
+
+            .icon-binaculor {
+              background-position: 0 3px;
+            }
+
+            .icon-thermal {
+              width: 35px;
+              background-position: -54px 5px;
+            }
+
+            .icon-range-finder {
+              background-position: -100px 0;
+            }
+
+            .icon-night-vision {
+              background-position: -150px 2px;
+            }
+
+            &:hover {
+              color: #191e23;
+
+              .icon-binaculor {
+                background-position: 0 -48px;
+              }
+
+              .icon-thermal {
+                background-position: -54px -47px;
+              }
+
+              .icon-range-finder {
+                background-position: -100px -50px;
+              }
+
+              .icon-night-vision {
+                background-position: -150px -49px;
+              }
+            }
+          }
+
+          .active {
+            color: #191e23;
+
+            .icon-binaculor {
+              background-position: 0 -48px;
+            }
+
+            .icon-thermal {
+              background-position: -54px -47px;
+            }
+
+            .icon-range-finder {
+              background-position: -100px -50px;
+            }
+
+            .icon-night-vision {
+              background-position: -150px -49px;
+            }
+          }
+        }
+      }
+
+      .tab-content {
+        margin: 0 -100px;
+
+        // .owl-carousel {
+          // .owl-stage {
+          //   display: flex;
+          //   flex-wrap: wrap;
+          // }
+
+          // .owl-item {
+          //   padding: 0 15px;
+
+            .card-product {
+              height: 100%;
+              background: #3b474f;
+              background: radial-gradient(circle, #3b474f 0, #101417 100%);
+              border-radius: 0;
+              cursor: pointer;
+              transition: .5s ease-in-out;
+              margin: 0 10px;
+
+              &:hover {
+                background: rgba(59, 71, 79, 0.5);
+                background: radial-gradient(circle, #1d2327 0, #030304 100%);
+              }
+
+              .card-image {
+                height: 350px;
+                padding: 40px 40px 0;
+                background: #fff;
+                margin: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                img {
+                  width: auto;
+                  max-width: 100%;
+                  max-height: 100%;
+                }
+              }
+
+              .card-body {
+                color: #fff;
+                padding-top: 0;
+
+                .card-title {
+                  font-size: 30px;
+                  text-transform: uppercase;
+                  font-weight: 700;
+                }
+
+                .card-sub-tile {
+                  color: #6d7479;
+                  transition: .4s ease-in-out;
+                }
+
+                .btn-dark {
+                  transition: .4s ease-in-out;
+
+                  &:hover, &:focus {
+                    background-color: #006fba;
+                    border-color: #006fba;
+                  }
+                }
+              }
+
+              &:hover .card-body p {
+                color: #fff;
+              }
+            }
+          // }
+
+          .owl-nav {
+            position: absolute;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            [class*=owl-] {
+              border: 2px solid #c4c4c4;
+              color: #c4c4c4;
+              background: 0 0;
+              font-size: 20px;
+              height: 45px;
+              width: 45px;
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+
+            .owl-prev {
+              margin-left: -130px;
+            }
+
+            .owl-next {
+              margin-right: -130px;
+            }
+          }
+        // }
+      }
+    }
+  }
+}
+
+@media (max-width: 1440px) {
+  .section-featured .col-sec-pull #featured-tablist .tab-content {
+    margin: 0 -30px;
+
+    .owl-carousel .owl-nav {
+      .owl-prev {
+        margin-left: -50px;
+      }
+
+      .owl-next {
+        margin-right: -50px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  .section-featured .col-sec-pull #featured-tablist .tab-content {
+    margin: 0 -30px;
+
+    .owl-carousel .owl-nav {
+      .owl-prev {
+        margin-left: 30px;
+      }
+
+      .owl-next {
+        margin-right: 30px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .section-featured .col-sec-pull {
+    margin-top: -115px;
+
+    #featured-tablist .tab-content .card-product .card-image {
+      height: 340px;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .section-featured .col-sec-pull #featured-tablist {
+    .nav-tabs .nav-item .nav-link {
+      padding: 0 .8rem;
+    }
+
+    .tab-content .card-product .card-image {
+      height: 280px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .section-featured .col-sec-pull {
+    margin-top: -80px;
+
+    #featured-tablist .nav-tabs {
+      margin-bottom: 40px;
+
+      .nav-item {
+        margin-bottom: 10px;
+        width: 100%;
+      }
+    }
+  }
+}
+
+
+.section-apply {
+  position: relative;
+  background: url('https://pulsarnv-ds.com/pulsarnv2020/bg-apply.ebe0479c0348b854204d.png') (center / cover) no-repeat #333;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .btn-apply {
+    border-radius: 0;
+    font-weight: 600;
+    position: relative;
+    padding-top: 25px;
+    font-size: 15px;
+
+    &::after {
+      position: absolute;
+      content: "";
+      width: 0;
+      height: 0;
+      bottom: -21px;
+      left: -1px;
+      border-left: 82px solid transparent;
+      border-right: 82px solid transparent;
+      border-top: 20px solid #e11e24;
+      transition: .4s ease-in-out;
+    }
+
+    &:hover {
+      background-color: #e11e24;
+      border-color: #e11e24;
+
+      &::after {
+        border-top: 20px solid #e11e24;
+      }
+    }
+  }
+}
+
+.section-whoWeAre .wwr-image-wrapper {
+  position: relative;
+
+  .img2 {
+    position: absolute;
+    top: 110px;
+    right: 30px;
+    box-shadow: 0 1px 22px rgba(0, 0, 0, 0.6);
+    transition: .4s ease-in-out;
+
+    .image {
+      position: relative;
+
+      .play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &:hover {
+      box-shadow: 0 1px 32px rgba(0, 0, 0, 0.8);
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .section-whoWeAre .wwr-image-wrapper {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-whoWeAre .wwr-image-wrapper {
+    margin-bottom: 40px;
+
+    .img1 {
+      width: 55%;
+    }
+
+    .img2 {
+      top: 30px;
+      right: 0;
+      width: 55%;
+    }
+  }
+}
+
+.section-one-half {
+  text-align: center;
+  color: #fff;
+
+  .col-md-6 {
+    min-height: 530px;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    position: relative;
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(0deg, #000 0, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.1) 50%);
+      z-index: 0;
+    }
+
+    .text {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  .one {
+    background-image: url('https://pulsarnv-ds.com/pulsarnv2020/one.56df08c63f113504edd1.png');
+  }
+
+  .second {
+    background-image: url('https://pulsarnv-ds.com/pulsarnv2020/two.dd51efc9a6364951fd15.png');
+  }
+
+  h4 {
+    font-size: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+@media (max-width: 800px) {
+  .section-one-half .col-md-6 {
+    min-height: 400px;
+  }
+}
+
+.section-featured-category .image {
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  img {
+    width: 100%;
+  }
+
+  .img-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 20px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    background-image: linear-gradient(0deg, #000 0, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.1) 78%);
+
+    h4 {
+      position: relative;
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 18px;
+      font-weight: 600;
+
+      &::before {
+        position: absolute;
+        content: '';
+        left: 0;
+        top: -20px;
+        height: 4px;
+        background-color: #006fba;
+        width: 70px;
+      }
+    }
+  }
+
+  &.blog_img1 {
+    height: 600px;
+  }
+
+  &.blog_imgSmall {
+    height: 285px;
+  }
+}
+
+.partner-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  justify-content: space-between;
+}
+
+.section-featured-partner .owl-theme {
+  .owl-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 110px;
+
+    img {
+      width: auto;
+    }
+  }
+
+  .owl-dots .active span {
+    background-color: #006fba;
+  }
+}

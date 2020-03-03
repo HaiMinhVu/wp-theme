@@ -1,0 +1,98 @@
+
+<app-footer _ngcontent-c1="" _nghost-c3="" class="ng-tns-c3-1">
+    <footer class="ng-tns-c3-1 ng-trigger ng-trigger-routerTransition">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="foo-widget">
+                        <h5 class="mb-4"> North America</h5>
+                        <ul class="address">
+                            <li class="ng-tns-c3-1">
+                                <i class="fa fa-map-marker">
+                                </i> 2201 Heritage Parkway Mansfield, <br class="ng-tns-c3-1"> TX 76063 United States of America</li>
+                                <li class="ng-tns-c3-1">
+                                    <a href="tel:+18172250310"><i class="fa fa-phone"></i>(817) 225 0310</a>
+                                </li>
+                                <li class="ng-tns-c3-1">
+                                    <a href="tel:+18173941628"><i class="fa fa-phone"></i>(817) 394 1628</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="foo-widget">
+                            <h5 class="mb-4"> Our Products</h5>
+                            <ul class="pro-list">
+                                {% for category in product_categories %}
+                                <li class="ng-tns-c3-1 ng-star-inserted">
+                                    <a class="ng-tns-c3-1" href="/category/{{ category.id }}">{{ category.label }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="foo-widget">
+                            <h5 class="mb-4">Follow us On</h5>
+                            {% include 'partial/social-share.twig' %}
+                            {% if false %}
+                            <h5 class="mb-2">Subscribe for Our Newsletter </h5>
+                            <link class="ng-tns-c3-1" href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
+                            <div class="ng-tns-c3-1" id="mc_embed_signup">
+                                <form class="validate ng-untouched ng-pristine ng-valid" action="https://gmail.us4.list-manage.com/subscribe/post?u=3835b48c50568046a516a0bb2&amp;id=90b47938c1" id="mc-embedded-subscribe-form" method="post" name="mc-embedded-subscribe-form" novalidate="" target="_blank">
+                                    <div class="ng-tns-c3-1" aria-hidden="true" style="position: absolute; left: -5000px;">
+                                        <input class="ng-tns-c3-1" name="b_3835b48c50568046a516a0bb2_90b47938c1" tabindex="-1" type="text" value="">
+                                    </div>
+                                    <input class="email form-control form-control-sm rounded mb-3" id="mce-EMAIL" name="EMAIL" placeholder="Enter Your Email Address" required="" type="email" value="">
+                                    <input class="btn btn-danger btn-sm rounded" id="mc-embedded-subscribe" name="subscribe" type="submit" value="Subscribe">
+                                </form>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="footer-links">
+                            <!---->
+                            <li class="ng-tns-c3-1 ng-star-inserted">
+                                <a class="ng-tns-c3-1" href="/privacy-policy">Privacy Policy</a>
+                            </li>
+                            <li class="ng-tns-c3-1 ng-star-inserted">
+                                <a class="ng-tns-c3-1" href="/support/terms-of-service">Terms of Service</a>
+                            </li>
+                            {% if false %}
+                            <li class="ng-tns-c3-1 ng-star-inserted">
+                                <a class="ng-tns-c3-1" href="#/terms-of-sales">Terms of Sales &amp; Conditions</a>
+                            </li>
+                            {% endif %}
+                            <li class="ng-tns-c3-1 ng-star-inserted">
+                                <a class="ng-tns-c3-1" href="/warranty-registration">Warranty Registration</a>
+                            </li>
+                            <li class="ng-tns-c3-1 ng-star-inserted">
+                                <a class="ng-tns-c3-1" href="/le-government">LE &amp; Government</a>
+                            </li>
+                            <li class="ng-tns-c3-1 ng-star-inserted">
+                                <a class="ng-tns-c3-1" href="/warranty-information">Warranty Information</a>
+                            </li>
+                            {% if false %}
+                            <li class="ng-tns-c3-1 ng-star-inserted">
+                                <a class="ng-tns-c3-1" href="#/faq">FAQ’s</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <!---->
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <p class="mb-0">Copyright Pulsar {{ "now"|date("Y") }}. All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </app-footer>

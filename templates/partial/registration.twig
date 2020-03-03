@@ -1,0 +1,191 @@
+<form  class="ng-tns-c14-6 ng-untouched ng-pristine ng-invalid" novalidate="" id="warranty-registration-form">
+    <ul id="warranty-form-errors-list"></ul>
+    <div  class="col-lg-12 form-group">
+        <label> Email Address <span>*</span></label>
+        <input class="form-control ng-untouched ng-pristine ng-invalid" name="email" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label>What would you like to do? <span>*</span></label>
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-invalid" name="registration_type" type="radio" value="1"> Register my product and enter sweepstakes
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-invalid" name="registration_type" type="radio" value="2"> Just register my product – I don’t want to enter sweepstakes
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-invalid" name="registration_type" type="radio" value="3"> Enter Sweepstakes Only – No purchase necessary
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> First Name <span>*</span></label>
+        <input class="form-control ng-untouched ng-pristine ng-invalid" name="first_name" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> Last Name <span>*</span></label>
+        <input class="form-control ng-untouched ng-pristine ng-invalid" name="last_name" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> Address 1 <span>*</span></label>
+        <input class="form-control ng-untouched ng-pristine ng-invalid" name="address1" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> Address 2 </label>
+        <input class="form-control ng-untouched ng-pristine ng-valid" name="address2" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> City <span>*</span></label>
+        <input class="form-control ng-untouched ng-pristine ng-invalid" name="city" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> State <span>*</span></label>
+        <input class="form-control ng-untouched ng-pristine ng-invalid" name="state" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> Zip / Postal Code <span>*</span></label>
+        <input class="form-control ng-untouched ng-pristine ng-invalid" name="zip" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> Phone Number </label>
+        <input class="form-control ng-untouched ng-pristine ng-invalid" name="phone_number" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> Model Number/SKU <span>*</span></label>
+        <select  class="form-control ng-untouched ng-pristine ng-invalid" name="product_id">
+            <option class="ng-tns-c14-6 ng-star-inserted" value="">Select Product</option>
+            {% for product in product_select_list %}
+            <option  class="ng-tns-c14-6 ng-star-inserted" value="{{ product.id }}">{{ product.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> Serial Number </label>
+        <input class="form-control ng-untouched ng-pristine ng-valid" name="serial" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> Dealer / Store <span>*</span></label>
+        <input class="form-control ng-untouched ng-pristine ng-invalid" name="DealerStore" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> Price Paid <span>*</span></label>
+        <input class="form-control ng-untouched ng-pristine ng-invalid" name="price_paid" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> Date Purchased <span>*</span></label>
+        <input class="form-control ng-untouched ng-pristine ng-invalid" name="date_purchased" type="text">
+    </div>
+    <div  class="col-lg-12 form-group">
+        <label> Satisfaction </label>
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-valid" name="satisfaction" type="radio" value="10"> 10 - Great product or high value
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-valid" name="satisfaction" type="radio" value="9"> 9 - Extremely Satisfied, frequent user, good customer service
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-valid" name="satisfaction" type="radio" value="8"> 8 - Good product
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-valid" name="satisfaction" type="radio" value="7"> 7 - Will use, but still looking at other products
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-valid" name="satisfaction" type="radio" value="6"> 6 - Works for me, even if issues with add-on features or price
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-valid" name="satisfaction" type="radio" value="5"> 5 - Never used, warranty replacement required
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-valid" name="satisfaction" type="radio" value="4"> 4 - I bought the wrong product or it is too difficult to use
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-valid" name="satisfaction" type="radio" value="3"> 3 - I am the intended customer and it works, but I will not use this
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-valid" name="satisfaction" type="radio" value="2"> 2 - Product can be made to work, but I am extremely dissatisfied
+        <br>
+        <input class="ng-tns-c14-6 ng-untouched ng-pristine ng-valid" name="satisfaction" type="radio" value="1"> 1 - Inoperable, design does not function </div>
+        <div class="col-lg-12 form-group">
+            <label> Comments </label>
+            <textarea class="form-control ng-untouched ng-pristine ng-valid" name="comments"> </textarea>
+        </div>
+        <br /><br />
+            <div class="col-lg-12 form-group">
+                <button class="btn btn-primary" id="submit-button" type="submit">Submit</button>
+            </div>
+        </form>
+        <div id="registration-summary" style="display:none;width:100%">
+            <div style="margin: 0 auto">
+                <strong>Product Registration Confirmation</strong><br>
+                <p>Congratulations on your new purchase. Below is your product registration info.</p>
+                <h4>Customer Info</h4>
+                <table class="table table-bordered">
+                    <tr>
+                        <td>Name</td>
+                        <td data-field="customer_name"></td>
+                    </tr>
+                    <tr>
+                        <td>Address</td>
+                        <td data-field="full_address"></td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td data-field="phone_number"></td>
+                    </tr>
+                </table>
+                <h4>Order Info</h4>
+                <table class="table table-bordered">
+                    <tr>
+                        <td>Model</td>
+                        <td data-field="sku"></td>
+                    </tr>
+                    <tr>
+                        <td>Serial</td>
+                        <td data-field="serial_number"></td>
+                    </tr>
+                    <tr>
+                        <td>Dealer/Store</td>
+                        <td data-field="dealer_store"></td>
+                    </tr>
+                    <tr>
+                        <td>Price Paid</td>
+                        <td data-field="price_paid"></td>
+                    </tr>
+                    <tr>
+                        <td>Date Purchased</td>
+                        <td data-field="date_purchased"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <script>
+            (function() {
+                $('#warranty-registration-form').submit((e) => {
+                    e.preventDefault();
+                    clearErrors();
+                    $('#submit-button').attr('disabled', true);
+                    $.ajax({
+                        method: 'POST',
+                        url: '{{ post_url }}',
+                        data: $('#warranty-registration-form').serialize()
+                    }).done((data, sdf, jqXHR) => {
+                        $('#warranty-registration-form').hide();
+                        const res = data.data;
+                        Object.keys(res).map(key => {
+                            $('#registration-summary').find(`[data-field=${key}]`).text(res[key]);
+                        });
+                        $('#registration-summary').fadeIn();
+                        scrollTo('#registration-summary');
+                    }).fail((jqXHR, textStatus, errorThrown) => {
+                        let errors = Object.values(jqXHR.responseJSON);
+                        errors = [].concat.apply([], errors);
+                        errors.map(error => {
+                            appendError(error);
+                        });
+                        $('#submit-button').attr('disabled', false);
+                        scrollTo('#warranty-form-errors-list');
+                    });
+                });
+
+                const appendError = (errorText) =>  {
+                    $('#warranty-form-errors-list').append(`<li class="text-danger">${errorText}</li>`);
+                }
+
+                const clearErrors = () => {
+                    $('#warranty-form-errors-list').html('');
+                }
+
+                function scrollTo(el) {
+                    $("html, body").animate({
+                         scrollTop: $(el).offset().top - 100
+                     }, 600);
+                }
+            })();
+        </script>

@@ -1,0 +1,83 @@
+{% extends "base.twig" %}
+
+{% block head %}
+<style>
+.product-list-row{display:-ms-grid;display:grid;-ms-grid-columns:1fr 1fr 1fr 1fr 1fr;grid-template-columns:1fr 1fr 1fr 1fr 1fr;grid-gap:10px}  .product-list-row .product-card{border:0}  .product-list-row .product-card .image{height:150px;padding:15px;display:flex;align-items:center;justify-content:center}  .product-list-row .product-card .image .img-fluid{max-height:100%}  .product-list-row .product-card .card-body{padding-top:0}  .product-list-row .product-card .card-body .card-title{color:#3a4559;font-weight:500;font-size:20px}  .product-list-row .product-card .card-body .btn-primary{visibility:hidden;transition:.2s ease-in-out}  .product-list-row .product-card:hover .card-body .btn-primary{visibility:visible}@media (max-width:1024px){  .product-list-row{-ms-grid-columns:1fr 1fr 1fr 1fr;grid-template-columns:1fr 1fr 1fr 1fr}  .product-list-row .product-card .card-body .btn-primary{visibility:visible}}@media (max-width:800px){  .product-list-row{-ms-grid-columns:1fr 1fr 1fr;grid-template-columns:1fr 1fr 1fr}}@media (max-width:600px){  .product-list-row{-ms-grid-columns:1fr 1fr;grid-template-columns:1fr 1fr}}@media (max-width:400px){  .product-list-row{-ms-grid-columns:1fr;grid-template-columns:1fr}}  .product-card .card-title{font-size:16px;line-height:22px;margin-bottom:5px}  .product-card .sub-title{font-size:14px;color:#8ea7d4;margin-bottom:0;line-height:20px}  .product-card .status{font-size:14px;margin-bottom:0;line-height:20px}  .product-card .price{color:#3a4559;font-size:22px;font-weight:600}  .nav-tabs.sub-category{padding:20px 0;border-bottom:1px solid #ddd;display:-ms-grid;display:grid;-ms-grid-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr;grid-gap:10px}  .nav-tabs.sub-category .nav-item{margin-bottom:0}  .nav-tabs.sub-category .nav-item .nav-link{text-align:center;border-radius:.25rem;border:2px solid #ddd;height:100%}  .nav-tabs.sub-category .nav-item .nav-link figure{width:100px;height:100px;margin:auto;display:flex;justify-content:center;align-items:center}  .nav-tabs.sub-category .nav-item .nav-link figure img{max-width:100%;max-height:100%}  .nav-tabs.sub-category .nav-item .nav-link h5{font-size:16px}  .nav-tabs.sub-category .nav-item .nav-link.active{border-color:#006fba}  .product-category-dropdown{display:none}  .product-category-dropdown button{display:flex;padding:.5rem .6rem;width:100%;text-align:left;align-items:center;justify-content:space-between}  .product-category-dropdown button:focus{color:#fff!important;box-shadow:none!important;outline:0!important}  .product-category-dropdown button:active{color:#fff!important}  .product-category-dropdown button img{width:40px}  .product-category-dropdown .product-category-dropdownmenu{width:100%;padding:0}  .product-category-dropdown .product-category-dropdownmenu ul{margin:0;padding:0;list-style:none}  .product-category-dropdown .product-category-dropdownmenu ul li{display:block;padding:.5rem .6rem;width:100%;text-align:left;color:#818182;border-bottom:1px solid #ddd}  .product-category-dropdown .product-category-dropdownmenu ul li:last-child{border-bottom:0}  .product-category-dropdown .product-category-dropdownmenu ul li img{width:40px}@media (max-width:600px){  .nav-tabs.sub-category{display:none}  .product-category-dropdown{display:block}}
+</style>
+{% endblock %}
+
+{% block content %}
+<section _ngcontent-c4="" class="section2 section-pro-cat">
+    <div _ngcontent-c4="" class="container">
+        <div _ngcontent-c4="" class="row">
+            <div _ngcontent-c4="" class="col-lg">
+                <h3 _ngcontent-c4="" class="theme-color-dark font-weight-bold mb-4">{{ category }}</h3>
+            </div>
+        </div>
+        <div _ngcontent-c4="" class="row">
+            <div _ngcontent-c4="" class="col-12">
+                <div _ngcontent-c4="" class="border-top-light">
+                </div>
+                <div _ngcontent-c4="" class="product-category-dropdown dropdown" ngbdropdown="">
+                    <button _ngcontent-c4="" aria-haspopup="true" class="btn btn-outline-secondary dropdown-toggle" id="dropdownForm1" ngbdropdowntoggle="" aria-expanded="false">
+                        <div _ngcontent-c4="">
+                            <img _ngcontent-c4="" class="mr-1" src="assets/images/Product.png"> All</div>
+                        </button>
+                        <div _ngcontent-c4="" class="product-category-dropdownmenu dropdown-menu" ngbdropdownmenu="" x-placement="bottom-left">
+                            <ul _ngcontent-c4="">
+                                <li _ngcontent-c4="">
+                                    <img _ngcontent-c4="" class="mr-1" src="assets/images/Product.png">category name</li>
+                                    <li _ngcontent-c4="">
+                                        <img _ngcontent-c4="" class="mr-1" src="assets/images/Product.png">category name</li>
+                                        <li _ngcontent-c4="">
+                                            <img _ngcontent-c4="" class="mr-1" src="assets/images/Product.png">category name</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                {% if sub_categories|length > 0 %}
+                                <ul _ngcontent-c4="" class="nav nav-tabs sub-category justify-content-start" role="tablist">
+                                    <li _ngcontent-c4="" class="nav-item">
+                                        <a _ngcontent-c4="" class="nav-link">
+                                            <figure _ngcontent-c4="" class="ng-star-inserted">
+                                                <img _ngcontent-c4="" alt="" src="http://pulsarnv-ds.com/pulsarnv2020/assets/images/Product.png">
+                                            </figure>
+                                            <h5 _ngcontent-c4="">All</h5>
+                                        </a>
+                                    </li>
+                                    {% for category in sub_categories %}
+                                    <li _ngcontent-c4="" class="nav-item ng-star-inserted{{ category.id == category_id ? 'active' : '' }}">
+                                        <a href="/category/{{ category.id }}" class="nav-link sub-category-link">
+                                            <figure _ngcontent-c4="" class="ng-star-inserted">
+                                                <img _ngcontent-c4="" alt="" src="{{ category.image }}">
+                                            </figure>
+                                            <h5 _ngcontent-c4="">{{ category.label }}</h5>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            </div>
+                            <div _ngcontent-c4="" class="product-list-row col-12">
+                                {% for product in products %}
+                                <pre style="display: none">{{ print_r(product) }}</pre>
+                                <div _ngcontent-c4="" class="card product-card ng-star-inserted">
+                                    <div _ngcontent-c4="" class="image">
+                                        <img _ngcontent-c4="" alt="" class="img-fluid" src="{{ product.remote_image_path|cdn_link(200) }}">
+                                    </div>
+                                    <div _ngcontent-c4="" class="card-body text-center">
+                                        <p _ngcontent-c4="" class="card-title">{{ product.feature_name }}</p>
+                                        <p _ngcontent-c4="" class="sub-title">{{ product.sku }}</p>
+                                        <p _ngcontent-c4="" class="status">{{ in_stock(product.stock) }}</p>
+                                        <p _ngcontent-c4="" class="price">{{ product.price|format_currency }}</p>
+                                        <a href="{{ product | product_page }}" class="btn btn-primary btn-sm rounded" tabindex="0">Buy Now <i _ngcontent-c4="" class="fa fa-angle-right ml-2">
+                                            </i>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+{% endblock %}

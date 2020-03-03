@@ -1,0 +1,16 @@
+.owl-theme {
+  display: block;
+}
+
+.owl-carousel {
+  .owl-item {
+    display: none;
+  }
+
+  &.owl-loaded .owl-item {
+    display: initial;
+  }
+  .owl-dots.disabled, .owl-nav.disabled {
+      display: none !important;
+    }
+}

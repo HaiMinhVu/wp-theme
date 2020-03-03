@@ -1,0 +1,12 @@
+article {
+  img {
+    max-width: 100%;
+  }
+
+  &:after {
+    content: '';
+    clear: both;
+    display: table;
+    padding-bottom: 100px;
+  }
+}

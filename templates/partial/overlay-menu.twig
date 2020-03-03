@@ -1,0 +1,25 @@
+<div id="overlay-menu">
+    <ul>
+        {% for item in nav_items %}
+        <li>
+            {% if item.children is defined %}
+
+            <div class="has-children">{{ item.name }} <i class="fa fa-angle-down"></i></div>
+            <ul class="item-children">
+                {% for child in item.children %}
+
+                <li>
+                    <a href="{{ child.link }}">{{ child.name }}</a>
+                </li>
+
+                {% endfor %}
+            </ul>
+            {% else %}
+
+            <a href="{{ item.link }}">{{ item.name }}</a>
+
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
