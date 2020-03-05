@@ -72,7 +72,7 @@ module.exports = {
                             // publicPath: 'static/assets'
                             name: '[name].[ext]',
                           outputPath: 'static/assets/',
-                          publicPath: 'static/assets/',
+                          publicPath: 'assets/',
                           postTransformPublicPath: (p) => `__webpack_public_path__ + ${p}`,
                         }
                     }

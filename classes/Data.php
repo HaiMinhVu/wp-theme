@@ -9,9 +9,10 @@ use GuzzleHttp\Client;
 
 class Data {
 
-    const API_ENDPOINT = 'apidev/v1/';
+    const API_ENDPOINT = 'https://api.slmk.dev/v1';
     const MANUFACTURER = 'pulsar/';
-    const PUBLIC_API_ENDPOINT = 'https://lumen.slmk.dev/';
+    const PUBLIC_API_ENDPOINT = 'https://api.slmk.dev/v1';
+    const API_KEY = 'Y4=nsSabrJ6C8q-6XvYVMp6zDX@BYPnFmPP2k7$G%txKm%@5X4ku5rJE2ap?ZwyZYjcn^8BJZ*P7y@hPwp+r$@KMTfynkXP-a98DRBYGH%AU^?!R6+SM7?S8aRM?v_TK';
     const TIMEOUT_SECONDS = 3600;
     const PERSIST_SECONDS = 300;
     const SLIDER_ID = 257;
@@ -19,6 +20,9 @@ class Data {
 
     protected $cache;
     protected $client;
+    protected $manufacturer;
+    protected $apiEndpoint;
+    protected $sliderId;
     protected static $instance = null;
 
     protected function __construct()
@@ -29,9 +33,14 @@ class Data {
         ]);
         $this->client = new Client([
             'headers' => [
-                'X-Api-Key' => 'Y4=nsSabrJ6C8q-6XvYVMp6zDX@BYPnFmPP2k7$G%txKm%@5X4ku5rJE2ap?ZwyZYjcn^8BJZ*P7y@hPwp+r$@KMTfynkXP-a98DRBYGH%AU^?!R6+SM7?S8aRM?v_TK'
+                'X-Api-Key' => CarbonFields::get('slmk_api_key')
             ]
         ]);
+
+        // $this->manufacturer = 'sightmark-products';
+        $this->manufacturer = CarbonFields::get('slmk_site_brand');
+        $this->apiEndpoint = CarbonFields::get('slmk_api_endpoint');
+        $this->sliderId = CarbonFields::get('slmk_home_slider');
     }
 
     protected static function getInstance()
@@ -43,10 +52,11 @@ class Data {
         return self::$instance;
     }
 
-    public static function get($key, $url) {
+    public static function get($key, $path, $isManufacturerPath = true) {
         $instance = self::getInstance();
         $cache = $instance->cache;
         $client = $instance->client;
+        $url = ($isManufacturerPath) ? $instance->getManufacturerEndpoint($path) : $instance->getEndpoint($path);
 
     	if($cache->isExpired($key) || self::NO_CACHE) {
     		try {
@@ -54,6 +64,7 @@ class Data {
     			$data = $res->getBody()->getContents();
     			$cache->set($key, $data, self::TIMEOUT_SECONDS);
     		} catch(\Exception $e) {
+                // print_r($e->getMessage());
     			$cache->expire($key, self::PERSIST_SECONDS);
     		}
     	}
@@ -61,9 +72,31 @@ class Data {
     	return $cache->get($key);
     }
 
+    public static function getSetting($key) {
+        $instance = self::getInstance();
+        $cache = $instance->cache;
+        
+        if($cache->isExpired($key) || self::NO_CACHE) {
+            return CarbonFields::get($key);
+        }
+
+        return $cache->get($key);
+    }
+
+    private function getEndpoint($path)
+    {
+        return "{$this->apiEndpoint}/{$path}";
+    }
+
+    private function getManufacturerEndpoint($path)
+    {
+        $instance = self::getInstance();
+        return "{$instance->apiEndpoint}/{$instance->manufacturer}/{$path}";
+    }
+
     public static function productSlugs()
     {
-        $names = self::get('products_names', self::API_ENDPOINT.self::MANUFACTURER.'/products/names');
+        $names = self::get('products_names', '/products/names');
 
         return array_map(function($name){
             return [
@@ -75,44 +108,40 @@ class Data {
 
     public static function sliderImages()
     {
-        // dd(self::get('slider_images', self::API_ENDPOINT.'slider/'.self::SLIDER_ID));
-        // dd(self::API_ENDPOINT.'slider/'.self::SLIDER_ID);
-        return self::get('slider_images', self::API_ENDPOINT.'slider/'.self::SLIDER_ID)->data;
+        $instance = self::getInstance();
+        return self::get("slider_images_{$instance->sliderId}", "slider/{$instance->sliderId}", false)->data;
+    }
+
+    public static function sliders()
+    {
+        return self::get('sliders', 'slider', false)->data;
+    }
+
+    public static function brands()
+    {
+        return self::get('brands', 'brand', false)->data;
+    }
+
+    public static function featuredProducts()
+    {
+        return self::get('featured_products', 'products/featured', false)->data;
     }
 
     public static function productCategoriesAll()
     {
-        // dd(self::get('products_categories_all', self::API_ENDPOINT.'categories/all'));
-        return self::get('products_categories_all', self::API_ENDPOINT.self::MANUFACTURER.'categories/all')->data;
+        return self::get('products_categories_all', 'categories/all')->data;
     }
 
     public static function productCategories()
     {
-        return self::get('products_categories', self::API_ENDPOINT.self::MANUFACTURER.'categories')->data;
-
-
-        $productCategories = (array)(self::get("product_categories", "http://pulsarnv-ds.com/pulsarnv2020/api/public/index.phpproduct/product-categories"))->data;
-
-        return array_values($productCategories)[0]->children;
-
-        $data = [];
-        foreach($productCategories as $category) {
-            $data[] = $category;
-            $data = array_merge($data, $category->children);
-        }
-        return array_map(function($category){
-            unset($category->children);
-            return $category;
-        }, $data);
+        return self::get('products_categories', 'categories')->data;
     }
 
     public static function getProductCategory($categoryId)
     {
-        // dd([self::productCategoriesAll(), $categoryId]);
         $filtered = array_filter(self::productCategoriesAll(), function($category) use ($categoryId) {
             return $category->id == $categoryId;
         });
-        // dd($filtered);
 
         if(count($filtered) > 0) {
             $filtered = array_values($filtered);
@@ -124,7 +153,8 @@ class Data {
 
     public static function getFeaturedProducts($featuredProductParentId)
     {
-        return self::get('featured_products', self::API_ENDPOINT.'products/featured/'.$featuredProductParentId)->data;
+        $featuredId = CarbonFields::get('slmk_featured_products');
+        return self::get("featured_products_{$featuredId}", "products/featured/{$featuredId}", false)->data;
     }
 
     public static function getProductCategoryTree($categoryId)
@@ -157,8 +187,6 @@ class Data {
         }
         $categoryTree = array_reverse($categoryTree);
 
-        // unset($categoryTree[0]);
-
         return $categoryTree;
     }
 
@@ -190,11 +218,6 @@ class Data {
     {
         $categories = self::productCategoriesAll();
 
-        // dd([
-        //     $categories,
-        //     $id
-        // ]);
-
         $filtered = array_filter($categories, function($category) use ($id){
             return $id == $category->id;
         });
@@ -207,16 +230,7 @@ class Data {
 
     public static function getProducts()
     {
-        $products = (self::get('products', 'http://pulsarnv-ds.com/pulsarnv2020/api/public/index.phpproduct/all-products-search'))->data;
-
-        return array_map(function($product){
-            $categories = (property_exists($product, 'categories')) ? $product->categories : null;
-            $product->category_ids = [];
-            if($categories) {
-                $product->category_ids = self::getCategoryIdsByString($product->categories);
-            }
-            return $product;
-        }, $products);
+        return self::get('products_api', 'products')->data;
     }
 
     public static function getUrl($path)
@@ -226,37 +240,33 @@ class Data {
 
     public static function getPublicUrl($path)
     {
-        return self::PUBLIC_API_ENDPOINT.self::MANUFACTURER.'/'.$path;
+        $instance = self::getInstance();
+        return $instance->getManufacturerEndpoint($path);
     }
 
     public static function getProducts2()
     {
-        return self::get('products_api', self::API_ENDPOINT.self::MANUFACTURER.'products')->data;
+        return self::getProducts();
     }
 
     public static function getProduct($id)
     {
-        return self::get("product_{$id}", self::API_ENDPOINT.self::MANUFACTURER.'product/'.$id)->data;
+        return self::get("product_{$id}", "product/{$id}")->data;
     }
 
     public static function getProductsByCategoryId($categoryId)
     {
-        return self::get("category_{$categoryId}_products", self::API_ENDPOINT.self::MANUFACTURER.'category/'.$categoryId.'/products')->data;
+        return self::get("category_{$categoryId}_products", "category/{$categoryId}/products")->data;
     }
 
     public static function getSubCategories($categoryId)
     {
-        return self::get("category_{$categoryId}", self::API_ENDPOINT.self::MANUFACTURER.'category/'.$categoryId)->data->subCategories;
+        return self::get("category_{$categoryId}", "category/{$categoryId}")->data->subCategories;
     }
-
-    // public static function
 
     public static function getProductIDBySlug($productSlug)
     {
-        // $products = self::getProducts2();
         $slugs = self::productSlugs();
-
-        // dd([$productSlug, $products]);
 
         $filtered = array_filter($slugs, function($slug) use ($productSlug){
             return $productSlug == $slug['slug'];

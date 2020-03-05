@@ -126,7 +126,7 @@
                         <td>Model</td>
                         <td data-field="sku"></td>
                     </tr>
-                    <tr>
+                    <tr style="display: none">
                         <td>Serial</td>
                         <td data-field="serial_number"></td>
                     </tr>
@@ -184,8 +184,8 @@
 
                 function scrollTo(el) {
                     $("html, body").animate({
-                         scrollTop: $(el).offset().top - 100
-                     }, 600);
+                         scrollTop: $(el).offset().top - 150
+                     }, 400);
                 }
             })();
         </script>

@@ -59,21 +59,7 @@
                             </div>
                             <div _ngcontent-c4="" class="product-list-row col-12">
                                 {% for product in products %}
-                                <pre style="display: none">{{ print_r(product) }}</pre>
-                                <div _ngcontent-c4="" class="card product-card ng-star-inserted">
-                                    <div _ngcontent-c4="" class="image">
-                                        <img _ngcontent-c4="" alt="" class="img-fluid" src="{{ product.remote_image_path|cdn_link(200) }}">
-                                    </div>
-                                    <div _ngcontent-c4="" class="card-body text-center">
-                                        <p _ngcontent-c4="" class="card-title">{{ product.feature_name }}</p>
-                                        <p _ngcontent-c4="" class="sub-title">{{ product.sku }}</p>
-                                        <p _ngcontent-c4="" class="status">{{ in_stock(product.stock) }}</p>
-                                        <p _ngcontent-c4="" class="price">{{ product.price|format_currency }}</p>
-                                        <a href="{{ product | product_page }}" class="btn btn-primary btn-sm rounded" tabindex="0">Buy Now <i _ngcontent-c4="" class="fa fa-angle-right ml-2">
-                                            </i>
-                                        </a>
-                                    </div>
-                                </div>
+                                    {% include 'partial/product-card.twig' %}
                                 {% endfor %}
                             </div>
                         </div>
