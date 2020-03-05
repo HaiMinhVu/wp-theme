@@ -130,13 +130,11 @@ $( document ).ready( function( $ ) {
             document.getElementById('shopping-counter-content').contentWindow.document.location.reload();
         }
 
-        $("#add-to-cart").click(function(e){
-            e.preventDefault();
-            const productName = $(this).data('name');
+        function addToCart(nsid, cb) {
             const $cartButtons = $('.cart-action-buttons');
             $cartButtons.prop('disabled', true);
             const data = new URLSearchParams({
-                buyid: $(this).data('nsid'),
+                buyid: nsid,
                 qty: 1,
                 c: 1247539
             }).toString();
@@ -149,13 +147,26 @@ $( document ).ready( function( $ ) {
                 complete: function() {
                     reloadShoppingCart();
                     $cartButtons.removeAttr('disabled');
-                    alertBottom(productName, 'Added to cart');
+                    cb();
                 }
+            });
+        }
+
+        $("#add-to-cart").click(function(e){
+            e.preventDefault();
+            const nsid = $(this).data('nsid');
+            const productName = $(this).data('name');
+            addToCart(nsid, function(){
+                alertBottom(productName, 'Added to cart');
             });
         });
 
-        $("#buy-now").click(function(){
-            window.open("https://www.sellmarknexus.com/checkout/cart.ssp?ext=T&amp;whence=&amp;sc=3#cart", "_blank");
+        $("#buy-now").click(function(e){
+            e.preventDefault();
+            const nsid = $(this).data('nsid');
+            addToCart(nsid, function(){
+                window.open("https://www.sellmarknexus.com/checkout/cart.ssp?ext=T&amp;whence=&amp;sc=3#cart", "_blank");
+            });
         });
 
         $('.related-items-carousel.active').slick({

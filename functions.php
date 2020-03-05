@@ -9,6 +9,8 @@
  */
 
  use Pulsar\Data;
+ use Pulsar\CarbonFields;
+
  // use Twig\Extra\Intl\IntlExtension;
 
  const SITE_PREFIX = 'pulsar';
@@ -97,6 +99,9 @@ class StarterSite extends Timber\Site {
 		$context['site']  = $this;
 		$context['product_categories'] = Data::productCategories();
         $context['nav_items'] = $this->navItems();
+        foreach(['slmk_site_favicon', 'slmk_site_logo'] as $imageSetting) {
+	        $context[$imageSetting] = (new Timber\Image(Data::getSetting($imageSetting)))->src;
+	    }
 		return $context;
 	}
 
@@ -298,12 +303,15 @@ class StarterSite extends Timber\Site {
 
 new StarterSite();
 
+new CarbonFields;
+
 function dd($var) {
     echo '<pre>';
     print_r($var);
     echo '</pre>';
     exit();
 }
+
 
 // add_action('init', 'pulsar_product2_rewrite');
 // function pulsar_product2_rewrite() {

@@ -18,6 +18,8 @@ use Pulsar\Data;
 $featuredProducts = Data::getFeaturedProducts(143);
 $sliderImages = Data::sliderImages();
 
+// dd(carbon_get_theme_option('slmk_site_brand'));
+
 $context = Timber::context();
 $context['featured_products'] = $featuredProducts;
 $context['sliders'] = $sliderImages;

@@ -4,39 +4,12 @@
     <section class="ng-tns-c4-2" _nghost-c5="">
         <div _ngcontent-c5="" class="slider">
             <div id="home-slider">
-                <pre style="display: none">{{ print_r(sliders) }}</pre>
-                <div class="owl-carousel owl-carousel-full owl-theme" style="display:none">
-                    {% for slider in sliders|slice(0, 20) %}
-                    <div>
-                        <!---->
-                        <!---->
-                        <div _ngcontent-c5="" class="item ng-star-inserted" style="background-image: url({{ slider.remote_path|cdn_link(1400) }});">
-                            <div _ngcontent-c5="" class="item-content">
-                                <div _ngcontent-c5="" class="container">
-                                    <div _ngcontent-c5="" class="row align-items-end">
-                                        <div _ngcontent-c5="" class="col">
-                                            <p _ngcontent-c5="" class="sub-name"></p>
-                                            <h1 _ngcontent-c5="">{{ slider.text }}</h1>
-                                            {% if slider.link is defined %}
-                                            <button _ngcontent-c5="" class="btn btn-primary rounded" tabindex="0"> Learn More <i _ngcontent-c5="" aria-hidden="true" class="fa fa-angle-right ml-2">
-                                                </i>
-                                            </button>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!---->
-                    </div>
-                    {% endfor %}
-                </div>
                 <div id="tns" class="tns" style="overflow:hidden">
 
                 {% for slider in sliders|slice(0, 20) %}
                     <!---->
                     <!---->
-                    <div style="background-image: url({{ slider.remote_path|cdn_link(1400) }});" class="slide-image">
+                    <div style="background-image: url({{ slider.remote_path|cdn_link(1600) }});" class="slide-image">
                         <div _ngcontent-c5="" class="item-content h-100">
                             <div _ngcontent-c5="" class="container h-100">
                                 <div _ngcontent-c5="" class="row h-100 align-items-end">
@@ -105,13 +78,12 @@
                                                         {% for product in featured_products %}
                                                         <div>
                                                             <div _ngcontent-c6="" class="card card-product border-0" style="">
-                                                                <div _ngcontent-c6="" class="card-image">
+                                                                <a href="{{ product|product_page }}" class="card-image">
                                                                     <img _ngcontent-c6="" alt="" class="img-fluid" src="{{ product.remote_image_path|cdn_link(400) }}">
-                                                                </div>
-                                                                <div _ngcontent-c6="" class="card-body text-center">
+                                                                </a>
+                                                                <div class="card-body text-center">
                                                                     <h4 _ngcontent-c6="" class="card-title" style="font-size: 20px;">{{ product.name }}</h4>
-                                                                    <p _ngcontent-c6="" class="card-sub-tile">
-                                                                    </p>
+                                                                    <p _ngcontent-c6="" class="card-sub-tile"></p>
                                                                     <a href="{{ product|product_page }}" class="btn btn-dark rounded" tabindex="0">Explore <i _ngcontent-c6="" class="fa fa-angle-right ml-2">
                                                                         </i>
                                                                     </a>
