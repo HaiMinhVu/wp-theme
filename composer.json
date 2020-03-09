@@ -33,7 +33,8 @@
 	  "timber/timber": "1.*",
       "sellmark/utilities": "0.0.1",
     "htmlburger/carbon-fields-plugin": "^3.1",
-    "guzzlehttp/guzzle": "~6.0"
+    "guzzlehttp/guzzle": "~6.0",
+    "danielstjules/stringy": "^3.1"
   },
   "require-dev": {
     "phpunit/phpunit": "5.7.16|6.*"
