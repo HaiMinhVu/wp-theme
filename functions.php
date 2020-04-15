@@ -99,6 +99,9 @@ class StarterSite extends Timber\Site {
 		$context['site']  = $this;
 		$context['product_categories'] = Data::productCategories();
         $context['nav_items'] = $this->navItems();
+        $context['slmk_brand_color'] = CarbonFields::get('slmk_brand_color');
+        $context['slmk_brand_color_rgba'] = carbon_hex_to_rgba($context['slmk_brand_color']);
+        $context['slmk_brand_color_hsl'] = rgbToHsl($context['slmk_brand_color_rgba']['red'], $context['slmk_brand_color_rgba']['green'], $context['slmk_brand_color_rgba']['blue']);
         foreach(['slmk_site_favicon', 'slmk_site_logo'] as $imageSetting) {
 	        $context[$imageSetting] = (new Timber\Image(Data::getSetting($imageSetting)))->src;
 	    }
@@ -311,6 +314,63 @@ function dd($var) {
     echo '</pre>';
     exit();
 }
+
+function rgbToHsl( $r, $g, $b ) {
+	$oldR = $r;
+	$oldG = $g;
+	$oldB = $b;
+
+	$r /= 255;
+	$g /= 255;
+	$b /= 255;
+
+    $max = max( $r, $g, $b );
+	$min = min( $r, $g, $b );
+
+	$h;
+	$s;
+	$l = ( $max + $min ) / 2;
+	$d = $max - $min;
+
+    	if( $d == 0 ){
+        	$h = $s = 0; // achromatic
+    	} else {
+        	$s = $d / ( 1 - abs( 2 * $l - 1 ) );
+
+		switch( $max ){
+	            case $r:
+	            	$h = 60 * fmod( ( ( $g - $b ) / $d ), 6 ); 
+                        if ($b > $g) {
+	                    $h += 360;
+	                }
+	                break;
+
+	            case $g: 
+	            	$h = 60 * ( ( $b - $r ) / $d + 2 ); 
+	            	break;
+
+	            case $b: 
+	            	$h = 60 * ( ( $r - $g ) / $d + 4 ); 
+	            	break;
+	        }			        	        
+	}
+
+	$lightness = round(round( $l, 2 )*100, 2);
+
+	if($lightness >= 50) {
+		$hoverLightness = $lightness-20;
+	} else {
+		$hoverLightness = $lightness+20;
+	}
+
+	return [ 
+		'hue' => round( $h, 2 ), 
+		'saturation' => round(round( $s, 4 )*100, 2), 
+		'lightness' => round(round( $l, 2 )*100, 2), 
+		'cssHoverLightness' => $hoverLightness 
+	];
+}
+
 
 
 // add_action('init', 'pulsar_product2_rewrite');

@@ -133,8 +133,8 @@ class Data {
     }
 
     public static function productCategories()
-    {
-        return self::get('products_categories', 'categories')->data;
+    {   
+        return (self::get('products_categories', 'categories')) ? self::get('products_categories', 'categories')->data : [];
     }
 
     public static function getProductCategory($categoryId)
