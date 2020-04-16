@@ -44,6 +44,9 @@ header {
 
     .navbar-brand {
       margin-right: 3.6rem;
+      img {
+        max-width: 200px;
+      }
     }
 
     .nav-item-icons {

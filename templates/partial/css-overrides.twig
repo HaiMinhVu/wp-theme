@@ -1,0 +1,26 @@
+{% if slmk_brand_color is defined %}
+	{% set c = slmk_brand_color_rgba %}
+	{% set hsl = slmk_brand_color_hsl %}
+	{% set brandColor = 'rgba('~c["red"]~','~c["green"]~','~c["blue"]~',1)' %}
+	{% set brandColorBorder = 'rgba('~c["red"]~','~c["green"]~','~c["blue"]~',0.7)' %}
+	{% set brandColorHover = 'rgba('~c["red"]~','~c["green"]~','~c["blue"]~',0.7)' %}
+	{% set brandColorBorderHover = 'rgba('~c["red"]~','~c["green"]~','~c["blue"]~',0.4)' %}
+
+	{% set brandColor2 = 'hsl('~hsl["hue"]~','~hsl["saturation"]~'%,'~hsl["lightness"]~'%)' %}
+	{% set brandColorHover2 = 'hsl('~hsl["hue"]~','~hsl["saturation"]~'%,'~hsl["cssHoverLightness"]~'%)' %}
+
+	<style type="text/css" media="screen">
+		.header-container {
+			border-bottom-color: {{ brandColor2 }};
+		}
+		.btn-primary {
+		    background-color: {{ brandColor2 }};
+		    border-color: {{ brandColor2 }};
+		}
+		.btn-primary:hover {
+		    background-color: {{ brandColorHover2 }};
+		    border-color: {{ brandColorHover2 }};
+		}
+	</style>
+</style>
+{% endif %}

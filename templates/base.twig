@@ -17,7 +17,7 @@
 					</li>
 					{% for item in nav_items %}
 					<li class="nav-item dropdown ng-tns-c2-0 ng-star-inserted">
-						{% if item.children is defined %}
+						{% if item.children|length > 0 %}
 						<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle pro ng-tns-c2-0 ng-star-inserted" data-toggle="dropdown" href="{{ item.link }}" id="navbarDropdownMenuLink">
 							{{ item.name }} <i class="fa fa-angle-down ml-3"></i>
 						</a>
