@@ -37,7 +37,14 @@ body {
   &.logged-in {
       > header {
           margin-top: 30px;
+          @media screen and (max-width: 762px) {
+            margin-top: 46px;
+          }
       }
+    #wpadminbar {
+      position: fixed;
+      top: 0;
+    }  
   }
 }
 
@@ -238,7 +245,13 @@ body {
 
 .header-container { border-bottom: 3px solid #006fba; }
 #content {
-    padding-top: 92px;
+    padding-top: 32px;
+    @media screen and (min-width: 600px) {
+      padding-top: 46px;
+    }
+    @media screen and (min-width: 1200px) {
+      padding-top: 92px;
+    }
 }
 .admin-bar.has-breadcrumbs #content {
     padding-top: 150px;

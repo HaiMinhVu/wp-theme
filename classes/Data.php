@@ -16,7 +16,7 @@ class Data {
     const TIMEOUT_SECONDS = 3600;
     const PERSIST_SECONDS = 300;
     const SLIDER_ID = 257;
-    const NO_CACHE = true;
+    const NO_CACHE = false;
 
     protected $cache;
     protected $client;
@@ -43,6 +43,18 @@ class Data {
         $this->sliderId = CarbonFields::get('slmk_home_slider');
     }
 
+    public static function cacheRemember($key, $method) {
+        $instance = self::getInstance();
+        $cache = $instance->cache;
+
+        if($cache->isExpired($key) || self::NO_CACHE) {
+            $value = $method();
+            $cache->set($key, $value);
+        }
+
+        return $cache->get($key);
+    }
+
     protected static function getInstance()
     {
         if(self::$instance == null) {
@@ -64,7 +76,7 @@ class Data {
     			$data = $res->getBody()->getContents();
     			$cache->set($key, $data, self::TIMEOUT_SECONDS);
     		} catch(\Exception $e) {
-                // print_r($e->getMessage());
+                print_r($e->getMessage());
     			$cache->expire($key, self::PERSIST_SECONDS);
     		}
     	}
@@ -73,11 +85,19 @@ class Data {
     }
 
     public static function getSetting($key) {
+        return self::getCarbonField($key);
+    }
+
+    public static function getThemeOption($key) {
+        return self::getCarbonField($key, 'theme_option');
+    }
+
+    private static function getCarbonField($key, $type = 'option') {
         $instance = self::getInstance();
         $cache = $instance->cache;
         
         if($cache->isExpired($key) || self::NO_CACHE) {
-            return CarbonFields::get($key);
+            $cache->set($key, CarbonFields::get($key, $type));
         }
 
         return $cache->get($key);

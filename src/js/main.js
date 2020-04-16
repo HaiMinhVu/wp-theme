@@ -39,9 +39,9 @@ $( document ).ready( function( $ ) {
         $('body').toggleClass('mobile-menu-visible');
     });
 
-    setContentPadding();
+    // setContentPadding();
     $(window).on('load resize', function(){
-        setContentPadding();
+        // setContentPadding();
     });
 
     function setContentPadding() {

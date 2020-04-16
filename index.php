@@ -18,10 +18,20 @@ use Pulsar\Data;
 $featuredProducts = Data::getFeaturedProducts(143);
 $sliderImages = Data::sliderImages();
 
-// dd(carbon_get_theme_option('slmk_site_brand'));
-
 $context = Timber::context();
 $context['featured_products'] = $featuredProducts;
 $context['sliders'] = $sliderImages;
 $context['blog_posts'] = Timber::get_posts(['posts_per_page' => 4, 'page' => 1, 'orderby' => 'publish_date']);
+
+
+$whoWeAre = Data::getThemeOption('who_we_are');
+if($whoWeAre) $context['who_we_are'] = $whoWeAre[0];
+
+$categoryCallout = Data::getThemeOption('category_callout');
+$categoryCalloutData = [
+	$categoryCallout[0]->left[0],
+	$categoryCallout[0]->right[0],
+];
+if($categoryCallout) $context['category_callout'] = $categoryCalloutData;
+
 Timber::render('index.twig', $context);

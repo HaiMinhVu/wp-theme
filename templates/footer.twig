@@ -10,12 +10,11 @@
                             <li class="ng-tns-c3-1">
                                 <i class="fa fa-map-marker">
                                 </i> 2201 Heritage Parkway Mansfield, <br class="ng-tns-c3-1"> TX 76063 United States of America</li>
+                                {% for p in phone_numbers %}
                                 <li class="ng-tns-c3-1">
-                                    <a href="tel:+18172250310"><i class="fa fa-phone"></i>(817) 225 0310</a>
+                                    <a href="tel:+{{ p.phone_number|only_numbers }}"><i class="fa fa-phone"></i>{{ p.phone_number }}</a>
                                 </li>
-                                <li class="ng-tns-c3-1">
-                                    <a href="tel:+18173941628"><i class="fa fa-phone"></i>(817) 394 1628</a>
-                                </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>

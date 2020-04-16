@@ -99,6 +99,7 @@ class StarterSite extends Timber\Site {
 		$context['site']  = $this;
 		$context['product_categories'] = Data::productCategories();
         $context['nav_items'] = $this->navItems();
+        $context['phone_numbers'] = Data::getThemeOption('phone_numbers', 'theme_option');
         $context['slmk_brand_color'] = CarbonFields::get('slmk_brand_color');
         $context['slmk_brand_color_rgba'] = carbon_hex_to_rgba($context['slmk_brand_color']);
         $context['slmk_brand_color_hsl'] = rgbToHsl($context['slmk_brand_color_rgba']['red'], $context['slmk_brand_color_rgba']['green'], $context['slmk_brand_color_rgba']['blue']);
@@ -193,6 +194,14 @@ class StarterSite extends Timber\Site {
             return "\${$dollarAmount}";
         }));
 
+        $twig->addFilter(new Timber\Twig_Filter('img_src', function($id) {
+        	return (new Timber\Image($id))->src;
+        }));
+
+        $twig->addFilter(new Timber\Twig_Filter('only_numbers', function($str) {
+	        return preg_replace('/\D/', '', $str);
+	    }));
+
         $twig->addFunction( new Timber\Twig_Function('in_stock', function($bool){
             if($bool) {
                 return '<span class="text-success">In Stock</span>';
@@ -208,7 +217,7 @@ class StarterSite extends Timber\Site {
 				exit();
 		}));
 
-        $twig->addFilter( new Timber\Twig_Filter('cdn_link', function($filename, $imageWidth = null){
+        $twig->addFilter( new Timber\Twig_Filter('cdn_link', function($filename, $imageWidth = null, $additionalOptions = []){
             // return $imageWidth;
             $options = [
                 "bucket" => "sellmark-media-bucket",
@@ -229,16 +238,24 @@ class StarterSite extends Timber\Site {
 	}
 
 	public function add_rewrites() {
+		$productPageID = Data::cacheRemember('product-page-id', function() {
+			return getTemplatePageId('product');
+		});
+
 		add_rewrite_rule(
 	        '^products/([a-z_\-0-9]+)/?',
-	        'index.php?page_id=5&product=$matches[1]',
+	        'index.php?page_id='.$productPageID.'&product=$matches[1]',
 	        'top'
 	    );
 		add_rewrite_tag('%product%','([a-z_\-0-9]+)');
 
+		$categoryPageID = Data::cacheRemember('category-page-id', function() {
+			return getTemplatePageId('category');
+		});
+
 		add_rewrite_rule(
 	        '^category/([a-z_\-0-9]+)/?',
-	        'index.php?page_id=7&category=$matches[1]',
+	        'index.php?page_id='. $categoryPageID .'&category=$matches[1]',
 	        'top'
 	    );
 		add_rewrite_tag('%category%','([a-z_\-0-9]+)');
@@ -272,24 +289,30 @@ class StarterSite extends Timber\Site {
     }
 
     private function navItems() {
-        return [
-            [
-                'name' => 'About Us',
-                'link' => '/about-us'
-            ],
-            [
-                'name' => 'Support',
-                'link' => '/support'
-            ],
-            [
-                'name' => 'Press &amp; Blogs',
-                'link' => '/blog'
-            ],
-            [
-                'name' => 'Contact',
-                'link' => '/contact'
-            ],
-            [
+    	$items = Data::getThemeOption('menu_items', 'theme_option');
+
+   //  	$items = [
+			// [
+			// 	'name' => 'About Us',
+			// 	'link' => '/about-us'
+			// ],
+			// [
+			// 	'name' => 'Support',
+			// 	'link' => '/support'
+			// ],
+			// [
+			// 	'name' => 'Press &amp; Blogs',
+			// 	'link' => '/blog'
+			// ],
+			// [
+			// 	'name' => 'Contact',
+			// 	'link' => '/contact'
+			// ]
+   //  	];
+    	$productCategories = Data::productCategories();
+    	// dd($productCategories);
+    	if(count($productCategories) > 0) {
+    		$categoryDropdown =  [
                 'name' => 'Products',
                 'link' => '/products',
                 'children' => array_map(function($category){
@@ -298,10 +321,22 @@ class StarterSite extends Timber\Site {
                         'link' => "/category/{$category->id}"
                     ];
                 }, Data::productCategories())
-            ]
-        ];
+            ];
+    		$items[] = $categoryDropdown;
+    	}
+        return $items;
     }
 
+}
+
+function getTemplatePageId($templateName) {
+	$page = get_pages(array(
+	    'meta_key' => '_wp_page_template',
+	    'meta_value' => "{$templateName}.php",
+	    'number' => 1
+	));
+
+	return (count($page) > 0) ? $page[0]->ID : null;
 }
 
 new StarterSite();
