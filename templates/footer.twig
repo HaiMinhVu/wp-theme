@@ -50,38 +50,19 @@
                         </div>
                     </div>
                 </div>
+                {% if footer_links|length > 0 %}
                 <div class="row">
                     <div class="col-12">
                         <ul class="footer-links">
-                            <!---->
+                            {% for link in footer_links %}
                             <li class="ng-tns-c3-1 ng-star-inserted">
-                                <a class="ng-tns-c3-1" href="/privacy-policy">Privacy Policy</a>
+                                <a class="ng-tns-c3-1" href="{{ link.link }}">{{ link.name }}</a>
                             </li>
-                            <li class="ng-tns-c3-1 ng-star-inserted">
-                                <a class="ng-tns-c3-1" href="/support/terms-of-service">Terms of Service</a>
-                            </li>
-                            {% if false %}
-                            <li class="ng-tns-c3-1 ng-star-inserted">
-                                <a class="ng-tns-c3-1" href="#/terms-of-sales">Terms of Sales &amp; Conditions</a>
-                            </li>
-                            {% endif %}
-                            <li class="ng-tns-c3-1 ng-star-inserted">
-                                <a class="ng-tns-c3-1" href="/warranty-registration">Warranty Registration</a>
-                            </li>
-                            <li class="ng-tns-c3-1 ng-star-inserted">
-                                <a class="ng-tns-c3-1" href="/le-government">LE &amp; Government</a>
-                            </li>
-                            <li class="ng-tns-c3-1 ng-star-inserted">
-                                <a class="ng-tns-c3-1" href="/warranty-information">Warranty Information</a>
-                            </li>
-                            {% if false %}
-                            <li class="ng-tns-c3-1 ng-star-inserted">
-                                <a class="ng-tns-c3-1" href="#/faq">FAQ’s</a>
-                            </li>
-                            {% endif %}
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
+                {% endif %}
                 <!---->
             </div>
             <div class="footer-bottom">

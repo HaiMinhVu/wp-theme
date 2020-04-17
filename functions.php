@@ -99,6 +99,7 @@ class StarterSite extends Timber\Site {
 		$context['site']  = $this;
 		$context['product_categories'] = Data::productCategories();
         $context['nav_items'] = $this->navItems();
+        $context['footer_links'] = Data::getThemeOption('footer_links', 'theme_option');
         $context['phone_numbers'] = Data::getThemeOption('phone_numbers', 'theme_option');
         $context['slmk_brand_color'] = CarbonFields::get('slmk_brand_color');
         $context['slmk_brand_color_rgba'] = carbon_hex_to_rgba($context['slmk_brand_color']);

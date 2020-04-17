@@ -79,15 +79,15 @@
 			</div>
 		</div>
 		{% if breadcrumbs is defined and breadcrumbs|length > 0 %}
-		<div _ngcontent-c4="" class="theme-bread ng-star-inserted nav-breadcrumbs">
-			<div _ngcontent-c4="" class="container">
-				<div _ngcontent-c4="" class="row">
-					<div _ngcontent-c4="" class="col-12">
-						<nav _ngcontent-c4="" aria-label="breadcrumb">
-							<ol _ngcontent-c4="" class="breadcrumb bg-transparent">
+		<div class="theme-bread ng-star-inserted nav-breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb bg-transparent">
 								{% for breadcrumb in breadcrumbs %}
-								<li _ngcontent-c4="" class="breadcrumb-item">
-									<a _ngcontent-c4="" href="/category/{{ breadcrumb.id }}">{{ breadcrumb.label }}</a>
+								<li class="breadcrumb-item">
+									<a href="/category/{{ breadcrumb.id }}">{{ breadcrumb.label }}</a>
 								</li>
 								{% endfor %}
 							</ol>

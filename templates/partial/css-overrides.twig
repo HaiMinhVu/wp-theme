@@ -10,6 +10,9 @@
 	{% set brandColorHover2 = 'hsl('~hsl["hue"]~','~hsl["saturation"]~'%,'~hsl["cssHoverLightness"]~'%)' %}
 
 	<style type="text/css" media="screen">
+		body header #overlay-menu {
+			background-color: {{ brandColor2 }};
+		}
 		.header-container {
 			border-bottom-color: {{ brandColor2 }};
 		}

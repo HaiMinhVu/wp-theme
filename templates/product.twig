@@ -13,7 +13,7 @@
             <div _ngcontent-c14="" class="row  sticky-top">
                 <div _ngcontent-c14="" class="col-lg-6 px-4 px-lg-auto">
                     <div _ngcontent-c14="" class="row">
-                        <h4 _ngcontent-c14="" class="product-title mobile">{{ product.name }}</h4>
+                        <h4 _ngcontent-c14="" class="product-title mobile">{{ product.name|convert_encoding('UTF-8', 'HTML-ENTITIES') }}</h4>
                         <div _ngcontent-c14="" class="thumbnail-container col-md-auto order-2 order-md-1">
                             <ul _ngcontent-c14="" class="thumbnail-list ng-star-inserted{{ product.images|length > 60  ? ' more-images' : '' }}">
                                 {% for image in product.images|slice(0,6) %}
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div _ngcontent-c14="" class="col-lg-6">
-                    <h4 _ngcontent-c14="" class="product-title">{{ product.name }}</h4>
+                    <h4 _ngcontent-c14="" class="product-title">{{ product.name|raw }}</h4>
                     <p _ngcontent-c14="" class="pro-id">Product ID: {{ product.sku }}</p>
                     <hr _ngcontent-c14="">
                     <h5 _ngcontent-c14="" class="font-weight-bold">Features</h5>

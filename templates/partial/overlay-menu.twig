@@ -2,7 +2,7 @@
     <ul>
         {% for item in nav_items %}
         <li>
-            {% if item.children is defined %}
+            {% if item.children|length > 0 %}
 
             <div class="has-children">{{ item.name }} <i class="fa fa-angle-down"></i></div>
             <ul class="item-children">
