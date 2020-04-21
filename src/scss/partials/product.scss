@@ -262,6 +262,7 @@
 
   .product-card {
     border: 0;
+    cursor: pointer;
 
     .image {
       height: 150px;
@@ -272,6 +273,7 @@
 
       .img-fluid {
         max-height: 100%;
+        transition: all 200ms;
       }
     }
 
@@ -289,8 +291,14 @@
       }
     }
 
-    &:hover .card-body .btn-primary {
-      visibility: visible;
+    &:hover {
+      text-decoration: none;
+      .card-body .btn-primary {
+        visibility: visible;
+      }
+      .img-fluid {
+        transform: scale(1.2);
+      }
     }
   }
 }

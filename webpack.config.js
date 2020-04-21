@@ -8,6 +8,8 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
 module.exports = {
     entry: ['./src/js/main.js', './src/scss/main.scss'],
     output: {
@@ -77,8 +79,11 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
             }
-
         ]
     },
     plugins: [
@@ -90,7 +95,8 @@ module.exports = {
         new webpack.SourceMapDevToolPlugin({}),
         new MiniCssExtractPlugin({
             filename: './static/main.min.css'
-        })
+        }),
+        new VueLoaderPlugin()
     ],
     optimization: {
         minimizer: [

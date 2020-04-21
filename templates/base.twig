@@ -34,7 +34,7 @@
 					</li>
 					{% endfor %}
 					<li class="nav-item-icons d-lg-flex" style="width:80px">
-						<a style="display:none" class="nav-link search" aria-controls="collapseExample" href="javascript:void(0)" aria-expanded="false">
+						<a class="nav-link search search-toggle" aria-controls="collapseExample" href="javascript:void(0)" aria-expanded="false">
 							<i class="fa fa-search">
 							</i>
 						</a>
@@ -54,40 +54,35 @@
 				</ul>
 			</nav>
 		</div>
-		<div class="search-wrapper collapse" id="collapseExample" style"display:none">
-			<div class="container" style="position: relative;">
+		<div class="search-wrapper collapse" id="search-bar" >
+			<form method="GET" action="/" class="container" style="position: relative;">
 				<div class="row justify-content-between">
 					<div class="col">
 						<div class="search-box">
-							<input class="form-control ng-untouched ng-pristine ng-valid" autocomplete="off" placeholder="Search..." type="search">
+							<input class="form-control" name="s" autocomplete="off" placeholder="Search..." type="search">
 							<i class="fa fa-search">
 							</i>
 						</div>
 					</div>
 					<div class="col-auto align-self-center">
-						<a class="close-search">
+						<span class="close-search search-toggle">
 							<i class="fa fa-close">
 							</i>
-						</a>
+						</span>
 					</div>
 				</div>
-				<div class="row search-list-row">
-					<div class="col-lg-12">
-						<!---->
-					</div>
-				</div>
-			</div>
+			</form>
 		</div>
 		{% if breadcrumbs is defined and breadcrumbs|length > 0 %}
-		<div _ngcontent-c4="" class="theme-bread ng-star-inserted nav-breadcrumbs">
-			<div _ngcontent-c4="" class="container">
-				<div _ngcontent-c4="" class="row">
-					<div _ngcontent-c4="" class="col-12">
-						<nav _ngcontent-c4="" aria-label="breadcrumb">
-							<ol _ngcontent-c4="" class="breadcrumb bg-transparent">
+		<div class="theme-bread ng-star-inserted nav-breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb bg-transparent">
 								{% for breadcrumb in breadcrumbs %}
-								<li _ngcontent-c4="" class="breadcrumb-item">
-									<a _ngcontent-c4="" href="/category/{{ breadcrumb.id }}">{{ breadcrumb.label }}</a>
+								<li class="breadcrumb-item">
+									<a href="/category/{{ breadcrumb.id }}">{{ breadcrumb.label }}</a>
 								</li>
 								{% endfor %}
 							</ol>
@@ -98,7 +93,9 @@
 		</div>
 		{% endif %}
 		{% include 'partial/overlay-menu.twig' %}
-
+		<div id="search-bar-old" style="display:none">
+			{% include 'partial/search.twig' %}
+		</div>
 	</header>
 	<section id="content" role="main" class="content-wrapper">
 		<div class="wrapper {{sidebar_class}}">

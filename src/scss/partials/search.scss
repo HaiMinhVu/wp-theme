@@ -1,0 +1,23 @@
+#search {
+	max-width: 1400px;
+	article {
+		max-width: 100%;
+		.article-content {
+			padding-top: 30px;
+			h1 {
+				text-align: center;
+			}
+			.product-list-row {
+				.form-group {
+					margin: 0 auto;
+				}
+			}
+			.no-matching-text {
+				display: flex;
+			    justify-content: center;
+			    align-items: center;
+			    height: 40vh;
+			}
+		}
+	}
+}

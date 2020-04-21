@@ -13,7 +13,7 @@ use Pulsar\Data;
 $categoryId = get_query_var('category');
 
 $context = Timber::context();
-$context['category'] = Data::getCategoryLabelById($categoryId);
+$context['category'] = Data::getCategoryById($categoryId);
 $context['products'] = Data::getProductsByCategoryId($categoryId);
 $context['sub_categories'] = Data::getSubCategories($categoryId);
 $context['category_id'] = $categoryId;

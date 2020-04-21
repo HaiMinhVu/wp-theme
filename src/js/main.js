@@ -2,14 +2,21 @@ import $ from 'jquery';
 import 'slick-carousel';
 import 'jquery-zoom';
 import 'slick-carousel';
+import Vue from 'vue/dist/vue.js';
+import Search from './components/search.vue'
+
+// Vue = Vue;
+Vue.component('search', Search);
 
 window.$ = window.JQuery = $;
 
 $( document ).ready( function( $ ) {
 
+    new Vue({ el: '#search' });
+
     $('.owl-carousel-default').on('init', function(){
         setCardHeight();
-    })
+    });
 
     $('.owl-carousel-default').slick({
         slidesToShow: 3,
@@ -213,6 +220,20 @@ $( document ).ready( function( $ ) {
         }
 
     }
+
+    // $('body').click(e => {
+    //     const $target = $(e.target);
+    //     if(!$('#search-bar').hasClass('active')) {
+    //         if($target.closest('#search-bar').length == 0) {
+    //             $('#search-bar').removeClass('active');
+    //         }
+    //     }
+    // });
+
+    $('.search-toggle').click(e => {
+        $('#search-bar').toggleClass('active');
+    });
+   
 
     // Temporary
     $('.dropdown-toggle').click(e => e.preventDefault());

@@ -10,6 +10,9 @@
 	{% set brandColorHover2 = 'hsl('~hsl["hue"]~','~hsl["saturation"]~'%,'~hsl["cssHoverLightness"]~'%)' %}
 
 	<style type="text/css" media="screen">
+		body header #overlay-menu {
+			background-color: {{ brandColor2 }};
+		}
 		.header-container {
 			border-bottom-color: {{ brandColor2 }};
 		}
@@ -20,6 +23,13 @@
 		.btn-primary:hover {
 		    background-color: {{ brandColorHover2 }};
 		    border-color: {{ brandColorHover2 }};
+		}
+		.page-item.active .page-link {
+			background-color: {{ brandColorHover2 }};
+		    border-color: {{ brandColorHover2 }};
+		}
+		.lds-ring div {
+			border-color: {{ brandColor2 }} transparent transparent transparent;
 		}
 	</style>
 </style>

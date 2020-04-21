@@ -16,7 +16,8 @@ class Data {
     const TIMEOUT_SECONDS = 3600;
     const PERSIST_SECONDS = 300;
     const SLIDER_ID = 257;
-    const NO_CACHE = false;
+    const DISABLE_CACHE = false;
+    const DISABLE_REMOTE_CACHE = false;
 
     protected $cache;
     protected $client;
@@ -47,7 +48,7 @@ class Data {
         $instance = self::getInstance();
         $cache = $instance->cache;
 
-        if($cache->isExpired($key) || self::NO_CACHE) {
+        if($cache->isExpired($key) || self::DISABLE_CACHE) {
             $value = $method();
             $cache->set($key, $value);
         }
@@ -69,8 +70,9 @@ class Data {
         $cache = $instance->cache;
         $client = $instance->client;
         $url = ($isManufacturerPath) ? $instance->getManufacturerEndpoint($path) : $instance->getEndpoint($path);
+        $url = (self::DISABLE_REMOTE_CACHE) ? $url.'?force-update=1' : $url;
 
-    	if($cache->isExpired($key) || self::NO_CACHE) {
+    	if($cache->isExpired($key) || self::DISABLE_CACHE) {
     		try {
     			$res = $client->get($url);
     			$data = $res->getBody()->getContents();
@@ -96,7 +98,7 @@ class Data {
         $instance = self::getInstance();
         $cache = $instance->cache;
         
-        if($cache->isExpired($key) || self::NO_CACHE) {
+        if($cache->isExpired($key) || self::DISABLE_CACHE) {
             $cache->set($key, CarbonFields::get($key, $type));
         }
 
@@ -236,14 +238,25 @@ class Data {
 
     public static function getCategoryLabelById($id)
     {
+        $category = self::getCategoryByType($id);
+        return $category->label;
+    }
+
+    public static function getCategoryById($id)
+    {
+        return self::getCategoryByType($id);
+    }
+
+    private static function getCategoryByType($str, $type = 'id')
+    {
         $categories = self::productCategoriesAll();
 
-        $filtered = array_filter($categories, function($category) use ($id){
-            return $id == $category->id;
+        $filtered = array_filter($categories, function($category) use ($str, $type){
+            return $str == $category->$type;
         });
 
         if(count($filtered) > 0) {
-            return (array_values($filtered)[0])->label;
+            return (array_values($filtered)[0]);
         }
         return '';
     }

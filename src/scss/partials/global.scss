@@ -57,7 +57,10 @@ body {
 }
 
 .theme-bread {
-  box-shadow: 0 2px 4px #ddd;
+  box-shadow: 0 1px 2px #ddd;
+  position: absolute;
+    width: 100%;
+    background: white;
 
   .breadcrumb {
     margin: 0;
@@ -243,11 +246,13 @@ body {
 }
 
 
-.header-container { border-bottom: 3px solid #006fba; }
+.header-container { 
+  border-bottom: 3px solid #006fba; 
+}
 #content {
-    padding-top: 32px;
-    @media screen and (min-width: 600px) {
-      padding-top: 46px;
+    padding-top: 58px;
+    @media screen and (min-width: 800px) {
+      padding-top: 79px;
     }
     @media screen and (min-width: 1200px) {
       padding-top: 92px;

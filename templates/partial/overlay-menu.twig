@@ -1,25 +1,30 @@
 <div id="overlay-menu">
-    <ul>
-        {% for item in nav_items %}
-        <li>
-            {% if item.children is defined %}
+    <div>
+        <form method="GET" action="/" class="search-box">
+            <input class="form-control" name="s" autocomplete="off" placeholder="Search..." type="search">
+        </form>
+        <ul>
+            {% for item in nav_items %}
+            <li>
+                {% if item.children|length > 0 %}
 
-            <div class="has-children">{{ item.name }} <i class="fa fa-angle-down"></i></div>
-            <ul class="item-children">
-                {% for child in item.children %}
+                <div class="has-children">{{ item.name }} <i class="fa fa-angle-down"></i></div>
+                <ul class="item-children">
+                    {% for child in item.children %}
 
-                <li>
-                    <a href="{{ child.link }}">{{ child.name }}</a>
-                </li>
+                    <li>
+                        <a href="{{ child.link }}">{{ child.name }}</a>
+                    </li>
 
-                {% endfor %}
-            </ul>
-            {% else %}
+                    {% endfor %}
+                </ul>
+                {% else %}
 
-            <a href="{{ item.link }}">{{ item.name }}</a>
+                <a href="{{ item.link }}">{{ item.name }}</a>
 
-            {% endif %}
-        </li>
-        {% endfor %}
-    </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
