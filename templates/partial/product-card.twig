@@ -1,4 +1,4 @@
-<div class="card product-card ng-star-inserted item" data-nsid="{{product.nsid}}">
+<a class="card product-card ng-star-inserted item" data-nsid="{{product.nsid}}" href="{{ product|product_page }}">
     <div class="image">
         <img alt="" class="img-fluid" style="width:auto" src="{{ product.remote_image_path|cdn_link(400) }}">
     </div>
@@ -9,8 +9,5 @@
             {{ in_stock(product.in_stock) }}
         </p>
         <p class="price">{{ product.price|format_currency }}</p>
-        <a href="{{ product|product_page }}" class="btn btn-primary btn-sm rounded">
-            Explore <i class="fa fa-angle-right ml-2"></i>
-        </a>
     </div>
-</div>
+</a>

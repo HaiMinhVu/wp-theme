@@ -78,6 +78,7 @@ class StarterSite extends Timber\Site {
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
 		add_action( 'init', array($this, 'add_rewrites') );
         add_action( 'init', array($this, 'add_shortcodes') );
+        add_action( 'rest_api_init', array($this, 'register_routes') );
         add_action( 'wp_enqueue_scripts', array($this, 'add_theme_scripts') );
 		parent::__construct();
 	}
@@ -187,9 +188,9 @@ class StarterSite extends Timber\Site {
 	public function add_to_twig( $twig ) {
 		$twig->addExtension(new Twig\Extension\StringLoaderExtension());
         // $twig->addExtension(new IntlExtension());
-		$twig->addFilter(new Timber\Twig_Filter( 'product_page', function( $product ) {
-	        return '/products/'.$product->nsid.'/'.sanitize_title($product->name);
-	    }));
+		$twig->addFilter(new Timber\Twig_Filter( 'product_page', function($product){
+			return productPage($product);
+		}));
         $twig->addFilter(new Timber\Twig_Filter( 'format_currency', function( $price ) {
             $dollarAmount = number_format($price, 2, '.', ',');
             return "\${$dollarAmount}";
@@ -204,11 +205,7 @@ class StarterSite extends Timber\Site {
 	    }));
 
         $twig->addFunction( new Timber\Twig_Function('in_stock', function($bool){
-            if($bool) {
-                return '<span class="text-success">In Stock</span>';
-            } else {
-                return '<span class="text-danger">Not in Stock</span>';
-            }
+        	return inStock($bool);
         }));
 		$twig->addFunction( new Timber\Twig_Function('print_r', 'print_r'));
 		$twig->addFunction( new Timber\Twig_Function('dd', function($var) {
@@ -219,22 +216,9 @@ class StarterSite extends Timber\Site {
 		}));
 
         $twig->addFilter( new Timber\Twig_Filter('cdn_link', function($filename, $imageWidth = null, $additionalOptions = []){
-            // return $imageWidth;
-            $options = [
-                "bucket" => "sellmark-media-bucket",
-                "key" => $filename
-            ];
-            if($imageWidth) {
-                $options['edits'] = [
-                    'resize' => [
-                        'width' => $imageWidth,
-                        'fit' => 'contain'
-                    ]
-                ];
-            }
-            $options = base64_encode(json_encode($options));
-            return "https://d4ursusm8s4tk.cloudfront.net/{$options}";
+        	return cdnLink($filename, $imageWidth, $additionalOptions);
         }));
+
 		return $twig;
 	}
 
@@ -328,6 +312,54 @@ class StarterSite extends Timber\Site {
         return $items;
     }
 
+     public function register_routes() {
+	    register_rest_route('slmk', '/products', [
+	      'methods' => 'GET',
+	      'callback' => [$this, 'getProducts']
+	  	]);
+	  }
+
+	public function getProducts() {
+		return Data::cacheRemember('api_products_list',function(){
+			$products = array_map(function($product){
+				$product->image = cdnLink($product->remote_image_path, 300);
+				$product->url = productPage($product);
+				$product->in_stock_html = inStock($product->in_stock);
+				return $product;
+			}, Data::getProducts());
+			return json_encode($products);
+		});
+	}
+
+}
+
+function inStock($bool) {
+    if($bool) {
+        return '<span class="text-success">In Stock</span>';
+    } else {
+        return '<span class="text-danger">Not in Stock</span>';
+    }
+}
+
+function productPage( $product ) {
+    return '/products/'.$product->nsid.'/'.sanitize_title($product->name);
+}
+
+function cdnLink($filename, $imageWidth = null, $additionalOptions = []){
+    $options = [
+        "bucket" => "sellmark-media-bucket",
+        "key" => $filename
+    ];
+    if($imageWidth) {
+        $options['edits'] = [
+            'resize' => [
+                'width' => $imageWidth,
+                'fit' => 'contain'
+            ]
+        ];
+    }
+    $options = base64_encode(json_encode($options));
+    return "https://d4ursusm8s4tk.cloudfront.net/{$options}";
 }
 
 function getTemplatePageId($templateName) {
@@ -405,6 +437,7 @@ function rgbToHsl( $r, $g, $b ) {
 		'lightness' => round(round( $l, 2 )*100, 2), 
 		'cssHoverLightness' => $hoverLightness 
 	];
+
 }
 
 

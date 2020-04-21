@@ -195,7 +195,6 @@ header {
   .search-wrapper {
     width: 100%;
     position: absolute;
-    top: 90px;
     background-color: #fff;
     left: 0;
     z-index: 1000;
@@ -204,11 +203,6 @@ header {
 
     .search-box {
       position: relative;
-      margin: 20px 0;
-
-      .form-control {
-        font-size: 30px;
-      }
 
       .fa-search {
         position: absolute;
@@ -449,6 +443,9 @@ ul.dropdown-menu {
     display: none;
     overflow: hidden;
     overflow-y: scroll;
+    .search-box {
+      padding-bottom: 15px; 
+    }
     ul {
         text-transform: uppercase;
         list-style: none;
@@ -528,6 +525,7 @@ ul.dropdown-menu {
             #overlay-menu {
                 display: flex;
                 align-items: center;
+                justify-content: center;
                 > ul {
                     transform: translateX(35%);
                     width: 100%;
@@ -583,4 +581,45 @@ ul.dropdown-menu {
             }
         }
     }
+}
+
+.header-container {
+  z-index: 1029;
+  background-color: white;
+  @media screen and (min-width: 1201px) {
+    position: relative;
+  }
+}
+
+#search-bar {
+  display: none;
+  padding: 15px;
+  width: 100%;
+  border-bottom: 2px solid;
+  z-index: 1;
+  transform: translateY(-100%);
+  position: absolute;
+  background-color: white;
+  transition: transform 200ms;
+  &.active {
+    transform: translateY(0);
+  }
+  .input-group {
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    input {
+      height: auto;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    display: block;
+  }
+}
+
+.search-toggle.search {
+  display: none;
+  @media screen and (min-width: 1200px) {
+    display: block;
+  }
 }
