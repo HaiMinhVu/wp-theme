@@ -9,13 +9,8 @@ use GuzzleHttp\Client;
 
 class Data {
 
-    const API_ENDPOINT = 'https://api.slmk.dev/v1';
-    const MANUFACTURER = 'pulsar/';
-    const PUBLIC_API_ENDPOINT = 'https://api.slmk.dev/v1';
-    const API_KEY = 'Y4=nsSabrJ6C8q-6XvYVMp6zDX@BYPnFmPP2k7$G%txKm%@5X4ku5rJE2ap?ZwyZYjcn^8BJZ*P7y@hPwp+r$@KMTfynkXP-a98DRBYGH%AU^?!R6+SM7?S8aRM?v_TK';
     const TIMEOUT_SECONDS = 3600;
     const PERSIST_SECONDS = 300;
-    const SLIDER_ID = 257;
     const DISABLE_CACHE = false;
     const DISABLE_REMOTE_CACHE = false;
 
@@ -38,7 +33,6 @@ class Data {
             ]
         ]);
 
-        // $this->manufacturer = 'sightmark-products';
         $this->manufacturer = CarbonFields::get('slmk_site_brand');
         $this->apiEndpoint = CarbonFields::get('slmk_api_endpoint');
         $this->sliderId = CarbonFields::get('slmk_home_slider');
@@ -268,7 +262,8 @@ class Data {
 
     public static function getUrl($path)
     {
-        return self::API_ENDPOINT.$path;
+        $instance = self::getInstance();
+        return $instance->apiEndpoint.$path;
     }
 
     public static function getPublicUrl($path)

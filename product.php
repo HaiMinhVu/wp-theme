@@ -21,6 +21,11 @@ if(!$product) {
 	get_template_part( 404 );
 	exit();
 }
+
+if(array_key_exists('slmk_breadcrumbs', $_SESSION)) {
+	$context['breadcrumbs'] = $_SESSION['slmk_breadcrumbs'];
+}
+
 $context['product'] = $product;
 $context['body_class'] = "{$context['body_class']} product-page";
 Timber::render( array( 'product.twig' ), $context );

@@ -10,6 +10,17 @@
 
  use Pulsar\Data;
  use Pulsar\CarbonFields;
+ use Timber\Site as TimberSite;
+
+session_start();
+
+function get_template_file() {
+	return basename(get_page_template());
+}
+
+function is_template_file($templateString) : bool {
+	return $templateString == get_template_file();
+}
 
  // use Twig\Extra\Intl\IntlExtension;
 
@@ -63,21 +74,18 @@ Timber::$dirname = array( 'templates', 'views' );
 Timber::$autoescape = false;
 
 
-/**
- * We're going to configure our theme inside of a subclass of Timber\Site
- * You can move this to its own file and include here via php's include("MySite.php")
- */
-class StarterSite extends Timber\Site {
+class StarterSite extends TimberSite {
 	/** Add timber support. */
 	public function __construct() {
 		add_action( 'after_setup_theme', array( $this, 'theme_supports' ) );
 		add_filter( 'timber/context', array( $this, 'add_to_context' ) );
 		add_filter( 'timber/twig', array( $this, 'add_to_twig' ) );
 		add_action( 'init', array($this, 'show_shopping_counter') );
-		add_action( 'init', array( $this, 'register_post_types' ) );
-		add_action( 'init', array( $this, 'register_taxonomies' ) );
+		// add_action( 'init', array( $this, 'register_post_types' ) );
+		// add_action( 'init', array( $this, 'register_taxonomies' ) );
 		add_action( 'init', array($this, 'add_rewrites') );
         add_action( 'init', array($this, 'add_shortcodes') );
+        add_action( 'the_post', array($this, 'clear_breadcrumbs') );
         add_action( 'rest_api_init', array($this, 'register_routes') );
         add_action( 'wp_enqueue_scripts', array($this, 'add_theme_scripts') );
 		parent::__construct();
@@ -111,29 +119,21 @@ class StarterSite extends Timber\Site {
 		return $context;
 	}
 
+	public function clear_breadcrumbs() {
+		try {
+		 	if(array_key_exists('slmk_breadcrumbs', $_SESSION) && !is_template_file('product.php')) {
+		 		$context = Timber::context();
+		 		unset($context['breadcrumbs']);
+		 		unset($_SESSION['slmk_breadcrumbs']);
+		 	}
+		} catch(\Exception $e) {
+			// print_r($e->getMessage());
+		} 
+	}
+
 	public function theme_supports() {
-		// Add default posts and comments RSS feed links to head.
 		add_theme_support( 'automatic-feed-links' );
-
-		/*
-		 * Let WordPress manage the document title.
-		 * By adding theme support, we declare that this theme does not use a
-		 * hard-coded <title> tag in the document head, and expect WordPress to
-		 * provide it for us.
-		 */
-		// add_theme_support( 'title-tag' );
-
-		/*
-		 * Enable support for Post Thumbnails on posts and pages.
-		 *
-		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
-		 */
 		add_theme_support( 'post-thumbnails' );
-
-		/*
-		 * Switch default core markup for search form, comment form, and comments
-		 * to output valid HTML5.
-		 */
 		add_theme_support(
 			'html5',
 			array(
@@ -143,12 +143,6 @@ class StarterSite extends Timber\Site {
 				'caption',
 			)
 		);
-
-		/*
-		 * Enable support for Post Formats.
-		 *
-		 * See: https://codex.wordpress.org/Post_Formats
-		 */
 		add_theme_support(
 			'post-formats',
 			array(
@@ -161,17 +155,7 @@ class StarterSite extends Timber\Site {
 				'audio',
 			)
 		);
-
 		add_theme_support( 'menus' );
-	}
-
-	/** This Would return 'foo bar!'.
-	 *
-	 * @param string $text being 'foo', then returned 'foo bar!'.
-	 */
-	public function myfoo( $text ) {
-		$text .= ' bar!';
-		return $text;
 	}
 
 	public function show_shopping_counter() {
@@ -181,13 +165,12 @@ class StarterSite extends Timber\Site {
 		}
 	}
 
-	/** This is where you can add your own functions to twig.
+	/** This is where you can add your own functions/filters to twig.
 	 *
 	 * @param string $twig get extension.
 	 */
 	public function add_to_twig( $twig ) {
 		$twig->addExtension(new Twig\Extension\StringLoaderExtension());
-        // $twig->addExtension(new IntlExtension());
 		$twig->addFilter(new Timber\Twig_Filter( 'product_page', function($product){
 			return productPage($product);
 		}));
@@ -275,27 +258,7 @@ class StarterSite extends Timber\Site {
 
     private function navItems() {
     	$items = Data::getThemeOption('menu_items', 'theme_option');
-
-   //  	$items = [
-			// [
-			// 	'name' => 'About Us',
-			// 	'link' => '/about-us'
-			// ],
-			// [
-			// 	'name' => 'Support',
-			// 	'link' => '/support'
-			// ],
-			// [
-			// 	'name' => 'Press &amp; Blogs',
-			// 	'link' => '/blog'
-			// ],
-			// [
-			// 	'name' => 'Contact',
-			// 	'link' => '/contact'
-			// ]
-   //  	];
     	$productCategories = Data::productCategories();
-    	// dd($productCategories);
     	if(count($productCategories) > 0) {
     		$categoryDropdown =  [
                 'name' => 'Products',
@@ -439,33 +402,3 @@ function rgbToHsl( $r, $g, $b ) {
 	];
 
 }
-
-
-
-// add_action('init', 'pulsar_product2_rewrite');
-// function pulsar_product2_rewrite() {
-//     add_rewrite_rule(
-//         '^products/([\w]+)/([\w]+)/([0-9]+)/?',
-//         'index.php?page_id=21&product=$matches[3]',
-//         'top'
-//     );
-// 	add_rewrite_tag('%product%','([0-9]+)');
-// }
-//
-// add_action('init', 'pulsar_product_rewrite');
-// function pulsar_product_rewrite() {
-//     add_rewrite_rule(
-//         '^products/([\w]+)/([0-9]+)/?',
-//         'index.php?page_id=21&product=$matches[2]',
-//         'top'
-//     );
-// 	add_rewrite_tag('%product%','([0-9]+)');
-// }
-
-
-
-// function custom_query_vars_filter($vars) {
-//   $vars[] .= 'product';
-//   return $vars;
-// }
-// add_filter( 'query_vars', 'custom_query_vars_filter', 1 );

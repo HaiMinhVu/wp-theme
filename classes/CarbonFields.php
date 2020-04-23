@@ -12,7 +12,6 @@ class CarbonFields {
         'slmk_api_key' => 'Y4=nsSabrJ6C8q-6XvYVMp6zDX@BYPnFmPP2k7$G%txKm%@5X4ku5rJE2ap?ZwyZYjcn^8BJZ*P7y@hPwp+r$@KMTfynkXP-a98DRBYGH%AU^?!R6+SM7?S8aRM?v_TK',
         'slmk_site_brand' => 'pulsar',
         'slmk_api_endpoint' => 'https://api.slmk.dev/v1',
-        // 'slmk_api_endpoint' => 'apidev/v1',
         'slmk_home_slider' => 257,
         'slmk_featured_products' => 105,
         'slmk_site_logo' => 5486,

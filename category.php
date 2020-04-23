@@ -17,6 +17,8 @@ $context['category'] = Data::getCategoryById($categoryId);
 $context['products'] = Data::getProductsByCategoryId($categoryId);
 $context['sub_categories'] = Data::getSubCategories($categoryId);
 $context['category_id'] = $categoryId;
-$context['breadcrumbs'] = Data::getCategoryBreadcrumbs($categoryId);
+$breadcrumbs = Data::getCategoryBreadcrumbs($categoryId);
+$context['breadcrumbs'] = $breadcrumbs;
+$_SESSION['slmk_breadcrumbs'] = $breadcrumbs;
 
 Timber::render( array( 'category.twig' ), $context );
