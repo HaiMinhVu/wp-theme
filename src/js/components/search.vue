@@ -41,7 +41,6 @@
 	import axios from 'axios';
 	import ProductCard from './product-card.vue';
 	import { filter, max, min, range, slice, sortBy } from 'lodash';
-	import levenshtein from 'fast-levenshtein';
 
 	const perPage = 12;
 	const paginationRangeCount = 5;
