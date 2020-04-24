@@ -2,4 +2,11 @@ body.page-template-default {
     .content-wrapper {
         padding-top: 30px;
     }
+    &.page-template-wide {
+    	.container {
+    		.article {
+    			max-width: 100%;
+    		}
+    	}
+    }
 }
