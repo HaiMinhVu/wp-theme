@@ -1,7 +1,9 @@
-body.page-template-default {
-    .content-wrapper {
-        padding-top: 30px;
-    }
+body {
+	&.page-template-default {
+	    .content-wrapper {
+	        padding-top: 30px;
+	    }
+	}
     &.page-template-wide {
     	.container {
     		.article {
