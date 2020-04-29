@@ -66,6 +66,14 @@ class CarbonFields {
 		return [
 			Field::make( 'select', 'slmk_home_slider', 'Home Slider' )->add_options($sliders),
 			Field::make( 'select', 'slmk_featured_products', 'Featured Products' )->add_options($featuredProducts),
+			Field::make( 'complex', 'interested_becoming_dealer', __( 'Interested in Becoming a Dealer Section' ))
+				->add_fields( array(
+					Field::make( 'image', 'image', __( 'Background Image' ) ),
+					Field::make( 'text', 'title', __( 'Title' )),
+					Field::make( 'text', 'sub_title', __( 'Subtitle' )),
+					Field::make( 'text', 'button_text', __( 'Button Text' ) )->set_default_value('Learn More'),
+					Field::make( 'text', 'button_link', __( 'Button Link' ) )			    
+				))->set_min(1)->set_max(1)->set_duplicate_groups_allowed(false),
 			Field::make( 'complex', 'who_we_are', __( 'Who We Are Section' ) )
 			    ->add_fields( array(
 					Field::make( 'image', 'image', __( 'Image' ) ),
