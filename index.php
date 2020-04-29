@@ -29,7 +29,6 @@ if($whoWeAre) $context['who_we_are'] = $whoWeAre[0];
 
 $interestedDealer = Data::getThemeOption('interested_becoming_dealer');
 if($interestedDealer) $context['interested_becoming_dealer'] = $interestedDealer[0];
-// dd($interestedDealer);
 
 $categoryCallout = Data::getThemeOption('category_callout');
 $categoryCalloutData = [
