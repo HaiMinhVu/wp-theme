@@ -112,18 +112,22 @@
                         </div>
                     </section>
                 </div>
-                <div class="ng-tns-c4-2" _nghost-c7="" style="display: none">
-                    <section _ngcontent-c7="" class="section section-apply bg-dark">
-                        <div _ngcontent-c7="" class="container">
-                            <div _ngcontent-c7="" class="row m-0">
-                                <div _ngcontent-c7="" class="col-12 text-center">
-                                    <h1 _ngcontent-c7="" class="section-title text-center mb-5 text-white">Interested in becoming a pulsar dealer?</h1>
-                                    <a href="/become-a-pulsar-dealer" class="btn btn-danger">Apply Now</a>
+                {% if interested_becoming_dealer is defined %}
+                <div class="ng-tns-c4-2">
+                    <section class="section bg-dark" style="background-image:url({{ interested_becoming_dealer.image | img_src }})">
+                        <div class="container">
+                            <div class="row m-0">
+                                <div class="col-12 text-center">
+                                    <h1 class="section-title text-center mb-5 text-white">{{ interested_becoming_dealer.title }}</h1>
+                                    <a href="{{ interested_becoming_dealer.button_link }}" class="btn btn-primary">
+                                        {{ interested_becoming_dealer.button_text }} <i class="fa fa-angle-right ml-2"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </section>
                 </div>
+                {% endif %}
                 {% if who_we_are is defined %}
                  <section class="section section-whoWeAre">
                     <div class="container">
@@ -141,7 +145,7 @@
                                 {{ who_we_are.text | wpautop }}
 
                                 {% if who_we_are.button_link is defined %}
-                                <a href="{{ who_we_are.button_link }}" class="btn btn-primary rounded">
+                                <a href="{{ who_we_are.button_link }}" class="btn btn-primary">
                                     {{ who_we_are.button_text }} <i class="fa fa-angle-right ml-2"></i>
                                 </a>
                                 {% endif %}
@@ -163,7 +167,7 @@
                                         {% endif %}
 
                                         {% if callout.button_link is defined %}
-                                        <a href="{{ callout.button_link }}" class="btn btn-primary rounded" tabindex="0">
+                                        <a href="{{ callout.button_link }}" class="btn btn-primary" tabindex="0">
                                             {{ callout.button_text }} <i class="fa fa-angle-right ml-2"></i>
                                         </a>
                                         {% endif %}

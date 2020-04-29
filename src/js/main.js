@@ -10,9 +10,11 @@ Vue.component('search', Search);
 
 window.$ = window.JQuery = $;
 
-$( document ).ready( function( $ ) {
-
+window.initSearch = () => {
     new Vue({ el: '#search' });
+}
+
+$( document ).ready( function( $ ) {
 
     $('.owl-carousel-default').on('init', function(){
         setCardHeight();

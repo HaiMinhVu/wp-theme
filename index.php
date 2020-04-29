@@ -27,6 +27,10 @@ $context['blog_posts'] = Timber::get_posts(['posts_per_page' => 4, 'page' => 1, 
 $whoWeAre = Data::getThemeOption('who_we_are');
 if($whoWeAre) $context['who_we_are'] = $whoWeAre[0];
 
+$interestedDealer = Data::getThemeOption('interested_becoming_dealer');
+if($interestedDealer) $context['interested_becoming_dealer'] = $interestedDealer[0];
+// dd($interestedDealer);
+
 $categoryCallout = Data::getThemeOption('category_callout');
 $categoryCalloutData = [
 	$categoryCallout[0]->left[0],

@@ -43,7 +43,7 @@
 	import { filter, max, min, range, slice, sortBy } from 'lodash';
 
 	const perPage = 12;
-	const paginationRangeCount = 5;
+	const paginationRangeCount = 5
 	const meanPaginationRange = (1 + paginationRangeCount) / 2;
 
 	export default {

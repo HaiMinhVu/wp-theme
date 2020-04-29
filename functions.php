@@ -113,8 +113,12 @@ class StarterSite extends TimberSite {
         $context['slmk_brand_color'] = CarbonFields::get('slmk_brand_color');
         $context['slmk_brand_color_rgba'] = carbon_hex_to_rgba($context['slmk_brand_color']);
         $context['slmk_brand_color_hsl'] = rgbToHsl($context['slmk_brand_color_rgba']['red'], $context['slmk_brand_color_rgba']['green'], $context['slmk_brand_color_rgba']['blue']);
+        $context['slmk_site_brand'] = ucwords(CarbonFields::get('slmk_site_brand'));
         foreach(['slmk_site_favicon', 'slmk_site_logo'] as $imageSetting) {
 	        $context[$imageSetting] = (new Timber\Image(Data::getSetting($imageSetting)))->src;
+	    }
+	    foreach(['facebook', 'youtube','twitter','instagram'] as $socialLink) {
+	    	$context["{$socialLink}_link"] = CarbonFields::get($socialLink);
 	    }
 		return $context;
 	}

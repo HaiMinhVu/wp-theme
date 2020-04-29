@@ -13,6 +13,9 @@
 		body header #overlay-menu {
 			background-color: {{ brandColor2 }};
 		}
+		#search-bar {
+			border-bottom-color: {{ brandColor2  }};
+		}
 		.header-container {
 			border-bottom-color: {{ brandColor2 }};
 		}
@@ -20,9 +23,11 @@
 		    background-color: {{ brandColor2 }};
 		    border-color: {{ brandColor2 }};
 		}
-		.btn-primary:hover {
-		    background-color: {{ brandColorHover2 }};
-		    border-color: {{ brandColorHover2 }};
+		.btn-primary:hover,
+		.btn-dark:hover,
+		.btn-dark:active {
+		    background-color: {{ brandColorHover2 }} !important;
+		    border-color: {{ brandColorHover2 }} !important;
 		}
 		.page-item.active .page-link {
 			background-color: {{ brandColorHover2 }};
