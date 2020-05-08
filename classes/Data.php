@@ -80,6 +80,26 @@ class Data {
     	return $cache->get($key);
     }
 
+    public function getFromInstance($key, $path, $isManufacturerPath = true) {
+        $cache = $this->cache;
+        $client = $this->client;
+        $url = ($isManufacturerPath) ? $this->getManufacturerEndpoint($path) : $this->getEndpoint($path);
+        $url = (self::DISABLE_REMOTE_CACHE) ? $url.'?force-update=1' : $url;
+
+        if($cache->isExpired($key) || self::DISABLE_CACHE) {
+            try {
+                $res = $client->get($url);
+                $data = $res->getBody()->getContents();
+                $cache->set($key, $data, self::TIMEOUT_SECONDS);
+            } catch(\Exception $e) {
+                print_r($e->getMessage());
+                $cache->expire($key, self::PERSIST_SECONDS);
+            }
+        }
+
+        return $cache->get($key);
+    }
+
     public static function getSetting($key) {
         return self::getCarbonField($key);
     }
@@ -120,6 +140,13 @@ class Data {
                 'slug' => sanitize_title($name->name)
             ];
         }, $names);
+    }
+
+    public static function form($formId) 
+    {
+        $instance = self::getInstance();
+        $instance->apiEndpoint = 'http://apidev/v2';
+        return $instance->getFromInstance("form_{$formId}", "form/{$formId}", false)->data;
     }
 
     public static function sliderImages()

@@ -206,6 +206,10 @@ class StarterSite extends TimberSite {
         	return cdnLink($filename, $imageWidth, $additionalOptions);
         }));
 
+        $twig->addFilter( new Timber\Twig_Filter('file_link', function($filename){
+        	return fileLink($filename);
+        }));
+
 		return $twig;
 	}
 
@@ -240,6 +244,7 @@ class StarterSite extends TimberSite {
     public function add_shortcodes() {
         add_shortcode('registration_form', [$this, 'addRegistrationFormShortcode']);
         add_shortcode('contact_form', [$this, 'addContactFormShortcode']);
+        add_shortcode('slmk_form', 'getSLMKForm');
     }
 
     public function addRegistrationFormShortcode() {
@@ -300,6 +305,15 @@ class StarterSite extends TimberSite {
 
 }
 
+function getSLMKForm($atts) {
+	$context = Timber::context();
+	$context['form'] = Data::form($atts['id']);
+	$context['brand_slug'] = CarbonFields::get('slmk_site_brand');
+	$endpoint = (CarbonFields::get('slmk_api_form_endpoint') != '') ? CarbonFields::get('slmk_api_form_endpoint') : CarbonFields::get('slmk_api_endpoint');
+	$context['slmk_api_form_endpoint'] = $endpoint;
+	return Timber::compile('partial/form-render.twig', $context);
+}
+
 function inStock($bool) {
     if($bool) {
         return '<span class="text-success">In Stock</span>';
@@ -327,6 +341,11 @@ function cdnLink($filename, $imageWidth = null, $additionalOptions = []){
     }
     $options = base64_encode(json_encode($options));
     return "https://d4ursusm8s4tk.cloudfront.net/{$options}";
+}
+
+function fileLink($filename) {
+	$url = parse_url(CarbonFields::get('slmk_api_endpoint'));
+	return "{$url['scheme']}://{$url['host']}/file/{$filename}";
 }
 
 function getTemplatePageId($templateName) {

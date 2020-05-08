@@ -138,7 +138,7 @@
                         <ul _ngcontent-c14="" class="list-group pdf-list">
                             {% for download in product.downloads %}
                             <li _ngcontent-c14="" class="list-group-item ng-star-inserted">
-                                <a target="_blank" href="{{ download.url }}">{{ download.name }}</a>
+                                <a target="_blank" href="{{ download.remote_path|file_link }}">{{ download.name }}</a>
                             </li>
                             {% endfor %}
                         </ul>

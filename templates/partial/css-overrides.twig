@@ -25,7 +25,11 @@
 		}
 		.btn-primary:hover,
 		.btn-dark:hover,
-		.btn-dark:active {
+		.btn-dark:active,
+		.btn-primary:focus, 
+		.btn-primary.focus,
+		.btn-primary:disabled, 
+		.btn-primary.disabled  {
 		    background-color: {{ brandColorHover2 }} !important;
 		    border-color: {{ brandColorHover2 }} !important;
 		}
@@ -41,6 +45,9 @@
 		}
 		.lds-ring div {
 			border-color: {{ brandColor2 }} transparent transparent transparent;
+		}
+		header .navbar .navbar-nav .nav-item .nav-link:focus {
+			background-color: {{ brandColor2 }}; 
 		}
 	</style>
 </style>

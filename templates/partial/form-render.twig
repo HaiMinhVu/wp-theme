@@ -1,0 +1,60 @@
+<form id="slmk_form_{{ form.id }}">
+
+	{% for field in form.fields %}
+
+		{% for type in ['text', 'textarea', 'select'] %}
+
+			{% if field.type == type %}
+
+				{% include 'partial/form/' ~ type ~ '.twig' %}
+
+			{% endif %}
+
+		{% endfor %}
+
+	{% endfor %}
+
+	<button class="btn btn-primary">
+  		<span class="spinner-border spinner-border-sm" role="status" style="display:none" aria-hidden="true"></span>
+		Submit
+	</button>
+
+</form>
+
+<section id="slmk_form_submitted" style="display:none">
+	<div style="min-height:40vh;display:flex;justify-content:center;align-items:center">
+		<h3>Your information has been submitted, thank you</h3>
+	</div>
+</section>
+
+<script>
+	$(document).ready(function(){
+		var formSelector = "#slmk_form_{{ form.id }}"; 
+		var $form = $(formSelector);
+		$form.submit(function(e){
+			e.preventDefault();
+			var $button = $(this).find('button');
+			$button.attr('disabled', true);
+			$button.find('span').show();
+			const data = {};
+			data.form_id = {{ form.id }};
+			data.brand = "{{ brand_slug }}";
+			data.fields = [];
+			['input', 'textarea', 'select'].map(type => {
+				$(this).find(type).each((idx, inputType) => {
+					var dataValue = { id: inputType.getAttribute('name') };
+					var valueKey = (type == 'select') ? 'selected_option_id' : 'value';
+					dataValue[valueKey] = inputType.value;
+					data.fields.push(dataValue);
+				});
+			});
+			window.submitSLMKForm("{{ slmk_api_form_endpoint ~ '/form-submission' }}", JSON.stringify(data)).done(function(){
+				$button.removeAttr('disabled');
+				$button.find('span').hide();
+				$form.hide();
+				$('#slmk_form_submitted').fadeIn();
+				$("html, body").animate({ scrollTop: "0px" });
+			});
+		});
+	});
+</script>

@@ -31,8 +31,8 @@ class CarbonFields {
 		    ->add_tab(__( 'Homepage' ), $this->homepageFields())
 		    ->add_tab(__( 'Menu' ), $this->menuFields())
 		    ->add_tab(__('Footer'), $this->footerFields())
-		    ->add_tab(__('Social'), $this->socialFields());
-
+		    ->add_tab(__('Social'), $this->socialFields())
+		    ->add_tab(__('Developer'), $this->developerFields());
 	}
 
 	private function globalSettingsFields() : array
@@ -45,9 +45,7 @@ class CarbonFields {
 			Field::make( 'select', 'slmk_site_brand', 'Site Brand' )->add_options($brands),
 			Field::make( 'color', 'slmk_brand_color', __( 'Site Primary Brand Color' ) )->set_alpha_enabled( true ),
 			Field::make( 'image', 'slmk_site_favicon', __( 'Site Favicon' ) ),
-			Field::make( 'image', 'slmk_site_logo', __( 'Site Logo' ) ),
-			Field::make( 'text', 'slmk_api_endpoint', 'Sellmark API Endpoint' ),
-			Field::make( 'textarea', 'slmk_api_key', 'Sellmark API Key' )->set_rows(2)
+			Field::make( 'image', 'slmk_site_logo', __( 'Site Logo' ) )
 		];
 	}
 
@@ -136,6 +134,15 @@ class CarbonFields {
 			function($socialTag){
 				return Field::make('text', $socialTag, __( ucfirst($socialTag).' Link' ));
 			}, ['facebook', 'youtube','twitter','instagram']);
+	}
+
+	private function developerFields()
+	{
+		return [
+			Field::make( 'text', 'slmk_api_endpoint', 'Sellmark API Endpoint' ),
+			Field::make( 'text', 'slmk_api_form_endpoint', 'Sellmark API Form Endpoint' )->set_help_text('If form API endpoint/version differs, specify here, defaults to Sellmark API Enpoint declared above'),
+			Field::make( 'textarea', 'slmk_api_key', 'Sellmark API Key' )->set_rows(2)
+		];
 	}
 
 	public function crb_load() 
