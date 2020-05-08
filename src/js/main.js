@@ -14,6 +14,22 @@ window.initSearch = () => {
     new Vue({ el: '#search' });
 }
 
+window.submitSLMKForm = (endpoint, serializedData) => {
+    return $.ajax({
+        url: endpoint,
+        method: 'POST',
+        data: serializedData,
+        crossDomain: true,
+        contentType:"application/json; charset=utf-8",
+        dataType:"json"
+    });
+    // .done(res => {
+    //     console.log(res);
+    // }).fail((e1,e2,e3) => {
+    //     console.log([e1,e2,e3]);
+    // })
+}
+
 $( document ).ready( function( $ ) {
 
     $('.owl-carousel-default').on('init', function(){
