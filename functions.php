@@ -307,7 +307,12 @@ class StarterSite extends TimberSite {
 
 function getSLMKForm($atts) {
 	$context = Timber::context();
-	$context['form'] = Data::form($atts['id']);
+	$form = Data::form($atts['id']);
+	$context['form'] = $form;
+	$requiredArray = array_filter($form->fields, function($field){ 
+		return $field->required;
+	});
+	$context['has_required_fields'] = (count($requiredArray) > 0);
 	$context['brand_slug'] = CarbonFields::get('slmk_site_brand');
 	$endpoint = (CarbonFields::get('slmk_api_form_endpoint') != '') ? CarbonFields::get('slmk_api_form_endpoint') : CarbonFields::get('slmk_api_endpoint');
 	$context['slmk_api_form_endpoint'] = $endpoint;

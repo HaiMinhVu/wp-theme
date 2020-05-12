@@ -1,0 +1,28 @@
+{% block html_head_container %}
+
+{% include 'html-header.twig' %}
+{% block head %}
+{% endblock %}
+</head>
+{% endblock %}
+<body class="{{body_class}}{{ (breadcrumbs is defined) ? ' has-breadcrumbs' : '' }}" data-template="landing-page.twig">
+	<section role="main" class="content-wrapper">
+			{{post.content}}
+	</section>
+
+	{% block footer %}
+
+	{{ function('wp_footer') }}
+	<div id="alert-bottom" class="alert alert-success alert-dismissible fade show" role="alert">
+		<strong id="alert-bottom-text1" class="alert-bottom-text"></strong> <span id="alert-bottom-text2" class="alert-bottom-text"></span>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}
+</body>
+</html>
