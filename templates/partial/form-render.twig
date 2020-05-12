@@ -1,3 +1,4 @@
+<ul id="slmk_form_errors" style="display:none"></ul>
 <form id="slmk_form_{{ form.id }}">
 
 	{% for field in form.fields %}
@@ -13,6 +14,10 @@
 		{% endfor %}
 
 	{% endfor %}
+
+	{% if has_required_fields %}
+		<p>* Required</p>
+	{% endif %}
 
 	<button class="btn btn-primary">
   		<span class="spinner-border spinner-border-sm" role="status" style="display:none" aria-hidden="true"></span>
@@ -33,9 +38,7 @@
 		var $form = $(formSelector);
 		$form.submit(function(e){
 			e.preventDefault();
-			var $button = $(this).find('button');
-			$button.attr('disabled', true);
-			$button.find('span').show();
+			hideErrors();
 			const data = {};
 			data.form_id = {{ form.id }};
 			data.brand = "{{ brand_slug }}";
@@ -49,12 +52,52 @@
 				});
 			});
 			window.submitSLMKForm("{{ slmk_api_form_endpoint ~ '/form-submission' }}", JSON.stringify(data)).done(function(){
-				$button.removeAttr('disabled');
-				$button.find('span').hide();
 				$form.hide();
 				$('#slmk_form_submitted').fadeIn();
-				$("html, body").animate({ scrollTop: "0px" });
+				scrollTop();
+			}).fail((jqXHR, textStatus, errorThrown) => {
+				try {
+					const errorsArray = Object.values(jqXHR.responseJSON.errors);
+					const errors = [].concat.apply([], errorsArray);
+					showErrors(errors);
+					scrollTop();
+				} catch(e) {
+					console.error(e);
+				}
 			});
 		});
+
+		const appendError = (errorHtml) => {
+			$errors = $('#slmk_form_errors').append(errorHtml);
+		}
+
+		const showErrors = (errorsArray) => {
+			errorsArray.map(error => {
+				const errorHtml = `<li class="text-danger">${error}</li>`;
+				appendError(errorHtml);
+			});
+			$('#slmk_form_errors').show();
+		}
+
+		const hideErrors = () => {
+			$('#slmk_form_errors').empty();
+			$('#slmk_form_errors').hide();
+		}
+
+		const scrollTop = () => {
+			$("html, body").animate({ scrollTop: "0px" });
+		}
+
+		const setLoading = () => {
+			var $button = $form.find('button');
+			$button.attr('disabled', true);
+			$button.find('span').show();
+		}
+
+		const unsetLoading = () => {
+			var $button = $form.find('button');
+			$button.removeAttr('disabled');
+			$button.find('span').hide();
+		}
 	});
 </script>

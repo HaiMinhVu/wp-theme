@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development",
     "prod": "webpack --mode production",
-    "watch": "webpack --watch --mode development",
+    "watch": "webpack --watch -d --mode development",
     "watch-poll": "webpack --watch-poll --mode development"
   },
   "author": "Sellmark",
