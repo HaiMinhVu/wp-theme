@@ -1,0 +1,9 @@
+<div class="form-group">
+	<label>{{ (field.required) ? '* ' : '' }}{{ field.description }}</label>
+	{% for option in field.options %}
+		<div class="form-check">
+		  <input class="form-check-input" type="radio" name="{{ field.id }}" value="{{ option.value }}"{{ field.required ? ' required' : '' }}>
+		  <label class="form-check-label">{{ option.name }}</label>
+		</div>
+	{% endfor %}
+</div>

@@ -3,7 +3,7 @@
 
 	{% for field in form.fields %}
 
-		{% for type in ['text', 'textarea', 'select'] %}
+		{% for type in ['text', 'textarea', 'select', 'radio'] %}
 
 			{% if field.type == type %}
 
@@ -42,20 +42,30 @@
 			const data = {};
 			data.form_id = {{ form.id }};
 			data.brand = "{{ brand_slug }}";
-			data.fields = [];
-			['input', 'textarea', 'select'].map(type => {
-				$(this).find(type).each((idx, inputType) => {
-					var dataValue = { id: inputType.getAttribute('name') };
-					var valueKey = (type == 'select') ? 'selected_option_id' : 'value';
-					dataValue[valueKey] = inputType.value;
-					data.fields.push(dataValue);
-				});
+			// data.fields = [];
+			// ['input', 'textarea', 'select'].map(type => {
+			// 	$(this).find(type).each((idx, inputType) => {
+			// 		var dataValue = { id: inputType.getAttribute('name') };
+			// 		var valueKey = (type == 'select') ? 'selected_option_id' : 'value';
+			// 		inputType.type == 
+			// 		dataValue[valueKey] = inputType.value;
+			// 		data.fields.push(dataValue);
+			// 	});
+			// });
+			const formData = $("#slmk_form_{{ form.id }}").serializeArray();
+			data.fields = formData.map(item => {
+				return {
+					id: item.name,
+					value: item.value
+				}
 			});
+			
 			window.submitSLMKForm("{{ slmk_api_form_endpoint ~ '/form-submission' }}", JSON.stringify(data)).done(function(){
 				$form.hide();
 				$('#slmk_form_submitted').fadeIn();
 				scrollTop();
 			}).fail((jqXHR, textStatus, errorThrown) => {
+				console.log(jqXHR)
 				try {
 					const errorsArray = Object.values(jqXHR.responseJSON.errors);
 					const errors = [].concat.apply([], errorsArray);

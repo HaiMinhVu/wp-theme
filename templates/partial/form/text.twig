@@ -1,4 +1,4 @@
 <div class="form-group">
 	<label for="text_{{ field.name }}">{{ (field.required) ? '* ' : '' }}{{ field.description }}</label>
-	<input type="text" name="{{ field.id }}" class="form-control" id="text_{{ field.name }}" {{ field.required ? ' ' : '' }}/>
+	<input type="text" name="{{ field.id }}" class="form-control" id="text_{{ field.name }}" {{ field.required ? 'required ' : '' }}/>
 </div> 
