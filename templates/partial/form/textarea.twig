@@ -1,4 +1,4 @@
 <div class="form-group">
-	<label for="textarea_{{ field.name }}">{{ field.description }}</label>
+	<label for="textarea_{{ field.name }}">{{ (field.required) ? '* ' : '' }}{{ field.description }}</label>
 	<textarea class="form-control" name="{{ field.id }}" id="textarea_{{ field.name }}" rows="3"{{ field.required ? ' required' : '' }}></textarea>
 </div>

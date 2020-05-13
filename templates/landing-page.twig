@@ -1,10 +1,7 @@
-{% block html_head_container %}
 
 {% include 'html-header.twig' %}
-{% block head %}
-{% endblock %}
+
 </head>
-{% endblock %}
 <body class="{{body_class}}{{ (breadcrumbs is defined) ? ' has-breadcrumbs' : '' }}" data-template="landing-page.twig">
 	<section role="main" class="content-wrapper">
 			{{post.content}}
