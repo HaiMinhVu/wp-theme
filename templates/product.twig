@@ -16,7 +16,7 @@
                         <h4 _ngcontent-c14="" class="product-title mobile">{{ product.name }}</h4>
                         <div _ngcontent-c14="" class="thumbnail-container col-md-auto order-2 order-md-1">
                             <ul _ngcontent-c14="" class="thumbnail-list ng-star-inserted{{ product.images|length > 60  ? ' more-images' : '' }}">
-                                {% for image in product.images|slice(0,6) %}
+                                {% for image in product.images %}
                                 <li _ngcontent-c14="" class="ng-star-inserted img-thumbnail-insert" data-img-src="{{ image.remote_path|cdn_link(1000) }}">
                                     <div>
                                         <img _ngcontent-c14="" class="img-fluid" src="{{ image.remote_path|cdn_link(100) }}" />

@@ -49,6 +49,15 @@
 		header .navbar .navbar-nav .nav-item .nav-link:focus {
 			background-color: {{ brandColor2 }}; 
 		}
+		::-moz-selection { /* Code for Firefox */
+			color: #ffffff;
+		    background: {{ brandColor2 }};
+		}
+
+		::selection {
+			color: #ffffff;
+		    background: {{ brandColor2 }};
+		}
 	</style>
 </style>
 {% endif %}

@@ -37,6 +37,7 @@ header {
   }
 
   .navbar {
+    flex-wrap: unset;
     padding: 0 1rem;
     .navbar-toggler {
         display: none !important;
@@ -78,6 +79,7 @@ header {
     }
 
     .navbar-nav {
+      justify-content: flex-end;
       width: 100%;
       li {
           &:first-child {
@@ -486,8 +488,9 @@ ul.dropdown-menu {
                 }
             }
             .navbar-nav {
-                justify-content: space-between;
+                justify-content: flex-end;
                 flex-direction: row;
+                width: 100%;
                 li {
                     display:none;
                     &:first-child,
