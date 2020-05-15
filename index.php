@@ -13,7 +13,7 @@
  * @since   Timber 0.1
  */
 
-use Pulsar\Data;
+use SellmarkTheme\Data;
 
 $featuredProducts = Data::getFeaturedProducts(143);
 $sliderImages = Data::sliderImages();

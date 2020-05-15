@@ -44,7 +44,7 @@
   "autoload": {
       "psr-4": {
           "Sellmark\\": "vendor/sellmark/utilities",
-          "Pulsar\\": "classes"
+          "SellmarkTheme\\": "classes"
       }
   }
 

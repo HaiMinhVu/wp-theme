@@ -8,7 +8,7 @@
  * @since    Timber 0.1
  */
 
-use Pulsar\Data;
+use SellmarkTheme\Data;
 
 $categoryId = get_query_var('category');
 

@@ -34,18 +34,20 @@ body {
   font-size: 16px;
   color: #535456;
   line-height: 28px;
-  &.logged-in {
+  &:not(.tve_editor_page) {
+    &.logged-in {
       > header {
           margin-top: 30px;
           @media screen and (max-width: 762px) {
             margin-top: 46px;
           }
       }
-    #wpadminbar {
-      position: fixed;
-      top: 0;
-    }  
+    }
   }
+  #wpadminbar {
+    position: fixed;
+    top: 0;
+  }  
 }
 
 .main {

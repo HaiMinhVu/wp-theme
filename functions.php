@@ -8,8 +8,8 @@
  * @since   Timber 0.1
  */
 
- use Pulsar\Data;
- use Pulsar\CarbonFields;
+ use SellmarkTheme\Data;
+ use SellmarkTheme\CarbonFields;
  use Timber\Site as TimberSite;
 
 session_start();
@@ -21,13 +21,6 @@ function get_template_file() {
 function is_template_file($templateString) : bool {
 	return $templateString == get_template_file();
 }
-
- // use Twig\Extra\Intl\IntlExtension;
-
- const SITE_PREFIX = 'pulsar';
-
-
-
 
 /**
  * If you are installing Timber as a Composer dependency in your theme, you'll need this block
