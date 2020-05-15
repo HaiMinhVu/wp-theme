@@ -101,6 +101,11 @@ $( document ).ready( function( $ ) {
         }
     }
 
+       $('.slic').click(function(){
+        alert('test');
+         
+        });
+
     if($('body').hasClass('product-page')) {
         $('#tab-links .nav-link').click(function(e){
             $('#tab-links .nav-link').removeClass('active');
@@ -109,23 +114,25 @@ $( document ).ready( function( $ ) {
             $($(this).data('content')).fadeIn();
         });
 
-        $('.img-thumbnail-insert').click(function(){
-            const $enlargedImg = $('#enlarged-image');
-            const $zoomContainer = $('#zoom-container');
-            const $loadingContainer = $('#enlarged-image-loading');
+        function loadThumbnailClick() {
+            $('.img-thumbnail-insert').click(function(){
+                const $enlargedImg = $('#enlarged-image');
+                const $zoomContainer = $('#zoom-container');
+                const $loadingContainer = $('#enlarged-image-loading');
 
-            $zoomContainer.hide();
-            $loadingContainer.show();
+                $zoomContainer.hide();
+                $loadingContainer.show();
 
-            $enlargedImg.attr('src', $(this).data('img-src'));
-            $enlargedImg[0].onload = function(e) {
-                loadZoom();
-                $loadingContainer.hide();
-                $zoomContainer.fadeIn(200);
-            }
-        });
-
+                $enlargedImg.attr('src', $(this).data('img-src'));
+                $enlargedImg[0].onload = function(e) {
+                    loadZoom();
+                    $loadingContainer.hide();
+                    $zoomContainer.fadeIn(200);
+                }
+            });
+        }
         loadZoom();
+        loadThumbnailClick();
 
         function loadZoom() {
             if(window.innerWidth >= 768) {
@@ -216,6 +223,49 @@ $( document ).ready( function( $ ) {
                 }
             ]
         });
+
+        const responsiveSettings = {
+            vertical: false,
+            prevArrow: '<span class="fa fa-caret-left icon-control"></span>',
+            nextArrow: '<span class="fa fa-caret-right icon-control"></span>'
+        };
+
+        const $thumbnailList = $('.thumbnail-list');
+
+        $thumbnailList.on('init', function(event, slick, direction){
+            loadThumbnailClick();
+        });
+
+        $thumbnailList.slick({
+            vertical:true,
+            slidesToShow: 5,
+            arrows: true,
+            prevArrow: '<span class="fa fa-caret-up icon-control"></span>',
+            nextArrow: '<span class="fa fa-caret-down icon-control"></span>',
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 4,
+                        ...responsiveSettings
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 4,
+                        ...responsiveSettings
+                    }
+                },
+                {
+                    breakpoint: 479,
+                    settings: {
+                        slidesToShow: 3,
+                        ...responsiveSettings
+                    }
+                }
+            ]
+        });    
 
         $('#alert-bottom .close').click(function(){
             closeAlertBottom();

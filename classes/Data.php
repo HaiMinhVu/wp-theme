@@ -1,6 +1,6 @@
 <?php
 
-namespace Pulsar;
+namespace SellmarkTheme;
 
 include_once( ABSPATH . 'wp-admin/includes/image.php' );
 
@@ -59,32 +59,17 @@ class Data {
         return self::$instance;
     }
 
-    public static function get($key, $path, $isManufacturerPath = true) {
+    public static function get($cacheKey, $path, $isManufacturerPath = true) {
         $instance = self::getInstance();
-        $cache = $instance->cache;
-        $client = $instance->client;
-        $url = ($isManufacturerPath) ? $instance->getManufacturerEndpoint($path) : $instance->getEndpoint($path);
-        $url = (self::DISABLE_REMOTE_CACHE) ? $url.'?force-update=1' : $url;
-
-    	if($cache->isExpired($key) || self::DISABLE_CACHE) {
-    		try {
-    			$res = $client->get($url);
-    			$data = $res->getBody()->getContents();
-    			$cache->set($key, $data, self::TIMEOUT_SECONDS);
-    		} catch(\Exception $e) {
-                print_r($e->getMessage());
-    			$cache->expire($key, self::PERSIST_SECONDS);
-    		}
-    	}
-
-    	return $cache->get($key);
+        return $instance->_get($cacheKey, $path, $isManufacturerPath);
     }
 
-    public function getFromInstance($key, $path, $isManufacturerPath = true) {
+    public function _get($cacheKey, $path, $isManufacturerPath = true) {
         $cache = $this->cache;
         $client = $this->client;
         $url = ($isManufacturerPath) ? $this->getManufacturerEndpoint($path) : $this->getEndpoint($path);
         $url = (self::DISABLE_REMOTE_CACHE) ? $url.'?force-update=1' : $url;
+        $key = "{$this->manufacturer}_{$cacheKey}";
 
         if($cache->isExpired($key) || self::DISABLE_CACHE) {
             try {
@@ -146,7 +131,7 @@ class Data {
     {
         $instance = self::getInstance();
         $instance->apiEndpoint = CarbonFields::get('slmk_api_form_endpoint');
-        return $instance->getFromInstance("form_{$formId}", "form/{$formId}", false)->data;
+        return $instance->_get("form_{$formId}", "form/{$formId}", false)->data;
     }
 
     public static function sliderImages()
@@ -332,42 +317,6 @@ class Data {
         }
 
         return (array_values($filtered)[0])['id'];
-    }
-
-    private static function downloadProductImage($url)
-    {
-        $parsed = parse_url($url);
-        $filename = basename($parsed['path']);
-        $uploaddir = wp_upload_dir();
-        $uploadfile = $uploaddir['path'] . '/' . $filename;
-
-        $contents= file_get_contents($url);
-        $savefile = fopen($uploadfile, 'w');
-        fwrite($savefile, $contents);
-        fclose($savefile);
-
-        $wp_filetype = wp_check_filetype(basename($filename), null );
-
-        $attachment = array(
-            'post_mime_type' => $wp_filetype['type'],
-            'post_title' => $filename,
-            'post_content' => '',
-            'post_status' => 'inherit'
-        );
-
-        $attach_id = wp_insert_attachment( $attachment, $uploadfile );
-
-        $imagenew = get_post( $attach_id );
-        $fullsizepath = get_attached_file( $imagenew->ID );
-        $attach_data = wp_generate_attachment_metadata( $attach_id, $fullsizepath );
-        wp_update_attachment_metadata( $attach_id, $attach_data );
-    }
-
-    public static function downloadProductImages($product)
-    {
-        foreach($product->images as $image) {
-            self::downloadProductImage("http://pulsarnv-ds.com/pulsarnv2020/assets/images/img_main/$image->image_name");
-        }
     }
 
 }

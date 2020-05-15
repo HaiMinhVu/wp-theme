@@ -8,7 +8,7 @@
  * @since    Timber 0.1
  */
 
-use Pulsar\Data;
+use SellmarkTheme\Data;
 
 $context = Timber::context();
 $productSlug = get_query_var('product');

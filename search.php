@@ -9,14 +9,7 @@
  * @since   Timber 0.1
  */
 
-use Pulsar\Data;
-
-// $searchQuery = get_query_var('s');
-
-// $context = Timber::context();
-// $context['products'] = Data::getProductsByCategoryId($categoryId);
-
-// Timber::render( array( 'category.twig' ), $context );
+use SellmarkTheme\Data;
 
 $templates = array( 'search.twig', 'archive.twig', 'index.twig' );
 

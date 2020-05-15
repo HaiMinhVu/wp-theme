@@ -257,6 +257,10 @@ li.ng-star-inserted.img-thumbnail-insert * {
   }
 }
 
+.img-thumbnail-insert {
+  
+}
+
 .product-list-row {
   // display: -ms-grid;
   // display: grid;
@@ -343,19 +347,35 @@ li.ng-star-inserted.img-thumbnail-insert * {
   }
 }
 
+.slick-arrow {
+  background-color: #ccc;
+}
+
 .section-product {
   .thumbnail-container {
     display: flex;
     justify-content: space-between;
 
+    .icon-control {
+      width: 100%;
+      text-align: center;
+      color: white;
+      border-radius: 3px;
+      cursor: pointer;
+      padding: 3px;
+    }
+
     .thumbnail-list {
       list-style: none;
       padding: 0;
+      // display: flex;
+      align-items: center;
 
-      li {
+
+      .img-thumbnail-insert {
         height: 80px;
-        width: 80px;
-        margin-bottom: 10px;
+        // width: 80px !important;
+        margin: 6.5px 0;
         border: 1px solid #ddd;
         padding: 2px;
         border-radius: .25rem;
@@ -368,10 +388,23 @@ li.ng-star-inserted.img-thumbnail-insert * {
         &.active, &:hover {
           border-color: #006fba;
         }
+        > div {
+          display: flex;
+          height: 100%;
+        }
+        img {
+          max-height: 75px;
+          width: 100%;
+          object-fit: contain;
+        }
       }
 
       &:last-of-type li {
         margin-left: 10px;
+      }
+      @media screen and (min-width: 768px) {
+        // width: 92px;
+        width: 80px;
       }
     }
   }
@@ -411,6 +444,14 @@ li.ng-star-inserted.img-thumbnail-insert * {
       &:hover .ngxImageZoomFullContainer {
         box-shadow: 0 1px #fff inset, 0 1px 3px rgba(34, 25, 25, 0.4);
         background-color: #fff;
+      }
+    }
+    @media screen and (max-width: 768px) {
+      .ngxImageZoomContainer {
+        height: 100%;
+        img.ngxImageZoomThumbnail {
+          height: 100%;
+        }
       }
     }
   }
@@ -532,7 +573,6 @@ li.ng-star-inserted.img-thumbnail-insert * {
             overflow: hidden;
             min-height: 30vh !important;
             max-height: 30vh !important;
-            // .ngxImageZoomContainer img.ngxImageZoomThumbnail
         }
         .product-title {
             display: none;
@@ -542,12 +582,29 @@ li.ng-star-inserted.img-thumbnail-insert * {
             }
         }
         .thumbnail-container {
+          max-height: 90px;
+            .icon-control {
+              width: auto;
+              height: 100%;
+              display: flex;
+              padding: 5px;
+              font-size: 40px;
+              align-items: center;
+            }
             .thumbnail-list {
                 padding-top: 10px !important;
                 display: flex;
-                li {
+                max-width: 100%;
+                .img-thumbnail-insert {
                     width: 79px !important;
-                    height: 79px !important;
+                    height: 80px !important;
+                    margin: 0;
+                }
+                .slick-slide {
+                  > div {
+                    display: flex;
+                    justify-content: center;
+                  }
                 }
             }
         }

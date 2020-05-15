@@ -1,6 +1,6 @@
 <?php 
 
-namespace Pulsar;
+namespace SellmarkTheme;
 
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
