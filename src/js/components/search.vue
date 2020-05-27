@@ -119,8 +119,8 @@
             paginationRange() {
             	let start = (this.page < meanPaginationRange) ? 1 : this.page - 2;
             	if(start > (this.totalPages - paginationRangeCount)+1) start = this.totalPages - (paginationRangeCount-1);
-            	// start = ((start+paginationRangeCount) >= this.totalPages) ? start-paginationRangeCount : start;
-            	return range(start, (start+paginationRangeCount)); 
+            	const ranged = range(start, (start+paginationRangeCount)); 
+            	return ranged.filter(r => r > 0);
             },
             showPagination() {
             	return this.filteredProducts.length > perPage;
