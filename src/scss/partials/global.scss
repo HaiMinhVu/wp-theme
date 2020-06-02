@@ -252,7 +252,8 @@ body {
   border-bottom: 3px solid #006fba; 
 }
 
-.page {
+.page,
+.single {
   #content {
     padding-top: 58px;
     @media screen and (min-width: 800px) {
