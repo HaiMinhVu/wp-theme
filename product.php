@@ -34,6 +34,6 @@ adjust_og_filter('title', $product->name);
 adjust_og_filter('type', 'product');
 adjust_og_filter('description', 'product');
 add_og_meta('image', cdnLink($product->remote_image_path));
-add_og_meta('description', $product->description);
+// add_og_meta('description', $product->description);
 
 Timber::render( array( 'product.twig' ), $context );
