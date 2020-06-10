@@ -78,7 +78,7 @@ class StarterSite extends TimberSite {
 		// add_action( 'init', array( $this, 'register_taxonomies' ) );
 		add_action( 'init', array($this, 'add_rewrites') );
         add_action( 'init', array($this, 'add_shortcodes') );
-        add_action( 'the_post', array($this, 'clear_breadcrumbs') );
+        add_action( 'get_header', array($this, 'clear_breadcrumbs') );
         add_action( 'rest_api_init', array($this, 'register_routes') );
         add_action( 'wp_enqueue_scripts', array($this, 'add_theme_scripts') );
 		parent::__construct();
@@ -100,32 +100,33 @@ class StarterSite extends TimberSite {
 		$context['menu']  = new Timber\Menu();
 		$context['site']  = $this;
 		$context['product_categories'] = Data::productCategories();
-        $context['nav_items'] = $this->navItems();
-        $context['footer_links'] = Data::getThemeOption('footer_links', 'theme_option');
-        $context['phone_numbers'] = Data::getThemeOption('phone_numbers', 'theme_option');
-        $context['slmk_brand_color'] = CarbonFields::get('slmk_brand_color');
-        $context['slmk_brand_color_rgba'] = carbon_hex_to_rgba($context['slmk_brand_color']);
-        $context['slmk_brand_color_hsl'] = rgbToHsl($context['slmk_brand_color_rgba']['red'], $context['slmk_brand_color_rgba']['green'], $context['slmk_brand_color_rgba']['blue']);
-        $context['slmk_site_brand'] = ucwords(CarbonFields::get('slmk_site_brand'));
-        foreach(['slmk_site_favicon', 'slmk_site_logo'] as $imageSetting) {
-	        $context[$imageSetting] = (new Timber\Image(Data::getSetting($imageSetting)))->src;
-	    }
-	    foreach(['facebook', 'youtube','twitter','instagram'] as $socialLink) {
-	    	$context["{$socialLink}_link"] = CarbonFields::get($socialLink);
-	    }
-		return $context;
+    $context['nav_items'] = $this->navItems();
+    $context['footer_links'] = Data::getThemeOption('footer_links', 'theme_option');
+    $context['phone_numbers'] = Data::getThemeOption('phone_numbers', 'theme_option');
+    $context['slmk_brand_color'] = CarbonFields::get('slmk_brand_color');
+    $context['slmk_brand_color_rgba'] = carbon_hex_to_rgba($context['slmk_brand_color']);
+    $context['slmk_brand_color_hsl'] = rgbToHsl($context['slmk_brand_color_rgba']['red'], $context['slmk_brand_color_rgba']['green'], $context['slmk_brand_color_rgba']['blue']);
+    $context['slmk_site_brand'] = ucwords(CarbonFields::get('slmk_site_brand'));
+    foreach(['slmk_site_favicon', 'slmk_site_logo'] as $imageSetting) {
+        $context[$imageSetting] = (new Timber\Image(Data::getSetting($imageSetting)))->src;
+    }
+    foreach(['facebook', 'youtube','twitter','instagram'] as $socialLink) {
+    	$context["{$socialLink}_link"] = CarbonFields::get($socialLink);
+    }
+    return $context;
 	}
 
 	public function clear_breadcrumbs() {
 		try {
-		 	if(array_key_exists('slmk_breadcrumbs', $_SESSION) && !is_template_file('product.php')) {
+      $templateFile = get_template_file();
+		 	if(array_key_exists('slmk_breadcrumbs', $_SESSION) && !in_array($templateFile, ['product'])) {
 		 		$context = Timber::context();
 		 		unset($context['breadcrumbs']);
 		 		unset($_SESSION['slmk_breadcrumbs']);
 		 	}
 		} catch(\Exception $e) {
 			// print_r($e->getMessage());
-		} 
+		}
 	}
 
 	public function theme_supports() {
@@ -302,7 +303,7 @@ function getSLMKForm($atts) {
 	$context = Timber::context();
 	$form = Data::form($atts['id']);
 	$context['form'] = $form;
-	$requiredArray = array_filter($form->fields, function($field){ 
+	$requiredArray = array_filter($form->fields, function($field){
 		return $field->required;
 	});
 	$context['has_required_fields'] = (count($requiredArray) > 0);
@@ -356,6 +357,22 @@ function getTemplatePageId($templateName) {
 	return (count($page) > 0) ? $page[0]->ID : null;
 }
 
+function adjust_og_filter($filter, $value) {
+	add_filter("wpseo_opengraph_{$filter}", function($wpseo_filter_value) use ($value) {
+		return $value;
+	}, 10, 1 );
+}
+
+function add_og_meta($type, $content = false) {
+	add_action('wp_head', function() use ($type, $content) {
+		if($type && $content):
+		?>
+		<meta property="og:<?= $type ?>" content="<?= $content; ?>"/>
+		<?php
+		endif;
+	}, 1);
+}
+
 new StarterSite();
 
 new CarbonFields;
@@ -391,20 +408,20 @@ function rgbToHsl( $r, $g, $b ) {
 
 		switch( $max ){
 	            case $r:
-	            	$h = 60 * fmod( ( ( $g - $b ) / $d ), 6 ); 
+	            	$h = 60 * fmod( ( ( $g - $b ) / $d ), 6 );
                         if ($b > $g) {
 	                    $h += 360;
 	                }
 	                break;
 
-	            case $g: 
-	            	$h = 60 * ( ( $b - $r ) / $d + 2 ); 
+	            case $g:
+	            	$h = 60 * ( ( $b - $r ) / $d + 2 );
 	            	break;
 
-	            case $b: 
-	            	$h = 60 * ( ( $r - $g ) / $d + 4 ); 
+	            case $b:
+	            	$h = 60 * ( ( $r - $g ) / $d + 4 );
 	            	break;
-	        }			        	        
+	        }
 	}
 
 	$lightness = round(round( $l, 2 )*100, 2);
@@ -415,11 +432,11 @@ function rgbToHsl( $r, $g, $b ) {
 		$hoverLightness = $lightness+20;
 	}
 
-	return [ 
-		'hue' => round( $h, 2 ), 
-		'saturation' => round(round( $s, 4 )*100, 2), 
-		'lightness' => round(round( $l, 2 )*100, 2), 
-		'cssHoverLightness' => $hoverLightness 
+	return [
+		'hue' => round( $h, 2 ),
+		'saturation' => round(round( $s, 4 )*100, 2),
+		'lightness' => round(round( $l, 2 )*100, 2),
+		'cssHoverLightness' => $hoverLightness
 	];
 
 }

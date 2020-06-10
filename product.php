@@ -28,4 +28,12 @@ if(array_key_exists('slmk_breadcrumbs', $_SESSION)) {
 
 $context['product'] = $product;
 $context['body_class'] = "{$context['body_class']} product-page";
+
+adjust_og_filter('url', get_site_url().productPage($product));
+adjust_og_filter('title', $product->name);
+adjust_og_filter('type', 'product');
+adjust_og_filter('description', 'product');
+add_og_meta('image', cdnLink($product->remote_image_path));
+add_og_meta('description', $product->description);
+
 Timber::render( array( 'product.twig' ), $context );
