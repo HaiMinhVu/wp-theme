@@ -130,8 +130,7 @@ class Data {
     public static function form($formId)
     {
         $instance = self::getInstance();
-        // $instance->apiEndpoint = CarbonFields::get('slmk_api_form_endpoint');
-        $instance->apiEndpoint = "apidev/v2";
+        $instance->apiEndpoint = CarbonFields::get('slmk_api_form_endpoint');
         return $instance->_get("form_{$formId}", "form/{$formId}", false)->data;
     }
 
