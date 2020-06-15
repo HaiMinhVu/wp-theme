@@ -3,8 +3,7 @@
 		<div class="product-list-row col-12">
 			<div class="lds-ring"></div>
 			<div class="form-group col-md-6">
-		      <label for="inputEmail4"></label>
-		      <input type="email" class="form-control" id="inputEmail4" v-model="searchQuery" placeholder="Search">
+		      <input type="text" class="form-control" v-model="searchQuery" placeholder="Search">
     		</div>
     		<section v-if="hasProducts">
 				<div class="row">
@@ -119,7 +118,7 @@
             paginationRange() {
             	let start = (this.page < meanPaginationRange) ? 1 : this.page - 2;
             	if(start > (this.totalPages - paginationRangeCount)+1) start = this.totalPages - (paginationRangeCount-1);
-            	const ranged = range(start, (start+paginationRangeCount)); 
+            	const ranged = range(start, (start+paginationRangeCount));
             	return ranged.filter(r => r > 0);
             },
             showPagination() {
@@ -138,7 +137,7 @@
         watch: {
         	searchQuery() {
         		this.page = 1;
-        	}	
+        	}
         },
 		components: {
 			ProductCard

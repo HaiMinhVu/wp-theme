@@ -3,7 +3,7 @@
 
 	{% for field in form.fields %}
 
-		{% for type in ['text', 'textarea', 'select', 'radio'] %}
+		{% for type in ['text', 'textarea', 'select', 'radio', 'file'] %}
 
 			{% if field.type == type %}
 
@@ -33,81 +33,9 @@
 </section>
 
 <script>
-	$(document).ready(function(){
-		var formSelector = "#slmk_form_{{ form.id }}"; 
-		var $form = $(formSelector);
-		$form.submit(function(e){
-			e.preventDefault();
-			hideErrors();
-			const data = {};
-			data.form_id = {{ form.id }};
-			data.brand = "{{ brand_slug }}";
-			// data.fields = [];
-			// ['input', 'textarea', 'select'].map(type => {
-			// 	$(this).find(type).each((idx, inputType) => {
-			// 		var dataValue = { id: inputType.getAttribute('name') };
-			// 		var valueKey = (type == 'select') ? 'selected_option_id' : 'value';
-			// 		inputType.type == 
-			// 		dataValue[valueKey] = inputType.value;
-			// 		data.fields.push(dataValue);
-			// 	});
-			// });
-			const formData = $("#slmk_form_{{ form.id }}").serializeArray();
-			data.fields = formData.map(item => {
-				return {
-					id: item.name,
-					value: item.value
-				}
-			});
-			
-			window.submitSLMKForm("{{ slmk_api_form_endpoint ~ '/form-submission' }}", JSON.stringify(data)).done(function(){
-				$form.hide();
-				$('#slmk_form_submitted').fadeIn();
-				scrollTop();
-			}).fail((jqXHR, textStatus, errorThrown) => {
-				console.log(jqXHR)
-				try {
-					const errorsArray = Object.values(jqXHR.responseJSON.errors);
-					const errors = [].concat.apply([], errorsArray);
-					showErrors(errors);
-					scrollTop();
-				} catch(e) {
-					console.error(e);
-				}
-			});
-		});
-
-		const appendError = (errorHtml) => {
-			$errors = $('#slmk_form_errors').append(errorHtml);
-		}
-
-		const showErrors = (errorsArray) => {
-			errorsArray.map(error => {
-				const errorHtml = `<li class="text-danger">${error}</li>`;
-				appendError(errorHtml);
-			});
-			$('#slmk_form_errors').show();
-		}
-
-		const hideErrors = () => {
-			$('#slmk_form_errors').empty();
-			$('#slmk_form_errors').hide();
-		}
-
-		const scrollTop = () => {
-			$("html, body").animate({ scrollTop: "0px" });
-		}
-
-		const setLoading = () => {
-			var $button = $form.find('button');
-			$button.attr('disabled', true);
-			$button.find('span').show();
-		}
-
-		const unsetLoading = () => {
-			var $button = $form.find('button');
-			$button.removeAttr('disabled');
-			$button.find('span').hide();
-		}
+	new SLMKForm({
+		formId: {{ form.id }},
+		brandSlug: "{{ brand_slug }}",
+		formEndpoint: "{{ slmk_api_form_endpoint }}"
 	});
 </script>

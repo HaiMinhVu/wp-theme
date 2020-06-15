@@ -3,31 +3,15 @@ import 'slick-carousel';
 import 'jquery-zoom';
 import 'slick-carousel';
 import Vue from 'vue/dist/vue.js';
-import Search from './components/search.vue'
+import Search from './components/search.vue';
+import SLMKForm from './classes/SLMKForm';
 
-// Vue = Vue;
 Vue.component('search', Search);
 
 window.$ = window.JQuery = $;
-
+window.SLMKForm = SLMKForm;
 window.initSearch = () => {
     new Vue({ el: '#search' });
-}
-
-window.submitSLMKForm = (endpoint, serializedData) => {
-    return $.ajax({
-        url: endpoint,
-        method: 'POST',
-        data: serializedData,
-        crossDomain: true,
-        contentType:"application/json; charset=utf-8",
-        dataType:"json"
-    });
-    // .done(res => {
-    //     console.log(res);
-    // }).fail((e1,e2,e3) => {
-    //     console.log([e1,e2,e3]);
-    // })
 }
 
 $( document ).ready( function( $ ) {
@@ -103,7 +87,7 @@ $( document ).ready( function( $ ) {
 
        $('.slic').click(function(){
         alert('test');
-         
+
         });
 
     if($('body').hasClass('product-page')) {
@@ -265,7 +249,7 @@ $( document ).ready( function( $ ) {
                     }
                 }
             ]
-        });    
+        });
 
         $('#alert-bottom .close').click(function(){
             closeAlertBottom();
@@ -289,19 +273,10 @@ $( document ).ready( function( $ ) {
 
     }
 
-    // $('body').click(e => {
-    //     const $target = $(e.target);
-    //     if(!$('#search-bar').hasClass('active')) {
-    //         if($target.closest('#search-bar').length == 0) {
-    //             $('#search-bar').removeClass('active');
-    //         }
-    //     }
-    // });
-
     $('.search-toggle').click(e => {
         $('#search-bar').toggleClass('active');
     });
-   
+
 
     // Temporary
     $('.dropdown-toggle').click(e => e.preventDefault());
