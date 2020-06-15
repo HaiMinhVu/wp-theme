@@ -96,7 +96,7 @@ class Data {
     private static function getCarbonField($key, $type = 'option') {
         $instance = self::getInstance();
         $cache = $instance->cache;
-        
+
         if($cache->isExpired($key) || self::DISABLE_CACHE) {
             $cache->set($key, CarbonFields::get($key, $type));
         }
@@ -127,7 +127,7 @@ class Data {
         }, $names);
     }
 
-    public static function form($formId) 
+    public static function form($formId)
     {
         $instance = self::getInstance();
         $instance->apiEndpoint = CarbonFields::get('slmk_api_form_endpoint');
@@ -161,7 +161,7 @@ class Data {
     }
 
     public static function productCategories()
-    {   
+    {
         return (self::get('products_categories', 'categories')) ? self::get('products_categories', 'categories')->data : [];
     }
 

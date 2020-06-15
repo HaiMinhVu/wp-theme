@@ -1,0 +1,80 @@
+{% set inputId = 'field_file_' ~ field.id %}
+{% set clickId = 'click_' ~ inputId %}
+{% set dropzoneId = 'click_' ~ field.id %}
+{% set imgPreviewId = 'img_preview_' ~ field.id %}
+{% set fileNameId = 'file_name_' ~ field.id %}
+
+<div class="form-group">
+    <label>{{ field.description }}</label>
+    <input style="display:none" type="file" name="{{ field.id }}" class="form-control-file" id="{{ inputId }}" onchange="fileChanged(event)">
+    <div id="{{ dropzoneId }}" class="p-4 text-center bg-light" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+        <p>Drag your file here or click below</p>
+        <button id="click_{{ inputId }}" class="btn btn-secondary btn-sm">Browse</button>
+    </div>
+    <div class="bg-light p-2" style="display:none;width:300px;margin:0 auto">
+        <button type="button" class="close" aria-label="Close" id="{{ imgPreviewId ~ '_close' }}">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <img id="{{ imgPreviewId }}" src="" alt="Image preview">
+        <p><small id="{{ fileNameId }}"></small></p>
+    </div>
+</div>
+
+<script>
+    $('#{{ clickId }}').click(function(e){
+        e.preventDefault();
+        $('#{{ inputId }}').click();
+    });
+
+    $('#{{ imgPreviewId }}_close').click(function(e){
+        e.preventDefault();
+        $('#{{ dropzoneId }}').fadeIn();
+        $('#{{ inputId }}').val(null);
+        $(this).parent().hide();
+    });
+
+    function dropHandler(e) {
+        e.preventDefault();
+        if (e.dataTransfer.files) {
+            addFiles(e.dataTransfer.files);
+        }
+    }
+
+    function dragOverHandler(e) {
+        e.preventDefault();
+    }
+
+    function fileChanged(e) {
+        addFiles(e.target.files);
+    }
+
+    function addFiles(files) {
+        $('#{{ inputId }}').prop('files', files);
+        $('#{{ fileNameId }}').text(files[0].name);
+        $('#{{ imgPreviewId }}').hide();
+        previewFile(files[0]);
+    }
+
+    function isFileImage(file) {
+        return file && file['type'].split('/')[0] === 'image';
+    }
+
+    function previewFile(file = null) {
+        var $el = $('#{{ imgPreviewId }}');
+        var reader = new FileReader;
+
+        reader.addEventListener("load", function () {
+            $el[0].src = reader.result;
+            $('#{{ dropzoneId }}').hide();
+            $el.show();
+            $el.parent().fadeIn();
+        }, false);
+
+        if (file && isFileImage(file)) {
+            reader.readAsDataURL(file);
+        } else {
+            $('#{{ dropzoneId }}').hide();
+            $el.parent().fadeIn();
+        }
+    }
+</script>
