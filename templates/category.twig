@@ -33,7 +33,7 @@
                     <li class="nav-item">
                         <a class="nav-link">
                             <figure class="ng-star-inserted">
-                                <img alt="" src="{{ category.remote_path|cdn_link }}">
+                                <img alt="" src="{{ category.remote_path|cdn_link(200) }}">
                             </figure>
                             <h5>All</h5>
                         </a>
@@ -42,7 +42,7 @@
                     <li class="nav-item ng-star-inserted{{ category.id == category_id ? 'active' : '' }}">
                         <a href="/category/{{ category.id }}" class="nav-link sub-category-link">
                             <figure class="ng-star-inserted">
-                                <img alt="" src="{{ category.image }}">
+                                <img alt="" src="{{ category.remote_path|cdn_link(200) }}">
                             </figure>
                             <h5>{{ category.label }}</h5>
                         </a>
