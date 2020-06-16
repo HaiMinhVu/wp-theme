@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace SellmarkTheme;
 
@@ -18,7 +18,7 @@ class CarbonFields {
         'slmk_site_favicon' => 548
     ];
 
-	public function __construct() 
+	public function __construct()
 	{
 		add_action('after_setup_theme', [$this, 'crb_load']);
 		add_action('carbon_fields_register_fields', [$this, 'register_fields']);
@@ -70,7 +70,7 @@ class CarbonFields {
 					Field::make( 'text', 'title', __( 'Title' )),
 					Field::make( 'text', 'sub_title', __( 'Subtitle' )),
 					Field::make( 'text', 'button_text', __( 'Button Text' ) )->set_default_value('Learn More'),
-					Field::make( 'text', 'button_link', __( 'Button Link' ) )			    
+					Field::make( 'text', 'button_link', __( 'Button Link' ) )
 				))->set_min(1)->set_max(1)->set_duplicate_groups_allowed(false),
 			Field::make( 'complex', 'who_we_are', __( 'Who We Are Section' ) )
 			    ->add_fields( array(
@@ -92,11 +92,11 @@ class CarbonFields {
 					    ))->set_min(1)->set_max(1)->set_duplicate_groups_allowed(false);
 					}, ['left', 'right'])
 				)
-					
+
 		];
 	}
 
-	private function menuFields() 
+	private function menuFields()
 	{
 		return [
 			Field::make( 'complex', 'menu_items', __( 'Menu Items' ) )
@@ -141,11 +141,12 @@ class CarbonFields {
 		return [
 			Field::make( 'text', 'slmk_api_endpoint', 'Sellmark API Endpoint' ),
 			Field::make( 'text', 'slmk_api_form_endpoint', 'Sellmark API Form Endpoint' )->set_help_text('If form API endpoint/version differs, specify here, defaults to Sellmark API Enpoint declared above'),
-			Field::make( 'textarea', 'slmk_api_key', 'Sellmark API Key' )->set_rows(2)
+			Field::make( 'textarea', 'slmk_api_key', 'Sellmark API Key' )->set_rows(2),
+			Field::make( 'textarea', 'slmk_analytics', 'Sellmark Analytics Scripts' )->set_rows(8)
 		];
 	}
 
-	public function crb_load() 
+	public function crb_load()
 	{
 	    Carbon_Fields::boot();
 	}
