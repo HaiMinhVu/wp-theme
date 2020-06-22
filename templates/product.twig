@@ -6,202 +6,208 @@
 {% endblock %}
 
 {% block content %}
-<section _ngcontent-c1="" class="main">
-<app-product-details _nghost-c14="" class="ng-star-inserted">
-    <section class="section2 section-product ng-star-inserted">
-        <div class="container">
-            <div class="row  sticky-top">
-                <div class="col-lg-6 px-4 px-lg-auto mb-4 mb-lg-0">
-                    <div class="row">
-                        <h4 class="product-title mobile">{{ product.name }}</h4>
-                        <div class="thumbnail-container col-md-auto order-2 order-md-1">
-                            <div class="thumbnail-list ng-star-inserted{{ product.images|length > 60  ? ' more-images' : '' }}">
-                                {% for image in product.images %}
-                                <div class="ng-star-inserted img-thumbnail-insert" data-img-src="{{ image.remote_path|cdn_link(1000) }}">
-                                    <div>
-                                        <img class="img-fluid" src="{{ image.remote_path|cdn_link(100) }}" />
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div id="enlarged-image-container" class="image-container col-md order-1 order-md-2">
-                            <div id="zoom-container" class="ngxImageZoomContainer">
-                                <img _ngcontent-c15="" class="ngxImageZoomThumbnail" id="enlarged-image" src="{{ product.images[0].remote_path|cdn_link(1000) }}">
-                            </div>
-                            <div id="enlarged-image-loading" class="lds-ring"><div></div><div></div><div></div><div></div></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <h4 class="product-title">{{ product.name|raw }}</h4>
-                    <p class="pro-id">Product ID: {{ product.sku }}</p>
-                    <hr>
-                    <h5 class="font-weight-bold">Features</h5>
-                    <ul class="square-style ml-2">
-                        {% for feature in product.features %}
-                        <li class="ng-star-inserted">{{ feature }}</li>
-                        {% endfor %}
-                    </ul>
-                    <ul class="features-list">
-                        <!---->
-                    </ul>
-                    <div class="price-row">
+<section class="main">
+    <div class="ng-star-inserted">
+        <section class="section2 section-product ng-star-inserted">
+            <div class="container">
+                <div class="row  sticky-top">
+                    <div class="col-lg-6 px-4 px-lg-auto mb-4 mb-lg-0">
                         <div class="row">
-                            <div class="col-md-6">
-                                <h3 class="price">
-                                    <span id="product_cost">{{ product.price|format_currency }}</span>
-                                    <span class="status">
-                                        {{ in_stock(product.in_stock) }}
-                                    </span>
-                                </h3>
-                            </div>
-                            <div class="col-md-6">
-                                {% if false %}
-                                {% include 'partial/product-share.twig' %}
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <button {{ product.in_stock ? '' : 'disabled' }} id="add-to-cart" data-name="{{ product.name }}" data-nsid="{{ product.nsid }}" class="btn btn-warning rounded mt-4 cart-action-buttons">
-                        Add To Cart <i class="fa fa-shopping-cart"></i>
-                    </button>
-                    <button {{ product.in_stock ? '' : 'disabled' }} id="buy-now" class="btn btn-danger rounded mt-4 cart-action-buttons" data-nsid="{{ product.nsid }}">
-                        Buy Now <i class="fa fa-shopping-cart"></i>
-                    </button>
-            </div>
-        </div>
-    </div>
-</section>
-<!---->
-<section class="section2 section-pro-details pt-0 pb-0 ng-star-inserted">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <ngb-tabset>
-                    <ul role="tablist" id="tab-links" class="nav nav-tabs justify-content-start">
-                        <!---->
-                        <li class="nav-item ng-star-inserted">
-                            <a class="nav-link active" data-content="#tab-content-description" role="tab" id="ngb-tab-4" aria-controls="ngb-tab-4-panel" aria-expanded="true" aria-disabled="false">Description</a>
-                        </li>
-                        <li class="nav-item ng-star-inserted">
-                            <a class="nav-link" data-content="#tab-content-specifications" role="tab" id="ngb-tab-5" aria-expanded="false" aria-disabled="false">Specifications</a>
-                        </li>
-                        {% if product.videos|length > 0 %}
-                        <li class="nav-item ng-star-inserted">
-                            <a class="nav-link" data-content="#tab-content-videos" role="tab" id="ngb-tab-7" aria-expanded="false" aria-disabled="false"> Product Videos<!---->
-                            </a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                    <div id="tab-content" class="tab-content">
-                        <div role="tabpanel" id="tab-content-description" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true">
-                            <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Description</h5>
-                            <span class="ng-star-inserted">
-                                {{ product.description }}
-                            </span>
-                        </div>
-                        <div role="tabpanel" id="tab-content-specifications" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true" style="display:none">
-                            <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Specifications</h5>
-                            <span class="ng-star-inserted">
-                                <table _ngcontent-c4="" class="table table-bordered table-striped ng-star-inserted">
-                                    <tbody _ngcontent-c4="">
-                                        {% for spec in product.specs %}
-                                        <tr _ngcontent-c4="" class="ng-star-inserted">
-                                            <th _ngcontent-c4="">{{ spec.name }}</th>
-                                            <td _ngcontent-c4="">{{ spec.value }}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody></table>
-                            </span>
-                        </div>
-                        <div role="tabpanel" id="tab-content-videos" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true" style="display:none">
-                            <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Videos</h5>
-                            <span class="ng-star-inserted owl-carousel video-carousel">
-                                {% for video in product.videos %}
-                                <div class="item">
-                                    <iframe id="ytplayer-{{ loop.index }}" type="text/html" width="100%" height="360" src="{{ video.url }}" autoplay="0" frameborder="0"></iframe>
-                                    <p>{{ video.description }}</p>
-                                    <br />
+                            <h4 class="product-title mobile">{{ product.name }}</h4>
+                            <div class="thumbnail-container col-md-auto order-2 order-md-1">
+                                <div class="thumbnail-list ng-star-inserted{{ product.images|length > 60  ? ' more-images' : '' }}">
+                                    {% for image in product.images %}
+                                    <div class="ng-star-inserted img-thumbnail-insert" data-img-src="{{ image.remote_path|cdn_link(1000) }}">
+                                        <div>
+                                            <img class="img-fluid" src="{{ image.remote_path|cdn_link(100) }}" />
+                                        </div>
+                                    </div>
+                                    {% endfor %}
                                 </div>
-                                {% endfor %}
-                            </span>
+                            </div>
+                            <div id="enlarged-image-container" class="image-container col-md order-1 order-md-2">
+                                <div id="zoom-container" class="ngxImageZoomContainer">
+                                    <img class="ngxImageZoomThumbnail" id="enlarged-image" src="{{ product.images[0].remote_path|cdn_link(1000) }}">
+                                </div>
+                                <div id="enlarged-image-loading" class="lds-ring">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </ngb-tabset>
-            </div>
-            <div class="col-lg-4">
-                {% if (product.downloads|length > 0) %}
-                <div class="card bg-light border-0 mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title font-weight-bold theme-color-dark">Product Downloads</h5>
-                        <ul class="list-group pdf-list">
-                            {% for download in product.downloads %}
-                            <li class="list-group-item ng-star-inserted">
-                                <a target="_blank" href="{{ download.remote_path|file_link }}">{{ download.name }}</a>
-                            </li>
+                    <div class="col-lg-6">
+                        <h4 class="product-title">{{ product.name|raw }}</h4>
+                        <p class="pro-id">Product ID: {{ product.sku }}</p>
+                        <hr>
+                        <h5 class="font-weight-bold">Features</h5>
+                        <ul class="square-style ml-2">
+                            {% for feature in product.features %}
+                            <li class="ng-star-inserted">{{ feature }}</li>
                             {% endfor %}
                         </ul>
-                    </div>
-                </div>
-                {% endif %}
-                {% if (product.included_items|length > 0) %}
-                <div class="card bg-light border-0 mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title font-weight-bold theme-color-dark">Included in Package</h5>
-                        <ul class="list-group">
-                            {% for item in product.included_items %}
-                            <li class="list-group-item ng-star-inserted">{{ item }}</li>
-                            {% endfor %}
+                        <ul class="features-list">
+                            <!---->
                         </ul>
+                        <div class="price-row">
+                            <div class="row">
+                                <div class="col-md-auto">
+                                    <h3 class="price">
+                                        <span id="product_cost">{{ product.price|format_currency }}</span>
+                                        <span class="status">
+                                            {{ in_stock(product.in_stock) }}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class="col-md">
+                                    {% if false %}
+                                    {% include 'partial/product-share.twig' %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <button {{ product.in_stock ? '' : 'disabled' }} id="add-to-cart" data-name="{{ product.name }}" data-nsid="{{ product.nsid }}" class="btn btn-warning rounded mt-4 cart-action-buttons">
+                            Add To Cart <i class="fa fa-shopping-cart"></i>
+                        </button>
+                        <button {{ product.in_stock ? '' : 'disabled' }} id="buy-now" class="btn btn-danger rounded mt-4 cart-action-buttons" data-nsid="{{ product.nsid }}">
+                            Buy Now <i class="fa fa-shopping-cart"></i>
+                        </button>
                     </div>
                 </div>
-                {% endif %}
-                {% if product.battery.type is not null %}
-                <div class="card bg-light border-0">
-                    <div class="card-body">
-                        <h5 class="card-title font-weight-bold theme-color-dark">Batteries Used</h5>
-                        <p>
-                            Type: {{ product.battery.type }}
-                        </p>
-                        <p>
-                            Quantity: {{ product.battery.quantity }}
-                        </p>
-                    </div>
-                </div>
-                {% endif %}
             </div>
-        </div>
-    </div>
-</section>
+        </section>
+        <!---->
+        <section class="section2 section-pro-details pt-0 pb-0 ng-star-inserted">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <ngb-tabset>
+                            <ul role="tablist" id="tab-links" class="nav nav-tabs justify-content-start">
+                                <!---->
+                                <li class="nav-item ng-star-inserted">
+                                    <a class="nav-link active" data-content="#tab-content-description" role="tab" id="ngb-tab-4" aria-controls="ngb-tab-4-panel" aria-expanded="true" aria-disabled="false">Description</a>
+                                </li>
+                                <li class="nav-item ng-star-inserted">
+                                    <a class="nav-link" data-content="#tab-content-specifications" role="tab" id="ngb-tab-5" aria-expanded="false" aria-disabled="false">Specifications</a>
+                                </li>
+                                {% if product.videos|length > 0 %}
+                                <li class="nav-item ng-star-inserted">
+                                    <a class="nav-link" data-content="#tab-content-videos" role="tab" id="ngb-tab-7" aria-expanded="false" aria-disabled="false"> Product Videos<!---->
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                            <div id="tab-content" class="tab-content">
+                                <div role="tabpanel" id="tab-content-description" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true">
+                                    <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Description</h5>
+                                    <span class="ng-star-inserted">
+                                        {{ product.description }}
+                                    </span>
+                                </div>
+                                <div role="tabpanel" id="tab-content-specifications" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true" style="display:none">
+                                    <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Specifications</h5>
+                                    <span class="ng-star-inserted">
+                                        <table class="table table-bordered table-striped ng-star-inserted">
+                                            <tbody>
+                                                {% for spec in product.specs %}
+                                                <tr class="ng-star-inserted">
+                                                    <th>{{ spec.name }}</th>
+                                                    <td>{{ spec.value }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </span>
+                                </div>
+                                <div role="tabpanel" id="tab-content-videos" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true" style="display:none">
+                                    <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Videos</h5>
+                                    <span class="ng-star-inserted owl-carousel video-carousel">
+                                        {% for video in product.videos %}
+                                        <div class="item">
+                                            <iframe id="ytplayer-{{ loop.index }}" type="text/html" width="100%" height="360" src="{{ video.url }}" autoplay="0" frameborder="0"></iframe>
+                                            <p>{{ video.description }}</p>
+                                            <br />
+                                        </div>
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                            </div>
+                        </ngb-tabset>
+                    </div>
+                    <div class="col-lg-4">
+                        {% if (product.downloads|length > 0) %}
+                        <div class="card bg-light border-0 mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bold theme-color-dark">Product Downloads</h5>
+                                <ul class="list-group pdf-list">
+                                    {% for d in product.downloads %}
+                                    <li class="list-group-item ng-star-inserted">
+                                        <a target="_blank" href="{{ d.remote_path|file_link }}">{{ d.display_name ? d.display_name : d.name }}</a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if (product.included_items|length > 0) %}
+                        <div class="card bg-light border-0 mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bold theme-color-dark">Included in Package</h5>
+                                <ul class="list-group">
+                                    {% for item in product.included_items %}
+                                    <li class="list-group-item ng-star-inserted">{{ item }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if product.battery.type is not null %}
+                        <div class="card bg-light border-0">
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bold theme-color-dark">Batteries Used</h5>
+                                <p>
+                                    Type: {{ product.battery.type }}
+                                </p>
+                                <p>
+                                    Quantity: {{ product.battery.quantity }}
+                                </p>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<section>
-    {{ post.content }}
-</section>
-{% if product.related_products|length > 0 %}
-<section class="section2 section-related-product ng-star-inserted">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg">
-                <h3 class="theme-color-dark font-weight-bold mb-4">Related Products</h3>
+        <section>
+            {{ post.content }}
+        </section>
+        {% if product.related_products|length > 0 %}
+        <section class="section2 section-related-product ng-star-inserted">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg">
+                        <h3 class="theme-color-dark font-weight-bold mb-4">Related Products</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="border-top-light"></div>
+                    </div>
+                    <div class="product-list-row col-12 owl-carousel related-items-carousel{{ (product.related_products|length > 1) ? ' active' : '' }}">
+                        {% for product in product.related_products %}
+                        {% include 'partial/product-card.twig' %}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="border-top-light"></div>
-            </div>
-            <div class="product-list-row col-12 owl-carousel related-items-carousel{{ (product.related_products|length > 1) ? ' active' : '' }}">
-                {% for product in product.related_products %}
-                    {% include 'partial/product-card.twig' %}
-                {% endfor %}
-            </div>
-        </div>
+        </section>
+        {% else %}
+        <br /><br /><br />
+        {% endif %}
     </div>
-</section>
-{% else %}
-<br /><br /><br />
-{% endif %}
-</app-product-details>
 </section>
 
 {% endblock %}

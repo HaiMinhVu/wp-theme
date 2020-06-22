@@ -1,5 +1,5 @@
 <ul _ngcontent-c14="" class="share">
-    <li _ngcontent-c14="">Share</li>
+    <li _ngcontent-c14="" style="display:none">Share</li>
     <li _ngcontent-c14="">
         <share-buttons _ngcontent-c14="">
             <!---->
@@ -9,8 +9,10 @@
                     <button class="sb-wrapper sb-facebook sb-show-icon" aria-label="Facebook" style="--button-color:#4267B2; font-size: 14px;">
                         <div class="sb-inner">
                             <div class="sb-content">
+                                <i class="fa fa-facebook" aria-hidden="true"></i>
+
                                 <!---->
-                                <div class="sb-icon ng-star-inserted">
+                                <div class="sb-icon ng-star-inserted" style="display:none">
                                     <fa-icon class="ng-fa-icon">
                                         <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f" class="svg-inline--fa fa-facebook-f fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                                             <path fill="currentColor" d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z">
@@ -43,6 +45,7 @@
                         </div>
                     </button>
                 </share-button>
+                {% if false %}
                 <share-button class="sb-button sb-classic-light ng-star-inserted">
                     <button class="sb-wrapper sb-google sb-show-icon" aria-label="Google+" style="--button-color:#DB4437; font-size: 14px;">
                         <div class="sb-inner">
@@ -81,6 +84,7 @@
                         </div>
                     </button>
                 </share-button>
+                {% endif %}
                 <div class="sb-button sb-classic-light">
                     <!---->
                 </div>
