@@ -10,6 +10,7 @@
 
 use SellmarkTheme\Data;
 use SellmarkTheme\CarbonFields;
+use SellmarkTheme\Sitemap;
 use Timber\Site as TimberSite;
 
 session_start();
@@ -74,8 +75,8 @@ class StarterSite extends TimberSite {
         add_filter( 'timber/context', array( $this, 'add_to_context' ) );
         add_filter( 'timber/twig', array( $this, 'add_to_twig' ) );
         add_action( 'init', array($this, 'show_shopping_counter') );
-        // add_action( 'init', array( $this, 'register_post_types' ) );
-        // add_action( 'init', array( $this, 'register_taxonomies' ) );
+        add_action( 'init', array($this, 'set_additional_debug_settings') );
+        add_action('init', array($this, 'add_to_sitemap'));
         add_action( 'init', array($this, 'add_rewrites') );
         add_action( 'init', array($this, 'add_shortcodes') );
         add_action( 'get_header', array($this, 'clear_breadcrumbs') );
@@ -83,18 +84,14 @@ class StarterSite extends TimberSite {
         add_action( 'wp_enqueue_scripts', array($this, 'add_theme_scripts') );
         parent::__construct();
     }
-    /** This is where you can register custom post types. */
-    public function register_post_types() {
 
-    }
-    /** This is where you can register custom taxonomies. */
-    public function register_taxonomies() {
-
+    public function add_to_sitemap() {
+        Sitemap::init();
     }
 
-    /** This is where you add some context
+    /** Add global context
     *
-    * @param string $context context['this'] Being the Twig's {{ this }}.
+    * @param string $context
     */
     public function add_to_context( $context ) {
         $context['menu']  = new Timber\Menu();
@@ -126,7 +123,7 @@ class StarterSite extends TimberSite {
                 unset($_SESSION['slmk_breadcrumbs']);
             }
         } catch(\Exception $e) {
-            // print_r($e->getMessage());
+            //
         }
     }
 
@@ -164,7 +161,7 @@ class StarterSite extends TimberSite {
         }
     }
 
-    /** This is where you can add your own functions/filters to twig.
+    /** Add twig functions and filters
     *
     * @param string $twig get extension.
     */
@@ -174,8 +171,7 @@ class StarterSite extends TimberSite {
             return productPage($product);
         }));
         $twig->addFilter(new Timber\Twig_Filter( 'format_currency', function( $price ) {
-            $dollarAmount = number_format($price, 2, '.', ',');
-            return "\${$dollarAmount}";
+            return number_format($price, 2, '.', ',');
         }));
 
         $twig->addFilter(new Timber\Twig_Filter('img_src', function($id) {
@@ -208,6 +204,9 @@ class StarterSite extends TimberSite {
         return $twig;
     }
 
+    /** Add rewrite rules for custom external data
+    *
+    */
     public function add_rewrites() {
         $productPageID = Data::cacheRemember('product-page-id', function() {
             return getTemplatePageId('product');
@@ -298,7 +297,88 @@ class StarterSite extends TimberSite {
         });
     }
 
+    public function add_categories_to_sitemap() {
+        $pages = [];
+        $pages[] = $this->addCategoriesToSitemap();
+        return implode('', $pages);
+    }
+
+    private function addCategoriesToSitemap() {
+        $categoriesArr = array_map(function($category){
+            $location = get_bloginfo('url').'/category/'.$category->id;
+            $lastModified = '2020-06-30T16:53:52+00:00';
+            $image = false;
+            if($image_path = $category->remote_path) {
+                $image = cdnLink($image_path, 400);
+            }
+            return $this->getSitemapString($location, $lastModified, $image);
+        }, Data::getCategories());
+        return implode('', $categoriesArr);
+    }
+
+    public function add_pages_to_sitemap() {
+        $pages = [];
+        $pages[] = $this->addProductPagesToSitemap();
+        return implode('', $pages);
+    }
+
+    private function addProductPagesToSitemap() {
+        $productPagesArr = array_map(function($product){
+            return $this->getProductPageSitemapString($product);
+        }, Data::getProducts());
+        return implode('', $productPagesArr);
+    }
+
+    private function getProductPageSitemapString($product) {
+        $location = get_bloginfo('url').productPage($product);
+        $lastModified = $product->last_remote_update ? $product->last_remote_update : '2020-06-30T16:53:52+00:00';
+        $image = false;
+        if($image_path = $product->remote_image_path) {
+            $image = cdnLink($image_path, 400);
+        }
+        return $this->getSitemapString($location, $lastModified, $image);
+    }
+
+    private function getSitemapString($location, $lastModified, $image = false) {
+        $s = "<url>";
+        $s .= "<loc>{$location}</loc>";
+        $s .= "<lastmod>{$lastModified}</lastmod>";
+        if($image) {
+            $s .= "<image:image>
+                     <image:loc>{$image}</image:loc>
+                   </image:image>";
+        }
+        $s .= "</url>";
+        return $s;
+    }
+
+    public function set_additional_debug_settings() {
+        if(WP_DEBUG) {
+            add_filter( 'yoast_seo_development_mode', '__return_true' );
+        }
+    }
+
 }
+
+function removeYoastOG() {
+    add_filter( 'wpseo_opengraph_url' , '__return_false' );
+    add_filter( 'wpseo_opengraph_desc', '__return_false' );
+    add_filter( 'wpseo_opengraph_title', '__return_false' );
+    add_filter( 'wpseo_opengraph_type', '__return_false' );
+    add_filter( 'wpseo_opengraph_site_name', '__return_false' );
+    add_filter( 'wpseo_opengraph_image' , '__return_false' );
+    add_filter( 'wpseo_og_og_image_width' , '__return_false' );
+    add_filter( 'wpseo_og_og_image_height' , '__return_false' );
+    add_filter( 'wpseo_opengraph_author_facebook' , '__return_false' );
+}
+
+function sitemap_exclude_post( $url, $type, $post) {
+    if($type == 'term') return false;
+    if(in_array($post->post_name, ['category', 'product'])) return false;
+
+	return $url;
+}
+add_filter( 'wpseo_sitemap_entry', 'sitemap_exclude_post', 20, 3 );
 
 function getSLMKForm($atts) {
     $context = Timber::context();
@@ -322,29 +402,17 @@ function inStock($bool) {
     }
 }
 
-function productPage( $product ) {
-    return '/products/'.$product->nsid.'/'.sanitize_title($product->name);
+function productPage($product) {
+    return Data::productPage($product);
 }
 
 function cdnLink($filename, $imageWidth = null, $additionalOptions = []){
-    $options = [
-        "bucket" => "sellmark-media-bucket",
-        "key" => $filename
-    ];
-    if($imageWidth) {
-        $options['edits'] = [
-            'resize' => [
-                'width' => $imageWidth,
-                'fit' => 'contain'
-            ]
-        ];
-    }
-    $options = base64_encode(json_encode($options));
-    return "https://d4ursusm8s4tk.cloudfront.net/{$options}";
+    return Data::cdnLink($filename, $imageWidth, $additionalOptions);
 }
 
 function fileLink($filename) {
     $url = parse_url(CarbonFields::get('slmk_api_endpoint'));
+    return "https://api-staging.slmk.dev/file/{$filename}";
     return "{$url['scheme']}://{$url['host']}/file/{$filename}";
 }
 
