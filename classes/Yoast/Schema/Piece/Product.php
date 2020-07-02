@@ -35,7 +35,7 @@ class Product extends Abstract_Schema_Piece {
             "@context" => "http://schema.org/",
 			'@type' => 'Product',
             'name' => $this->product->name,
-            'description' => $this->product->description,
+            'description' => preg_replace( "/\r|\n/", "", strip_tags($this->product->description, '<p><br><ul><li><ol>')),
             'sku' => $this->product->sku,
             'brand' => Data::getBrandName(),
             'gtin8' => $this->product->upc,
