@@ -149,14 +149,9 @@ $( document ).ready( function( $ ) {
         function addToCart(nsid, cb) {
             const $cartButtons = $('.cart-action-buttons');
             $cartButtons.prop('disabled', true);
-            const data = new URLSearchParams({
-                buyid: nsid,
-                qty: 1,
-                c: 1247539
-            }).toString();
             $.ajax({
                 type: "POST",
-                url: `https://checkout.na1.netsuite.com/app/site/query/additemtocart.nl?${data}`,
+                url: `https://checkout.na1.netsuite.com/app/site/query/additemtocart.nl?qty=1&c=1247539&buyid=${nsid}`,
                 contentType: 'text/html',
                 crossDomain: true,
                 dataType: "jsonp",
