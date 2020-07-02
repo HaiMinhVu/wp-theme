@@ -57,7 +57,7 @@
                             <div class="row">
                                 <div class="col-md-auto">
                                     <h3 class="price">
-                                        $<span id="product_cost" itemprop="price">{{ product.price|format_currency }}</span>
+                                        $<span id="product_cost">{{ product.price|format_currency }}</span>
                                         <span class="status">
                                             {{ in_stock(product.in_stock) }}
                                         </span>
