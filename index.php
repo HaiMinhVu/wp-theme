@@ -30,11 +30,12 @@ if($whoWeAre) $context['who_we_are'] = $whoWeAre[0];
 $interestedDealer = Data::getThemeOption('interested_becoming_dealer');
 if($interestedDealer) $context['interested_becoming_dealer'] = $interestedDealer[0];
 
-$categoryCallout = Data::getThemeOption('category_callout');
-$categoryCalloutData = [
-	$categoryCallout[0]->left[0],
-	$categoryCallout[0]->right[0],
-];
-if($categoryCallout) $context['category_callout'] = $categoryCalloutData;
+if($categoryCallout = Data::getThemeOption('category_callout')) {
+	$categoryCalloutData = [
+		$categoryCallout[0]->left[0],
+		$categoryCallout[0]->right[0],
+	];
+	$context['category_callout'] = $categoryCalloutData;
+}
 
 Timber::render('index.twig', $context);

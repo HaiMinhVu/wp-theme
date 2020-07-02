@@ -6,14 +6,16 @@
 {% endblock %}
 
 {% block content %}
-<section class="main">
+<section class="main" itemscope itemtype="http://schema.org/Product">
     <div class="ng-star-inserted">
         <section class="section2 section-product ng-star-inserted">
             <div class="container">
                 <div class="row  sticky-top">
                     <div class="col-lg-6 px-4 px-lg-auto mb-4 mb-lg-0">
                         <div class="row">
-                            <h4 class="product-title mobile">{{ product.name }}</h4>
+                            <h4 class="product-title mobile" itemprop="name">
+                                {{ product.name }}
+                            </h4>
                             <div class="thumbnail-container col-md-auto order-2 order-md-1">
                                 <div class="thumbnail-list ng-star-inserted{{ product.images|length > 60  ? ' more-images' : '' }}">
                                     {% for image in product.images %}
@@ -55,7 +57,7 @@
                             <div class="row">
                                 <div class="col-md-auto">
                                     <h3 class="price">
-                                        <span id="product_cost">{{ product.price|format_currency }}</span>
+                                        $<span id="product_cost" itemprop="price">{{ product.price|format_currency }}</span>
                                         <span class="status">
                                             {{ in_stock(product.in_stock) }}
                                         </span>
@@ -102,7 +104,7 @@
                             <div id="tab-content" class="tab-content">
                                 <div role="tabpanel" id="tab-content-description" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true">
                                     <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Description</h5>
-                                    <span class="ng-star-inserted">
+                                    <span class="ng-star-inserted" itemprop="description">
                                         {{ product.description }}
                                     </span>
                                 </div>

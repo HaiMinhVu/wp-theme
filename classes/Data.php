@@ -93,6 +93,12 @@ class Data {
         return self::getCarbonField($key, 'theme_option');
     }
 
+    public static function getBrandName() {
+        $brandSlug = CarbonFields::get('slmk_site_brand');
+        $brandSlug = str_replace('-', ' ', $brandSlug);
+        return ucwords($brandSlug);
+    }
+
     private static function getCarbonField($key, $type = 'option') {
         $instance = self::getInstance();
         $cache = $instance->cache;
@@ -153,6 +159,11 @@ class Data {
     public static function featuredProducts()
     {
         return self::get('featured_products', 'products/featured', false)->data;
+    }
+
+    public static function getCategories()
+    {
+        return self::productCategoriesAll();
     }
 
     public static function productCategoriesAll()
@@ -317,6 +328,31 @@ class Data {
         }
 
         return (array_values($filtered)[0])['id'];
+    }
+
+    public static function cdnLink($filename, $imageWidth = null, $additionalOptions = []){
+        $options = [
+            "bucket" => "sellmark-media-bucket",
+            "key" => $filename
+        ];
+        if($imageWidth) {
+            $options['edits'] = [
+                'resize' => [
+                    'width' => $imageWidth,
+                    'fit' => 'contain'
+                ]
+            ];
+        }
+        $options = base64_encode(json_encode($options));
+        return "https://d4ursusm8s4tk.cloudfront.net/{$options}";
+    }
+
+    public static function productPage($product) {
+        return '/products/'.$product->nsid.'/'.sanitize_title($product->name);
+    }
+
+    public static function productPageUrl($product) {
+        return get_site_url().self::productPage($product);
     }
 
 }
