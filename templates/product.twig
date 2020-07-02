@@ -70,12 +70,14 @@
                                 </div>
                             </div>
                         </div>
-                        <button {{ product.in_stock ? '' : 'disabled' }} id="add-to-cart" data-name="{{ product.name }}" data-nsid="{{ product.nsid }}" class="btn btn-warning rounded mt-4 cart-action-buttons">
-                            Add To Cart <i class="fa fa-shopping-cart"></i>
-                        </button>
-                        <button {{ product.in_stock ? '' : 'disabled' }} id="buy-now" class="btn btn-danger rounded mt-4 cart-action-buttons" data-nsid="{{ product.nsid }}">
-                            Buy Now <i class="fa fa-shopping-cart"></i>
-                        </button>
+                        <div class="d-flex justify-content-center justify-content-sm-between flex-wrap">
+                            <button {{ product.in_stock ? '' : 'disabled' }} id="add-to-cart" data-name="{{ product.name }}" data-nsid="{{ product.nsid }}" class="btn btn-warning rounded mt-4 cart-action-buttons">
+                                Add To Cart <i class="fa fa-shopping-cart"></i>
+                            </button>
+                            <button {{ product.in_stock ? '' : 'disabled' }} id="buy-now" class="btn btn-danger rounded mt-4 cart-action-buttons" data-nsid="{{ product.nsid }}">
+                                Buy Now <i class="fa fa-shopping-cart"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
