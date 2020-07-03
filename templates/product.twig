@@ -59,7 +59,7 @@
                                     <h3 class="price">
                                         $<span id="product_cost">{{ product.price|format_currency }}</span>
                                         <span class="status">
-                                            {{ in_stock(product.in_stock) }}
+                                            {{ in_stock(product.in_stock, product.allow_backorders) }}
                                         </span>
                                     </h3>
                                 </div>
@@ -71,10 +71,10 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center justify-content-sm-between flex-wrap">
-                            <button {{ product.in_stock ? '' : 'disabled' }} id="add-to-cart" data-name="{{ product.name }}" data-nsid="{{ product.nsid }}" class="btn btn-warning rounded mt-4 cart-action-buttons mx-1">
+                            <button {{ allow_purchase(product.in_stock, product.allow_backorders) ? '' : 'disabled' }} id="add-to-cart" data-name="{{ product.name }}" data-nsid="{{ product.nsid }}" class="btn btn-warning rounded mt-4 cart-action-buttons mx-1">
                                 Add To Cart <i class="fa fa-shopping-cart"></i>
                             </button>
-                            <button {{ product.in_stock ? '' : 'disabled' }} id="buy-now" class="btn btn-danger rounded mt-4 cart-action-buttons mx-1" data-nsid="{{ product.nsid }}">
+                            <button {{ allow_purchase(product.in_stock, product.allow_backorders) ? '' : 'disabled' }} id="buy-now" class="btn btn-danger rounded mt-4 cart-action-buttons mx-1" data-nsid="{{ product.nsid }}">
                                 Buy Now <i class="fa fa-shopping-cart"></i>
                             </button>
                         </div>

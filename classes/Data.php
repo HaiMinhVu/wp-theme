@@ -2,8 +2,6 @@
 
 namespace SellmarkTheme;
 
-include_once( ABSPATH . 'wp-admin/includes/image.php' );
-
 use Sellmark\Cache\Connector as SellmarkCache;
 use GuzzleHttp\Client;
 

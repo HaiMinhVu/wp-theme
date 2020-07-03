@@ -55,7 +55,7 @@ class Product extends Abstract_Schema_Piece {
     }
 
     private function itemAvailability() {
-        $type = $this->product->in_stock ? 'InStock' : 'OutOfStock';
+        $type = $this->product->in_stock ? 'InStock' : ($this->product->allow_backorders ? 'PreOrder' : 'OutOfStock');
         return "http://schema.org/{$type}";
     }
 
