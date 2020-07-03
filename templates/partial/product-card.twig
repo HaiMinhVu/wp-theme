@@ -6,7 +6,7 @@
         <p class="card-title">{{ product.name }}</p>
         <p class="sub-title">{{ product.sku }}</p>
         <p class="status">
-            {{ in_stock(product.in_stock) }}
+            {{ in_stock(product.in_stock, product.allow_backorders) }}
         </p>
         <p class="price">{{ product.price|format_currency }}</p>
     </div>

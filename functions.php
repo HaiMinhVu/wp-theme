@@ -182,8 +182,11 @@ class StarterSite extends TimberSite {
             return preg_replace('/\D/', '', $str);
         }));
 
-        $twig->addFunction( new Timber\Twig_Function('in_stock', function($bool){
-            return inStock($bool);
+        $twig->addFunction( new Timber\Twig_Function('in_stock', function($bool, $allow_backorders = false){
+            return inStock($bool, $allow_backorders);
+        }));
+        $twig->addFunction( new Timber\Twig_Function('allow_purchase', function($bool, $allow_backorders = false){
+            return allowPurchase($bool, $allow_backorders);
         }));
         $twig->addFunction( new Timber\Twig_Function('print_r', 'print_r'));
         $twig->addFunction( new Timber\Twig_Function('dd', function($var) {
@@ -290,7 +293,7 @@ class StarterSite extends TimberSite {
             $products = array_map(function($product){
                 $product->image = cdnLink($product->remote_image_path, 300);
                 $product->url = productPage($product);
-                $product->in_stock_html = inStock($product->in_stock);
+                $product->in_stock_html = inStock($product->in_stock, $product->allow_backorders);
                 return $product;
             }, Data::getProducts());
             return json_encode($products);
@@ -394,12 +397,18 @@ function getSLMKForm($atts) {
     return Timber::compile('partial/form-render.twig', $context);
 }
 
-function inStock($bool) {
+function inStock($bool, $allow_backorders = false) {
     if($bool) {
         return '<span class="text-success">In Stock</span>';
-    } else {
+    } elseif($allow_backorders) {
+        return '<span class="text-warning">Backordered</span>';
+    }else {
         return '<span class="text-danger">Not in Stock</span>';
     }
+}
+
+function allowPurchase($bool, $allow_backorders = false) {
+    return ($bool || $allow_backorders);
 }
 
 function productPage($product) {

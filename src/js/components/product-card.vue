@@ -16,8 +16,8 @@
     export default {
         props: ['product'],
         methods: {
-            inStock(stockStatus) {
-                return stockStatus;
+            inStock(stockStatus, backOrdered = true) {
+                return stockStatus || backOrdered;
             }
         }
     }
