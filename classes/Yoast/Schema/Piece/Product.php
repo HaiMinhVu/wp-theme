@@ -43,7 +43,8 @@ class Product extends Abstract_Schema_Piece {
                 '@type' => 'Offer',
                 'availability' => $this->itemAvailability(),
                 'priceCurrency' => 'USD',
-                'price' => $this->product->price
+                'price' => $this->product->price,
+                'url' => Data::productPageUrl($this->product)
             ]
 		];
 
