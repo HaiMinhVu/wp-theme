@@ -1,4 +1,5 @@
 {% if slmk_brand_color is defined %}
+{% filter uglify_string %}
 	{% set c = slmk_brand_color_rgba %}
 	{% set hsl = slmk_brand_color_hsl %}
 	{% set brandColor = 'rgba('~c["red"]~','~c["green"]~','~c["blue"]~',1)' %}
@@ -8,7 +9,6 @@
 
 	{% set brandColor2 = 'hsl('~hsl["hue"]~','~hsl["saturation"]~'%,'~hsl["lightness"]~'%)' %}
 	{% set brandColorHover2 = 'hsl('~hsl["hue"]~','~hsl["saturation"]~'%,'~hsl["cssHoverLightness"]~'%)' %}
-
 	<style type="text/css" media="screen">
 		body header #overlay-menu {
 			background-color: {{ brandColor2 }};
@@ -26,9 +26,9 @@
 		.btn-primary:hover,
 		.btn-dark:hover,
 		.btn-dark:active,
-		.btn-primary:focus, 
+		.btn-primary:focus,
 		.btn-primary.focus,
-		.btn-primary:disabled, 
+		.btn-primary:disabled,
 		.btn-primary.disabled  {
 		    background-color: {{ brandColorHover2 }} !important;
 		    border-color: {{ brandColorHover2 }} !important;
@@ -47,7 +47,7 @@
 			border-color: {{ brandColor2 }} transparent transparent transparent;
 		}
 		header .navbar .navbar-nav .nav-item .nav-link:focus {
-			background-color: {{ brandColor2 }}; 
+			background-color: {{ brandColor2 }};
 		}
 		::-moz-selection { /* Code for Firefox */
 			color: #ffffff;
@@ -60,12 +60,17 @@
 		}
 
 		* {
-			outline-color: {{ brandColor2 }}; 
+			outline-color: {{ brandColor2 }};
 		}
 
 		.img-thumbnail-insert:hover {
 			border-color: {{ brandColor2 }} !important;
 		}
+
+		.support-sidebar li .active {
+			background-color: {{ brandColor2 }} !important;
+			cursor: default;
+		}
 	</style>
-</style>
+{% endfilter %}
 {% endif %}

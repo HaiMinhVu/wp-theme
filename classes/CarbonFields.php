@@ -115,16 +115,33 @@ class CarbonFields {
 	private function footerFields()
 	{
 		return [
-			Field::make( 'complex', 'phone_numbers', __( 'Phone Numbers' ) )
-				->add_fields([
-					Field::make( 'text', 'phone_number', __( 'Phone Number' ) )
-						->set_attribute( 'placeholder', '(***) ***-****' )
-					]),
 			Field::make( 'complex', 'footer_links', __( 'Footer Links' ) )
 				->add_fields([
 					Field::make( 'text', 'name', __( 'Name' ) ),
 					Field::make( 'text', 'link', __( 'Link' ) )
-				])
+				]),
+			Field::make( 'complex', 'addresses', __( 'Locations' ) )
+				->add_fields([
+					Field::make( 'text', 'name', __( 'Global Region' ) ),
+					Field::make( 'complex', 'children', __( 'Addresses' ) )
+						->add_fields([
+							Field::make( 'textarea', 'name', __( 'Address' ) ),
+							Field::make( 'complex', 'phone_numbers', __( 'Phone Numbers' ) )
+								->add_fields([
+									Field::make( 'select', 'phone_type', __('Type') )
+										->add_options([
+											'phone' => __('Phone'),
+											'fax' => __('Fax')
+										]),
+									Field::make( 'text', 'phone_number', __( 'Phone Number' ) )
+										->set_attribute( 'placeholder', '(***) ***-****' )
+									]),
+							Field::make( 'complex', 'emails', __( 'Email Addresses' ) )
+								->add_fields([
+									Field::make( 'text', 'email', __( 'Email Address' ) )
+								])->set_max(3)
+						])->set_max(3)
+				])->set_max(2)
 		];
 	}
 
