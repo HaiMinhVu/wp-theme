@@ -11,14 +11,13 @@
 global $post;
 $args = [
     'orderby' => 'menu_order',
-    'order' => 'DESC',
+    'order' => 'ASC',
     'post_status' => 'publish'
 ];
 
 if($post->post_parent == 0) {
     $args['post_parent'] = $post->ID;
     $children = array_values(get_children($args));
-    // dd($children);
     if(count($children) > 0) {
         $redirectUrl = get_permalink($children[0]->ID);
     } else {
