@@ -11,13 +11,12 @@ use Yoast\WP\SEO\Config\Schema_IDs;
 use Yoast\WP\SEO\Generators\Schema\Abstract_Schema_Piece;
 use SellmarkTheme\Data;
 
-class Product extends Abstract_Schema_Piece {
+class DataDownload extends Abstract_Schema_Piece {
 
     private $product;
     private $image;
 
     public function __construct($product) {
-        // dd($product);
         $this->product = $product;
         $this->setImage();
     }

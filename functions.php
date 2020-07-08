@@ -99,6 +99,7 @@ class StarterSite extends TimberSite {
         $context['product_categories'] = Data::productCategories();
         $context['nav_items'] = $this->navItems();
         $context['footer_links'] = Data::getThemeOption('footer_links', 'theme_option');
+        $context['addresses'] = Data::getThemeOption('addresses', 'theme_option');
         $context['phone_numbers'] = Data::getThemeOption('phone_numbers', 'theme_option');
         $context['slmk_brand_color'] = CarbonFields::get('slmk_brand_color');
         $context['slmk_brand_color_rgba'] = carbon_hex_to_rgba($context['slmk_brand_color']);
@@ -176,6 +177,14 @@ class StarterSite extends TimberSite {
 
         $twig->addFilter(new Timber\Twig_Filter('img_src', function($id) {
             return (new Timber\Image($id))->src;
+        }));
+
+        $twig->addFilter(new Timber\Twig_Filter('uglify_string', function($string) {
+            $string = preg_replace("/\s{2,}/", " ", $string);
+            $string = str_replace("\n", "", $string);
+            $string = str_replace('@CHARSET "UTF-8";', "", $string);
+            $string = str_replace(', ', ",", $string);
+            return trim($string);
         }));
 
         $twig->addFilter(new Timber\Twig_Filter('only_numbers', function($str) {

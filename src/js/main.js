@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import 'slick-carousel';
 import 'jquery-zoom';
-import 'slick-carousel';
 import Vue from 'vue/dist/vue.js';
 import Search from './components/search.vue';
 import SLMKForm from './classes/SLMKForm';
