@@ -1,9 +1,24 @@
 {% extends "tease.twig" %}
 
 {% block content %}
-	<h2 class="h2"><a href="{{post.link}}">{{post.title}}</a></h2>
-		<p>{{post.preview.length(25)}}</p>
-		{% if post.thumbnail.src %}
+	{% if post.thumbnail.src %}
+	<div class="row">
+		<div class="col-md-4">
 			<img src="{{post.thumbnail.src}}" />
-		{% endif %}
+		</div>
+		<div class="col-md-8">
+			<h2 class="h2"><a href="{{post.link}}">{{post.title}}</a></h2>
+			<p class="byline">
+				<a href="{{post.author.link}}">{{post.author.name | capitalize}}</a> | <small>{{ post.date }}</small>
+			</p>
+			<p>{{post.preview.length(25)}}</p>
+		</div>
+	</div>
+	{% else %}
+		<h2 class="h2"><a href="{{post.link}}">{{post.title}}</a></h2>
+		<p class="byline">
+		    <a href="{{post.author.link}}">{{post.author.name | capitalize}}</a> | <small>{{ post.date }}</small>
+		</p>
+		<p>{{post.preview.length(25)}}</p>
+	{% endif %}
 {% endblock %}
