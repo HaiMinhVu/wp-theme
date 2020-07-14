@@ -2,6 +2,8 @@
 
 namespace SellmarkTheme;
 
+use DateTime;
+
 class Sitemap {
 
     const DEFAULT_LAST_UPDATE = '2020-06-30T16:53:52+00:01';
@@ -29,7 +31,8 @@ class Sitemap {
 
     public function getCategoryPageSitemapString($category) {
         $location = get_bloginfo('url').'/category/'.$category->id;
-        $lastModified = $category->last_update ? $category->last_update : self::DEFAULT_LAST_UPDATE;
+        $lastModified = $this->getLastModifiedDate($category->last_update);
+        // $lastModified = $category->last_update ? $category->last_update : self::DEFAULT_LAST_UPDATE;
         $image = false;
         if($image_path = $category->remote_path) {
             $image = cdnLink($image_path, 400);
@@ -50,9 +53,15 @@ class Sitemap {
         return implode('', $productPagesArr);
     }
 
+    protected function getLastModifiedDate($dateString = null) {
+        $dateTime = ($dateString) ? new DateTime($dateString) : new DateTime(self::DEFAULT_LAST_UPDATE);
+        return $dateTime->format('c');
+    }
+
     protected function getProductPageSitemapString($product) {
         $location = get_bloginfo('url').productPage($product);
-        $lastModified = $product->last_remote_update ? $product->last_remote_update : self::DEFAULT_LAST_UPDATE;
+        $lastModified = $this->getLastModifiedDate($product->last_remote_update);
+        // $lastModified = $product->last_remote_update ? $product->last_remote_update : self::DEFAULT_LAST_UPDATE;
         $image = false;
         if($image_path = $product->remote_image_path) {
             $image = cdnLink($image_path, 400);
