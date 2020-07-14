@@ -56,9 +56,9 @@ class Sitemap {
     protected function getLastModifiedDate($dateString = null) {
         if($dateString) {
             try {
-                $dateTime = new DateTime($dateString)
+                $dateTime = new DateTime($dateString);
             } catch(\Exception $e) {
-                $dateTime = new DateTime(self::DEFAULT_LAST_UPDATE)
+                $dateTime = new DateTime(self::DEFAULT_LAST_UPDATE);
             }
         } else {
             $dateTime = new DateTime(self::DEFAULT_LAST_UPDATE);
