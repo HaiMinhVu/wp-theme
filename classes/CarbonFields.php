@@ -161,9 +161,7 @@ class CarbonFields {
 			Field::make( 'textarea', 'slmk_api_key', 'Sellmark API Key' )->set_rows(2),
 			Field::make( 'textarea', 'slmk_analytics', 'Sellmark Analytics Scripts' )->set_rows(8),
 			Field::make( 'text', 'slmk_redirect_product_path', 'Redirect Product Path' ),
-			Field::make( 'text', 'slmk_redirect_product_var', 'Redirect Product GET URL Variable' ),
-			Field::make( 'text', 'slmk_redirect_category_path', 'Redirect Category Path' ),
-			Field::make( 'text', 'slmk_redirect_category_var', 'Redirect Category GET URL Variable' )
+			Field::make( 'text', 'slmk_redirect_product_var', 'Redirect Product GET URL Variable' )
 		];
 	}
 
