@@ -36,9 +36,7 @@ class SellmarkThemeSite extends Site {
     public function add_dynamic_redirects() {
         Redirection::init([
             'product_path' => CarbonFields::get('slmk_redirect_product_path'),
-            'product_var' => CarbonFields::get('slmk_redirect_product_var'),
-            'category_path' => CarbonFields::get('slmk_redirect_category_path'),
-            'category_var' => CarbonFields::get('slmk_redirect_category_var')
+            'product_var' => CarbonFields::get('slmk_redirect_product_var')
         ]);
     }
 

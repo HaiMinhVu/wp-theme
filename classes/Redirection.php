@@ -4,23 +4,17 @@ namespace SellmarkTheme;
 
 class Redirection {
 
-    const PRODUCT_TYPE = 'product';
-    const CATEGORY_TYPE = 'category';
     const PRODUCT_PATH_KEY = 'product_path';
     const PRODUCT_VAR_KEY = 'product_var';
-    const CATEGORY_PATH_KEY = 'category_path';
-    const CATEGORY_VAR_KEY = 'category_var';
     const DEFAULT_COLUMN_NAME = 'id';
 
     protected $options;
     protected $products;
-    protected $categories;
 
     public function __construct(array $options)
     {
         $this->options = $options;
         $this->products = Data::getProducts();
-        $this->categories = Data::getCategories();
      }
 
     public static function init(array $options) : void
@@ -44,64 +38,44 @@ class Redirection {
     public function setupRedirects() : void
     {
         $this->setupProductRedirects();
-        $this->setupCategoryRedirects();
     }
 
     public function setupProductRedirects() : void
     {
         if($this->getOption(self::PRODUCT_PATH_KEY) && $this->getOption(self::PRODUCT_VAR_KEY)) {
             $this->setupRedirect(
-                self::PRODUCT_TYPE,
                 $this->getOption(self::PRODUCT_PATH_KEY),
                 $this->getOption(self::PRODUCT_VAR_KEY)
             );
         }
     }
 
-    public function setupCategoryRedirects() : void
-    {
-        if($this->getOption(self::CATEGORY_PATH_KEY) && $this->getOption(self::CATEGORY_VAR_KEY)) {
-            $this->setupRedirect(
-                self::CATEGORY_TYPE,
-                $this->getOption(self::CATEGORY_PATH_KEY),
-                $this->getOption(self::CATEGORY_VAR_KEY)
-            );
-        }
-    }
-
-    protected function setupRedirect(string $type, string $path, string $getVar, string $columnName = self::DEFAULT_COLUMN_NAME) : void
+    protected function setupRedirect(string $path, string $getVar, string $columnName = self::DEFAULT_COLUMN_NAME) : void
     {
         if(getUrlPath() == $path) {
-            $items = $this->getItems($type);
+            $items = $this->getItems();
             if($key = array_search($_GET[$getVar], array_column($items, $columnName))) {
                 $queryVars = $this->buildQueryVars([$getVar]);
-                $url = $this->getItemPage($type, $items[$key]);
+                $url = $this->getItemPage($items[$key]);
                 $url = $url.'?'.$queryVars;
                 $this->redirect($url);
             }
         }
     }
 
-    protected function getItems(string $type) : ?array
+    protected function getItems() : ?array
     {
-        return ($type == self::CATEGORY_TYPE) ? $this->categories : $this->products;
+        return $this->products;
     }
 
-    protected function getItemPage(string $type, object $item)
+    protected function getItemPage(object $item)
     {
-        return ($type == self::CATEGORY_TYPE) ? Data::categoryPage($item) : Data::productPage($item);
+        return Data::productPage($item);
     }
 
     protected function productRedirect(object $product) : void
     {
         if($page = Data::productPage($product)) {
-            $this->redirect($page);
-        }
-    }
-
-    protected function categoryRedirect(object $category) : void
-    {
-        if($page = Data::categoryPage($category)) {
             $this->redirect($page);
         }
     }
