@@ -11,7 +11,7 @@ class CarbonFields {
 	const DEFAULTS = [
         'slmk_api_key' => 'Y4=nsSabrJ6C8q-6XvYVMp6zDX@BYPnFmPP2k7$G%txKm%@5X4ku5rJE2ap?ZwyZYjcn^8BJZ*P7y@hPwp+r$@KMTfynkXP-a98DRBYGH%AU^?!R6+SM7?S8aRM?v_TK',
         'slmk_site_brand' => 'pulsar',
-        'slmk_api_endpoint' => 'https://api.slmk.dev/v1',
+        'slmk_api_endpoint' => 'https://api-staging.slmk.dev/v1',
         'slmk_home_slider' => 257,
         'slmk_featured_products' => 105,
         'slmk_site_logo' => 5486,
@@ -159,7 +159,11 @@ class CarbonFields {
 			Field::make( 'text', 'slmk_api_endpoint', 'Sellmark API Endpoint' ),
 			Field::make( 'text', 'slmk_api_form_endpoint', 'Sellmark API Form Endpoint' )->set_help_text('If form API endpoint/version differs, specify here, defaults to Sellmark API Enpoint declared above'),
 			Field::make( 'textarea', 'slmk_api_key', 'Sellmark API Key' )->set_rows(2),
-			Field::make( 'textarea', 'slmk_analytics', 'Sellmark Analytics Scripts' )->set_rows(8)
+			Field::make( 'textarea', 'slmk_analytics', 'Sellmark Analytics Scripts' )->set_rows(8),
+			Field::make( 'text', 'slmk_redirect_product_path', 'Redirect Product Path' ),
+			Field::make( 'text', 'slmk_redirect_product_var', 'Redirect Product GET URL Variable' ),
+			Field::make( 'text', 'slmk_redirect_category_path', 'Redirect Category Path' ),
+			Field::make( 'text', 'slmk_redirect_category_var', 'Redirect Category GET URL Variable' )
 		];
 	}
 

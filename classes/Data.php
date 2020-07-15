@@ -345,8 +345,18 @@ class Data {
         return "https://d4ursusm8s4tk.cloudfront.net/{$options}";
     }
 
-    public static function productPage($product) {
-        return '/products/'.$product->nsid.'/'.sanitize_title($product->name);
+    public static function productPage($product = null) {
+        if($product) {
+            return '/products/'.$product->nsid.'/'.sanitize_title($product->name);
+        }
+        return null;
+    }
+
+    public static function categoryPage($category = null) {
+        if($category) {
+            return '/category/'.$category->id;
+        }
+        return null;
     }
 
     public static function productPageUrl($product) {
