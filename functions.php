@@ -13,28 +13,6 @@ use SellmarkTheme\{
     Sitemap
 };
 
-// add_action('template_redirect', function() {
-//     if(getUrlPath() == '/product.php') {
-//         $products = Data::getProducts();
-//         $key = array_search($_GET['item'], array_column($products, 'id'));
-//         if($key) {
-//             $product = $products[$key];
-//             $productPage = Data::productPage($product);
-//             wp_redirect($productPage);
-//         }
-//     }
-// });
-
-function getUrlPath() {
-    try {
-        $requestUri = $_SERVER['REQUEST_URI'];
-        $parsedUrl = parse_url($requestUri);
-        return $parsedUrl['path'];
-    } catch(\Exception $e) {
-        return null;
-    }
-}
-
 function removeYoastOG() {
     add_filter( 'wpseo_opengraph_url' , '__return_false' );
     add_filter( 'wpseo_opengraph_desc', '__return_false' );
@@ -63,8 +41,8 @@ function getSLMKForm($atts) {
         return $field->required;
     });
     $context['has_required_fields'] = (count($requiredArray) > 0);
-    $context['brand_slug'] = CarbonFields::get('slmk_site_brand');
-    $endpoint = (CarbonFields::get('slmk_api_form_endpoint') != '') ? CarbonFields::get('slmk_api_form_endpoint') : CarbonFields::get('slmk_api_endpoint');
+    $context['brand_slug'] = Data::getSetting('slmk_site_brand');
+    $endpoint = (Data::getSetting('slmk_api_form_endpoint') != '') ? Data::getSetting('slmk_api_form_endpoint') : Data::getSetting('slmk_api_endpoint');
     $context['slmk_api_form_endpoint'] = $endpoint;
     return Timber::compile('partial/form-render.twig', $context);
 }
@@ -92,8 +70,7 @@ function cdnLink($filename, $imageWidth = null, $additionalOptions = []){
 }
 
 function fileLink($filename) {
-    $url = parse_url(CarbonFields::get('slmk_api_endpoint'));
-    return "https://api-staging.slmk.dev/file/{$filename}";
+    $url = parse_url(Data::getSetting('slmk_api_endpoint'));
     return "{$url['scheme']}://{$url['host']}/file/{$filename}";
 }
 

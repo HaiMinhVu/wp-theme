@@ -52,7 +52,7 @@ class Redirection {
 
     protected function setupRedirect(string $path, string $getVar, string $columnName = self::DEFAULT_COLUMN_NAME) : void
     {
-        if(getUrlPath() == $path) {
+        if($this->getUrlPath() == $path) {
             $items = $this->getItems();
             if($key = array_search($_GET[$getVar], array_column($items, $columnName))) {
                 $queryVars = $this->buildQueryVars([$getVar]);
@@ -92,6 +92,17 @@ class Redirection {
     protected function redirect(string $url) : void
     {
         wp_redirect($url, 301);
+    }
+
+    protected function getUrlPath() : ?string
+    {
+        try {
+            $requestUri = $_SERVER['REQUEST_URI'];
+            $parsedUrl = parse_url($requestUri);
+            return $parsedUrl['path'];
+        } catch(\Exception $e) {
+            return null;
+        }
     }
 
 }
