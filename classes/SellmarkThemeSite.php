@@ -6,6 +6,7 @@ use Timber\{
     Image,
     Menu,
     Site,
+    Timber,
     Twig_Filter,
     Twig_Function
 };
@@ -24,7 +25,7 @@ class SellmarkThemeSite extends Site {
         add_action('template_redirect', array($this, 'add_dynamic_redirects') );
         add_action( 'init', array($this, 'add_rewrites') );
         add_action( 'init', array($this, 'add_shortcodes') );
-        add_action( 'get_header', array($this, 'clear_breadcrumbs') );
+        add_action( 'template_redirect', array($this, 'clear_breadcrumbs') );
         add_action( 'rest_api_init', array($this, 'register_routes') );
         add_action( 'wp_enqueue_scripts', array($this, 'add_theme_scripts') );
     }
@@ -35,8 +36,8 @@ class SellmarkThemeSite extends Site {
 
     public function add_dynamic_redirects() {
         Redirection::init([
-            'product_path' => CarbonFields::get('slmk_redirect_product_path'),
-            'product_var' => CarbonFields::get('slmk_redirect_product_var')
+            'product_path' => Data::getSetting('slmk_redirect_product_path'),
+            'product_var' => Data::getSetting('slmk_redirect_product_var')
         ]);
     }
 
@@ -69,7 +70,7 @@ class SellmarkThemeSite extends Site {
     public function clear_breadcrumbs() {
         try {
             $templateFile = get_template_file();
-            if(array_key_exists('slmk_breadcrumbs', $_SESSION) && !in_array($templateFile, ['product'])) {
+            if(array_key_exists('slmk_breadcrumbs', $_SESSION) && !in_array($templateFile, ['product.php'])) {
                 $context = Timber::context();
                 unset($context['breadcrumbs']);
                 unset($_SESSION['slmk_breadcrumbs']);
