@@ -169,6 +169,6 @@ function rgbToHsl( $r, $g, $b ) {
 }
 
 function get_relative_link($post = null) {
-    $permalink = ($id) ? get_permalink($post) : get_permalink();
+    $permalink = ($post) ? get_permalink($post) : get_permalink();
     return str_replace(home_url(), '', $permalink);
 }
