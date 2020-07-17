@@ -1,0 +1,17 @@
+{% if blog_posts|length > 3 %}
+<section class="section blog-posts section-featured-category py-6 ng-star-inserted">
+    <div class="container">
+        {% for post in blog_posts %}
+        <div class="blog-post">
+            <div class="image{{ (post.thumbnail.src == null) ? ' default-image' : '' }}" style="background-image: url({{ post.thumbnail.src ? post.thumbnail.src : slmk_site_logo }});">
+                <div class="img-content">
+                    <a href="{{ post.link }}">
+                        <h4>{{ post.title }}</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
