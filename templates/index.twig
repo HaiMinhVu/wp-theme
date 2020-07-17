@@ -180,56 +180,6 @@
 
                 {% endif %}
     {% include "partial/home/blog-posts.twig" %}
-
-    {% if blog_posts|length > 3 %}
-    <section class="section section-featured-category pb-0 ng-star-inserted">
-        <div class="container">
-            <div class="row m-0 justify-content-center">
-                <div class="col-lg">
-                    <div class="image blog_img1" style="background-image: url({{ blog_posts[0].thumbnail.src }});">
-                        <div class="img-content">
-                            <a href="{{ blog_posts[0].link }}">
-                                <h4>{{ blog_posts[0].title }}{{ blog_posts|length }}</h4>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg">
-                    <div class="row h-100">
-                        <div class="col-lg mt-4 mt-lg-0">
-                            <div class="image blog_imgSmall" style="background-image: url({{ blog_posts[1].thumbnail.src ? blog_posts[1].thumbnail.src : slmk_site_logo }});">
-                                <div class="img-content">
-                                    <a href="{{ blog_posts[1].link }}">
-                                        <h4>{{ blog_posts[1].title }}</h4>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg mt-4 mt-lg-0">
-                            <div class="image blog_imgSmall" style="background-image: url({{ blog_posts[2].thumbnail.src }});">
-                                <div class="img-content">
-                                    <a href="{{ blog_posts[2].link }}">
-                                        <h4>{{ blog_posts[2].title }}</h4>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 align-self-end">
-                            <div class="image blog_imgSmall" style="background-image: url({{ blog_posts[3].thumbnail.src }});">
-                                <div class="img-content">
-                                    <a href="{{ blog_posts[3].link }}">
-                                        <h4>{{ blog_posts[3].title }}</h4>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <br /><br /><br />
-    {% endif %}
 </div>
 
 {% endblock %}

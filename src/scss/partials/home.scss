@@ -9,6 +9,9 @@
                     background-size: 70%;
                 }
             }
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
         @media screen and (min-width: 768px) {
             .container {
@@ -22,6 +25,9 @@
                     &:nth-child(even) {
                         padding-left: 15px;
                     }
+                    &:nth-child(3) {
+                        margin-bottom: 0;
+                    }
                 }
             }
         }
@@ -29,23 +35,25 @@
             .container {
                 display: grid;
                 grid-template-columns: 25% 25% 25% 25%;
-                grid-template-rows: 330px 330px;
+                grid-template-rows: 250px 250px;
                 flex-wrap: unset;
                 .blog-post {
+                    height: 100%;
                     width: 100%;
+                    margin-bottom: 0;
                     &:first-child {
                         grid-column-start: 1;
                         grid-column-end: 3;
                         grid-row-start: 1;
-                        grid-row-end: 2;
-                        height: 630px;
+                        grid-row-end: 4;
+                        margin-bottom: 0;
                     }
                     &:nth-child(2) {
                         grid-column-start: 3;
                         grid-column-end: 3;
                         grid-row-start: 1;
                         grid-row-end: 1;
-                        height: 300px;
+                        padding-bottom: 15px;
                         padding-right: 7.5px;
                     }
                     &:nth-child(3) {
@@ -53,8 +61,8 @@
                         grid-column-end: 4;
                         grid-row-start: 1;
                         grid-row-end: 1;
-                        height: 300px;
                         padding-right: 0;
+                        padding-bottom: 15px;
                         padding-left: 22.5px;
                     }
                     &:nth-child(4) {
@@ -62,9 +70,20 @@
                         grid-column-end: 6;
                         grid-row-start: 2;
                         grid-row-end: 2;
-                        height: 300px;
-                        padding-right: 0;
-                        padding-left: 15px;
+                        padding: 15px 0 0 15px;
+                    }
+                    h4 {
+                        font-size: 90%;
+                    }
+                }
+            }
+        }
+        @media screen and (min-width: 1200px) {
+            .container {
+                grid-template-rows: 300px 300px;
+                .blog-post {
+                    h4 {
+                        font-size: initial;
                     }
                 }
             }
