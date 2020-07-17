@@ -105,7 +105,7 @@
                 </div>
                 {% endif %}
                 {% if who_we_are is defined %}
-                 <section class="section section-whoWeAre{{ (blog_posts|length > 3) ? ' pb-0' : '' }}">
+                 <section class="section section-whoWeAre{{ (blog_posts|length > 3 and category_callout is not defined) ? ' pb-0' : '' }}">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-6 d-flex justify-content-center">
