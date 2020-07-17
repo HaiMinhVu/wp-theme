@@ -19,7 +19,7 @@ if($post->post_parent == 0) {
     $args['post_parent'] = $post->ID;
     $children = array_values(get_children($args));
     if(count($children) > 0) {
-        $redirectUrl = get_permalink($children[0]->ID);
+        $redirectUrl = get_relative_link($children[0]->ID);
     } else {
         $redirectUrl = get_site_url();
     }
@@ -32,7 +32,7 @@ $children = array_values(get_children($args));
 
 $sideMenuItems = array_map(function($child){
     return [
-        'permalink' => get_permalink($child->ID),
+        'permalink' => get_relative_link($child->ID),
         'title' => $child->post_title
     ];
 }, $children);
@@ -40,7 +40,7 @@ $sideMenuItems = array_map(function($child){
 $context = Timber::context();
 $context['side_menu_items'] = $sideMenuItems;
 $context['parent_title'] = (get_post($post->post_parent))->post_title;
-$context['permalink'] = get_the_permalink();
+$context['permalink'] = get_relative_link();
 $context['post'] = new Timber\Post($post->ID);
 
 // $context['content'] = apply_filters( 'the_content', $post->post_content );
