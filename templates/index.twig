@@ -1,23 +1,20 @@
 {% extends "base.twig" %}
 {% block content %}
 <div class="ng-tns-c4-2 ng-trigger ng-trigger-routerTransition">
-    <section class="ng-tns-c4-2" _nghost-c5="">
-        <div _ngcontent-c5="" class="slider">
+    <section class="ng-tns-c4-2">
+        <div class="slider">
             <div id="home-slider">
                 <div id="tns" class="tns" style="overflow:hidden">
-
                 {% for slider in sliders|slice(0, 20) %}
-                    <!---->
-                    <!---->
                     <div style="background-image: url({{ slider.remote_path|cdn_link(1400) }});" class="slide-image">
-                        <div _ngcontent-c5="" class="item-content h-100">
-                            <div _ngcontent-c5="" class="container h-100">
-                                <div _ngcontent-c5="" class="row h-100 align-items-end">
-                                    <div _ngcontent-c5="" class="col">
-                                        <p _ngcontent-c5="" class="sub-name"></p>
-                                        <h1 _ngcontent-c5="">{{ slider.text }}</h1>
+                        <div class="item-content h-100">
+                            <div class="container h-100">
+                                <div class="row h-100 align-items-end">
+                                    <div class="col">
+                                        <p class="sub-name"></p>
+                                        <h1>{{ slider.text }}</h1>
                                         {% if slider.link is defined %}
-                                        <button _ngcontent-c5="" class="btn btn-primary rounded" tabindex="0"> Learn More <i _ngcontent-c5="" aria-hidden="true" class="fa fa-angle-right ml-2">
+                                        <button class="btn btn-primary rounded" tabindex="0"> Learn More <i aria-hidden="true" class="fa fa-angle-right ml-2">
                                             </i>
                                         </button>
                                         {% endif %}
@@ -26,65 +23,55 @@
                             </div>
                         </div>
                     </div>
-                    <!---->
                 {% endfor %}
-            </div>
-
+                </div>
             </div>
         {% include "partial/social-share.twig" %}
 </div>
 </section>
-<div class="ng-tns-c4-2" _nghost-c6="">
-    <section _ngcontent-c6="" class="section section-featured">
-        <div _ngcontent-c6="" class="container">
-            <div _ngcontent-c6="" class="row m-0">
-                <div _ngcontent-c6="" class="col-12 col-sec-pull pt-4 pt-md-5">
-                    <h1 _ngcontent-c6="" class="section-title text-center mb-4 mb-md-5">Featured Products</h1>
-                    <div _ngcontent-c6="" id="featured-tablist">
+<div class="ng-tns-c4-2">
+    <section class="section section-featured">
+        <div class="container">
+            <div class="row m-0">
+                <div class="col-12 col-sec-pull pt-4 pt-md-5">
+                    <h1 class="section-title text-center mb-4 mb-md-5">Featured Products</h1>
+                    <div id="featured-tablist">
                         <ul role="tablist" class="nav nav-tabs justify-content-start" style="display:none">
-                            <!---->
                             <li class="nav-item ng-star-inserted" style="">
                                 <a class="nav-link active" href="" role="tab" id="ngb-tab-0" aria-controls="ngb-tab-0-panel" aria-expanded="true" aria-disabled="false">
-                                    <!---->
-                                    <span _ngcontent-c6="" class="icon icon-thermal0 ng-star-inserted">
+                                    <span class="icon icon-thermal0 ng-star-inserted">
                                     </span>Night Vision </a>
                                 </li>
                                 <li class="nav-item ng-star-inserted" style="">
                                     <a class="nav-link" href="" role="tab" id="ngb-tab-1" aria-expanded="false" aria-disabled="false">
-                                        <!---->
-                                        <span _ngcontent-c6="" class="icon icon-thermal0 ng-star-inserted">
+                                        <span class="icon icon-thermal0 ng-star-inserted">
                                         </span>Thermal </a>
                                     </li>
                                     <li class="nav-item ng-star-inserted" style="">
                                         <a class="nav-link" href="" role="tab" id="ngb-tab-2" aria-expanded="false" aria-disabled="false">
-                                            <!---->
-                                            <span _ngcontent-c6="" class="icon icon-thermal0 ng-star-inserted">
+                                            <span class="icon icon-thermal0 ng-star-inserted">
                                             </span>IR Illuminators </a>
                                         </li>
                                         <li class="nav-item ng-star-inserted" style="">
                                             <a class="nav-link" href="" role="tab" id="ngb-tab-3" aria-expanded="false" aria-disabled="false">
-                                                <!---->
-                                                <span _ngcontent-c6="" class="icon icon-thermal0 ng-star-inserted">
+                                                <span class="icon icon-thermal0 ng-star-inserted">
                                                 </span>Accessories </a>
                                             </li>
                                         </ul>
                                         <div class="tab-content">
-                                            <!---->
-                                            <!---->
                                             <div role="tabpanel" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-0" id="ngb-tab-0-panel" aria-expanded="true" style="">
-                                                <!---->
                                                 <div class="ng-tns-c13-5">
                                                     <div class="owl-carousel owl-carousel-default owl-theme">
                                                         {% for product in featured_products %}
                                                         <div>
-                                                            <div _ngcontent-c6="" class="card card-product border-0" style="">
+                                                            <div class="card card-product border-0" style="">
                                                                 <a href="{{ product|product_page }}" class="card-image">
-                                                                    <img _ngcontent-c6="" alt="" class="img-fluid" src="{{ product.remote_image_path|cdn_link(400) }}">
+                                                                    <img alt="" class="img-fluid" src="{{ product.remote_image_path|cdn_link(400) }}">
                                                                 </a>
                                                                 <div class="card-body text-center">
-                                                                    <h4 _ngcontent-c6="" class="card-title" style="font-size: 20px;">{{ product.name }}</h4>
-                                                                    <p _ngcontent-c6="" class="card-sub-tile"></p>
-                                                                    <a href="{{ product|product_page }}" class="btn btn-dark rounded" tabindex="0">Explore <i _ngcontent-c6="" class="fa fa-angle-right ml-2">
+                                                                    <h4 class="card-title" style="font-size: 20px;">{{ product.name }}</h4>
+                                                                    <p class="card-sub-tile"></p>
+                                                                    <a href="{{ product|product_page }}" class="btn btn-dark rounded" tabindex="0">Explore <i class="fa fa-angle-right ml-2">
                                                                         </i>
                                                                     </a>
                                                                 </div>
@@ -93,18 +80,7 @@
                                                         {% endfor %}
                                                     </div>
                                                 </div>
-
-                                            <!---->
-                                            <!---->
-
                                             </div>
-                                            <!---->
-                                            <!---->
-                                            <!---->
-                                            <!---->
-                                            <!---->
-                                            <!---->
-                                            <!---->
                                         </div>
                                     </div>
                                 </div>
@@ -129,7 +105,7 @@
                 </div>
                 {% endif %}
                 {% if who_we_are is defined %}
-                 <section class="section section-whoWeAre">
+                 <section class="section section-whoWeAre{{ (blog_posts|length > 3) ? ' pb-0' : '' }}">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-6 d-flex justify-content-center">
@@ -179,7 +155,7 @@
                     </section>
 
                 {% endif %}
-    {% include "partial/home/blog-posts.twig" %}
+                {% include "partial/home/blog-posts.twig" %}
 </div>
 
 {% endblock %}
