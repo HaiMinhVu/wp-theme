@@ -128,7 +128,7 @@ class SellmarkThemeSite extends Site {
         }));
 
         $twig->addFilter(new Twig_Filter('img_src', function($id) {
-            return (new Image($id))->src;
+            return (new Timber\Image($id))->src;
         }));
 
         $twig->addFilter(new Twig_Filter('uglify_string', function($string) {
