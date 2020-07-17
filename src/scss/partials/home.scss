@@ -1,3 +1,77 @@
+.home {
+    .blog-posts {
+        .blog-post {
+            height: 400px;
+            margin-bottom: 30px;
+            position: relative;
+            .image {
+                &.default-image {
+                    background-size: 70%;
+                }
+            }
+        }
+        @media screen and (min-width: 768px) {
+            .container {
+                display: flex;
+                flex-wrap: wrap;
+                .blog-post {
+                    width: 50%;
+                    &:nth-child(odd) {
+                        padding-right: 15px;
+                    }
+                    &:nth-child(even) {
+                        padding-left: 15px;
+                    }
+                }
+            }
+        }
+        @media screen and (min-width: 992px) {
+            .container {
+                display: grid;
+                grid-template-columns: 25% 25% 25% 25%;
+                grid-template-rows: 330px 330px;
+                flex-wrap: unset;
+                .blog-post {
+                    width: 100%;
+                    &:first-child {
+                        grid-column-start: 1;
+                        grid-column-end: 3;
+                        grid-row-start: 1;
+                        grid-row-end: 2;
+                        height: 630px;
+                    }
+                    &:nth-child(2) {
+                        grid-column-start: 3;
+                        grid-column-end: 3;
+                        grid-row-start: 1;
+                        grid-row-end: 1;
+                        height: 300px;
+                        padding-right: 7.5px;
+                    }
+                    &:nth-child(3) {
+                        grid-column-start: 4;
+                        grid-column-end: 4;
+                        grid-row-start: 1;
+                        grid-row-end: 1;
+                        height: 300px;
+                        padding-right: 0;
+                        padding-left: 22.5px;
+                    }
+                    &:nth-child(4) {
+                        grid-column-start: 3;
+                        grid-column-end: 6;
+                        grid-row-start: 2;
+                        grid-row-end: 2;
+                        height: 300px;
+                        padding-right: 0;
+                        padding-left: 15px;
+                    }
+                }
+            }
+        }
+    }
+}
+
 .section-featured {
   background-color: #f2f2f2;
 
@@ -434,6 +508,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  height: 100%;
 
   img {
     width: 100%;
