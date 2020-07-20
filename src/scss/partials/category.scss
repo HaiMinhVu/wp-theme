@@ -1,0 +1,26 @@
+body.page-template-category {
+    .row {
+        .card {
+            transition: border-color 200ms;
+            img {
+                height: 90px;
+                object-fit: contain;
+                width: 120px;
+            }
+            text-decoration: none;
+            .card-body {
+                .card-title {
+                    color: initial;
+                    line-height: 20px;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+    .category-thumbs {
+        display: none;
+        @media screen and (min-width: 601px) {
+            display: flex;
+        }
+    }
+}

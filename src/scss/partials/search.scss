@@ -3,7 +3,7 @@
 	article {
 		max-width: 100%;
 		.article-content {
-			padding-top: 30px;
+			padding-top: 60px;
 			h1 {
 				text-align: center;
 			}
@@ -17,6 +17,14 @@
 			    justify-content: center;
 			    align-items: center;
 			    height: 40vh;
+			}
+		}
+	}
+	@media screen and (min-width: 768px) {
+		article {
+			.article-content {
+				margin-top: 90px;
+    			padding-top: 30px;
 			}
 		}
 	}

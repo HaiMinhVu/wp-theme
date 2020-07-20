@@ -22,22 +22,27 @@
                 <div class="product-category-dropdown dropdown">
                     <div class="form-group">
                         <select class="form-control" id="mobileCategorySelector">
-                          <option value="{{ category.id }}">All</option>
                           {% for category in sub_categories %}
                           <option value="{{ category.id }}">{{ category.label }}</option>
                           {% endfor %}
                         </select>
                     </div>
                 </div>
-                <ul class="nav nav-tabs sub-category justify-content-start" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link">
-                            <figure class="ng-star-inserted">
-                                <img alt="" src="{{ category.remote_path|cdn_link(200) }}">
-                            </figure>
-                            <h5>All</h5>
+                <div class="row category-thumbs">
+                    {% for category in sub_categories %}
+                    <div class="col-lg-2 col-md-3  col-sm-4 mb-4">
+                        <a href="/category/{{ category.id }}" class="card py-1 w-100">
+                          {% if category.remote_path %}
+                          <img class="card-img-top mx-auto" src="{{ category.remote_path|cdn_link(200) }}">
+                          {% endif %}
+                          <div class="card-body p-1">
+                            <p class="card-title text-center mb-1">{{ category.label }}</p>
+                          </div>
                         </a>
-                    </li>
+                    </div>
+                    {% endfor %}
+                </div>
+                <ul class="nav nav-tabs sub-category justify-content-start" role="tablist">
                     {% for category in sub_categories %}
                     <li class="nav-item ng-star-inserted{{ category.id == category_id ? 'active' : '' }}">
                         <a href="/category/{{ category.id }}" class="nav-link sub-category-link">

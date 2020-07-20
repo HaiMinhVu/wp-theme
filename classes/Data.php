@@ -121,7 +121,7 @@ class Data {
 
     public static function productSlugs()
     {
-        $names = self::get('products_names', '/products/names');
+        $names = self::get('products_names', 'products/names')->data;
 
         return array_map(function($name){
             return [
@@ -167,6 +167,25 @@ class Data {
     public static function productCategoriesAll()
     {
         return self::get('products_categories_all', 'categories/all')->data;
+    }
+
+    public static function parentCategory()
+    {
+        return self::getCategory(self::parentCategoryId());
+    }
+
+    public static function parentCategoryId() : ?int
+    {
+        $categories = self::productCategories();
+        if(count($categories) > 0) {
+            return $categories[0]->parent;
+        }
+        return null;
+    }
+
+    public static function parentCategoryPage() : ?string
+    {
+        return self::categoryPageById(self::parentCategoryId());
     }
 
     public static function productCategories()
@@ -222,6 +241,12 @@ class Data {
                 $categoryId = false;
             }
         }
+
+        if($parentCategory = Data::parentCategory()) {
+            $parentCategory->label = 'All Products';
+            $categoryTree[] = $parentCategory;
+        }
+
         $categoryTree = array_reverse($categoryTree);
 
         return $categoryTree;
@@ -308,9 +333,17 @@ class Data {
         return self::get("category_{$categoryId}_products", "category/{$categoryId}/products")->data;
     }
 
+    public static function getCategory($categoryId)
+    {
+        return self::get("category_{$categoryId}_with_parent", "category/{$categoryId}")->data;
+    }
+
     public static function getSubCategories($categoryId)
     {
-        return self::get("category_{$categoryId}", "category/{$categoryId}")->data->subCategories;
+        if($category = self::getCategory($categoryId)) {
+            return $category->subCategories;
+        }
+        return [];
     }
 
     public static function getProductIDBySlug($productSlug)
@@ -354,7 +387,14 @@ class Data {
 
     public static function categoryPage($category = null) {
         if($category) {
-            return '/category/'.$category->id;
+            return self::categoryPageById($category->id);
+        }
+        return null;
+    }
+
+    public static function categoryPageById($id = null) {
+        if($id) {
+            return get_site_url().'/category/'.$id;
         }
         return null;
     }

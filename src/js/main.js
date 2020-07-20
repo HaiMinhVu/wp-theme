@@ -33,11 +33,11 @@ $( document ).ready( function( $ ) {
                 }
             },
             {
-              breakpoint: 1024,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-              }
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                }
             }
         ]
     });
@@ -84,10 +84,10 @@ $( document ).ready( function( $ ) {
         }
     }
 
-       $('.slic').click(function(){
+    $('.slic').click(function(){
         alert('test');
 
-        });
+    });
 
     if($('body').hasClass('product-page')) {
         $('#tab-links .nav-link').click(function(e){
@@ -271,9 +271,28 @@ $( document ).ready( function( $ ) {
         $('#search-bar').toggleClass('active');
     });
 
+    // $('body').scroll()
+
+    if (
+        "IntersectionObserver" in window &&
+        "IntersectionObserverEntry" in window &&
+        "intersectionRatio" in window.IntersectionObserverEntry.prototype
+    ) {
+        let observer = new IntersectionObserver(entries => {
+            console.log(entries)
+            if (entries[0].boundingClientRect.y < 0) {
+                console.log('less than')
+                document.getElementById('main_navigation').classList.add("reduced");
+            } else {
+                console.log('greater than')
+                document.getElementById('main_navigation').classList.remove("reduced");
+            }
+        });
+        observer.observe(document.getElementById('scroll-anchor'));
+    }
 
     // Temporary
-    $('.dropdown-toggle').click(e => e.preventDefault());
+    // $('.dropdown-toggle').click(e => e.preventDefault());
 
     $('#overlay-menu .has-children').click(function(){
         $(this).siblings().removeClass('show-children');
