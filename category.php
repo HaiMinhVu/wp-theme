@@ -15,7 +15,7 @@ use SellmarkTheme\Yoast\Schema\Piece\ItemListSimple as ItemListSimplePiece;
 $categoryId = get_query_var('category');
 
 $context = Timber::context();
-$category = Data::getCategoryById($categoryId);
+$category = Data::getCategory($categoryId);
 $context['category'] = $category;
 $products = Data::getProductsByCategoryId($categoryId);
 $context['products'] = Data::getProductsByCategoryId($categoryId);
@@ -31,7 +31,7 @@ add_filter( 'wpseo_schema_webpage', function($data) use ($category, $categoryUrl
 	$data['url'] = $categoryUrl;
 	$data['potentialAction'][0]['target'] = $categoryUrl;
 	$data['name'] = $category->label;
-	if($category->last_update) $data['dateModified'] = $category->last_update;
+	if(property_exists($category, 'last_update') && $category->last_update) $data['dateModified'] = $category->last_update;
     return $data;
 });
 add_filter( 'wpseo_schema_graph_pieces', function($pieces, $context) use ($products) {

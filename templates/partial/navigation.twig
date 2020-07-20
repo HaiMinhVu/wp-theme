@@ -1,0 +1,83 @@
+<header id="main_navigation" class="fixed-top">
+    <nav class="container">
+        <a class="navbar-brand" routerlink="/" href="/">
+            <img class="img-fluid" alt="" src="{{ slmk_site_logo }}">
+        </a>
+        <ul>
+            {% for item in nav_items %}
+            <li>
+                <a href="{{ item.link }}">
+                    {{ item.name }}
+                    {% if item.children|length > 0 %}
+                    <i class="fa fa-angle-down ml-3"></i>
+                    {% endif %}
+                </a>
+                {% if item.children|length > 0 %}
+                <ul>
+                    {% for child in item.children %}
+                    <li>
+                        <a class="" href="{{ child.link }}">{{ child.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+            <li>
+                <a class="nav-link search search-toggle" aria-controls="collapseExample" href="javascript:void(0)" aria-expanded="false">
+                    <i class="fa fa-search"></i>
+                </a>
+                <a class="nav-link cart" target="_blank" href="http://www.sellmarknexus.com/checkout/cart.ssp?sc=3&amp;ck=RLi-rpzgAVWwmaRg&amp;vid=RLi-ruHgAQOKmrLj&amp;cktime=131820&amp;cart=5623&amp;ext=T">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span class="badge badge-secondary" id="shopping-counter" style="display: none"></span>
+                    <iframe id="shopping-counter-content" src="/?show_shopping_counter=true" style="border: 0;width: 1px;height: 1px;pointer-events: none; position: fixed;top:0;left:0;"></iframe>
+                </a>
+                <button id="hamburger-menu" class="navbar-toggler nav-link" type="button">
+                    <span class="navbar-toggler-icon">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </span>
+                </button>
+            </li>
+        </ul>
+    </nav>
+    <div class="search-wrapper" id="search-bar" >
+        <form method="GET" action="/" class="container" style="position: relative;">
+            <div class="row justify-content-between">
+                <div class="col">
+                    <div class="search-box">
+                        <input class="form-control" name="s" autocomplete="off" placeholder="Search..." type="search">
+                        <i class="fa fa-search">
+                        </i>
+                    </div>
+                </div>
+                <div class="col-auto align-self-center">
+                    <span class="close-search search-toggle">
+                        <i class="fa fa-close">
+                        </i>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% if breadcrumbs is defined and breadcrumbs|length > 0 %}
+    <div class="theme-bread ng-star-inserted nav-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb bg-transparent">
+                            {% for breadcrumb in breadcrumbs %}
+                            <li class="breadcrumb-item">
+                                <a href="/category/{{ breadcrumb.id }}">{{ breadcrumb.label }}</a>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% include 'partial/overlay-menu.twig' %}
+</header>

@@ -13,6 +13,7 @@ use Timber\{
 use Twig\Extension\StringLoaderExtension;
 
 class SellmarkThemeSite extends Site {
+
     /** Add timber support. */
     public function __construct() {
         parent::__construct();
@@ -28,6 +29,18 @@ class SellmarkThemeSite extends Site {
         add_action( 'template_redirect', array($this, 'clear_breadcrumbs') );
         add_action( 'rest_api_init', array($this, 'register_routes') );
         add_action( 'wp_enqueue_scripts', array($this, 'add_theme_scripts') );
+        add_action( 'admin_menu', array($this, 'remove_submenu_pages') );
+    }
+
+    public function remove_submenu_pages(){
+        $submenu_pages = [
+            'themes.php' => 'nav-menus.php'
+        ];
+        foreach($submenu_pages as $menu => $submenu) {
+            remove_submenu_page($menu, $submenu);
+        }
+        $request = urlencode($_SERVER['REQUEST_URI']);
+        remove_submenu_page('themes.php', 'customize.php?return='. $request);
     }
 
     public function add_to_sitemap() {
@@ -229,7 +242,7 @@ class SellmarkThemeSite extends Site {
         if(count($productCategories) > 0) {
             $categoryDropdown =  [
                 'name' => 'Products',
-                'link' => '/products',
+                'link' => Data::parentCategoryPage(),
                 'children' => array_map(function($category){
                     return [
                         'name' => $category->label,

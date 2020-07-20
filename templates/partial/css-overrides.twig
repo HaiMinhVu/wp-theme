@@ -13,11 +13,12 @@
 		body header #overlay-menu {
 			background-color: {{ brandColor2 }};
 		}
-		#search-bar {
+		#main_navigation .search-wrapper {
 			border-bottom-color: {{ brandColor2  }};
 		}
-		.header-container {
-			border-bottom-color: {{ brandColor2 }};
+		.header-container,
+		#main_navigation {
+			border-bottom: 3px solid {{ brandColor2 }};
 		}
 		.btn-primary {
 		    background-color: {{ brandColor2 }};
@@ -40,6 +41,10 @@
 		a,
 		.page-link {
 			color: {{ brandColor2 }};
+		}
+		.nav-tabs .nav-item .active {
+			color: {{ brandColor2 }};
+			border-bottom: 2px solid {{ brandColor2 }};
 		}
 		a:hover,
 		.page-link:hover {
@@ -66,7 +71,8 @@
 			outline-color: {{ brandColor2 }};
 		}
 
-		.img-thumbnail-insert:hover {
+		.img-thumbnail-insert:hover,
+		body.page-template-category .row .card:hover {
 			border-color: {{ brandColor2 }} !important;
 		}
 
