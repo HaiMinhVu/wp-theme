@@ -66,6 +66,19 @@ html {
             }
         }
     }
+    .badge-secondary {
+      position: absolute;
+      right: 2px;
+      padding: 0;
+      font-size: 9px;
+      width: 18px;
+      height: 18px;
+      line-height: 19px;
+      text-align: center;
+      background: #dc3545;
+      border-radius: 50%;
+      margin-top: -7px;
+    }
     .nav-breadcrumbs {
         box-shadow: 0 1px 2px #ddd;
         position: absolute;
