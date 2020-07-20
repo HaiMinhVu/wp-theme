@@ -42,18 +42,6 @@
                     </div>
                     {% endfor %}
                 </div>
-                <ul class="nav nav-tabs sub-category justify-content-start" role="tablist">
-                    {% for category in sub_categories %}
-                    <li class="nav-item ng-star-inserted{{ category.id == category_id ? 'active' : '' }}">
-                        <a href="/category/{{ category.id }}" class="nav-link sub-category-link">
-                            <figure class="ng-star-inserted">
-                                <img alt="" src="{{ category.remote_path|cdn_link(200) }}">
-                            </figure>
-                            <h5>{{ category.label }}</h5>
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
                 {% endif %}
             </div>
             <div class="product-list-row col-12">
