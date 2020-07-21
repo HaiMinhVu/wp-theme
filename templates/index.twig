@@ -14,9 +14,9 @@
                                         <p class="sub-name"></p>
                                         <h1>{{ slider.text }}</h1>
                                         {% if slider.link is defined %}
-                                        <button class="btn btn-primary rounded" tabindex="0"> Learn More <i aria-hidden="true" class="fa fa-angle-right ml-2">
-                                            </i>
-                                        </button>
+                                        <a href="{{ slider.link }}" class="btn btn-primary">
+                                            Learn More <i aria-hidden="true" class="fa fa-angle-right ml-2"></i>
+                                        </a>
                                         {% endif %}
                                     </div>
                                 </div>
