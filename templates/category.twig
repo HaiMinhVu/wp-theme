@@ -56,7 +56,6 @@
 
 {% block scripts %}
 <script type="text/javascript">
-    console.log('loaded');
     $('#mobileCategorySelector').change(function(){
         window.location.href = "/category/"+$(this).val();
     });
