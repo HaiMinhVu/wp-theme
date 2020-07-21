@@ -26,7 +26,7 @@ html {
             max-height: 100%;
             padding: 0;
             .img-fluid {
-                max-height: 80%;
+                height: 80%;
             }
         }
         > ul {
@@ -55,10 +55,13 @@ html {
                     text-transform: uppercase;
                     transition: font-size 250ms;
                 }
+                .cart {
+                    position: relative;
+                }
                 &:last-child {
                     display: flex;
                     .nav-link {
-                        &:not(:last-child) {
+                        &:first-child {
                             display: none;
                         }
                     }
@@ -69,15 +72,20 @@ html {
     .badge-secondary {
       position: absolute;
       right: 2px;
-      padding: 0;
-      font-size: 9px;
-      width: 18px;
-      height: 18px;
-      line-height: 19px;
-      text-align: center;
+      font-size: 11px;
       background: #dc3545;
+      border: 1px solid #dc3545;
       border-radius: 50%;
       margin-top: -7px;
+      transition: none;
+      body.mobile-menu-visible & {
+          background-color: #ffffff;
+          color: #dc3545;
+      }
+      @media screen and (max-width: 992px) {
+          font-size: 10px;
+          right: -4px;
+      }
     }
     .nav-breadcrumbs {
         box-shadow: 0 1px 2px #ddd;
@@ -222,7 +230,7 @@ html {
             ul {
                 background-color: transparent;
             }
-            .navbar-toggler-icon {
+            .nav-link {
                 color: #ffffff;
             }
         }

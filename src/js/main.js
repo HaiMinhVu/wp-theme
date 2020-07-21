@@ -279,12 +279,9 @@ $( document ).ready( function( $ ) {
         "intersectionRatio" in window.IntersectionObserverEntry.prototype
     ) {
         let observer = new IntersectionObserver(entries => {
-            console.log(entries)
             if (entries[0].boundingClientRect.y < 0) {
-                console.log('less than')
                 document.getElementById('main_navigation').classList.add("reduced");
             } else {
-                console.log('greater than')
                 document.getElementById('main_navigation').classList.remove("reduced");
             }
         });
