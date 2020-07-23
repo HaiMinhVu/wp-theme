@@ -213,37 +213,39 @@ $( document ).ready( function( $ ) {
         $thumbnailList.on('init', function(event, slick, direction){
             loadThumbnailClick();
         });
-
-        $thumbnailList.slick({
-            vertical:true,
-            slidesToShow: 5,
-            arrows: true,
-            prevArrow: '<span class="fa fa-caret-up icon-control"></span>',
-            nextArrow: '<span class="fa fa-caret-down icon-control"></span>',
-            responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 4,
-                        ...responsiveSettings
+        console.log($thumbnailList.find('.img-thumbnail-insert').length);
+        if($thumbnailList.find('.img-thumbnail-insert').length > 2) {
+            $thumbnailList.slick({
+                vertical:true,
+                slidesToShow: 5,
+                arrows: true,
+                prevArrow: '<span class="fa fa-caret-up icon-control"></span>',
+                nextArrow: '<span class="fa fa-caret-down icon-control"></span>',
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 4,
+                            ...responsiveSettings
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 4,
+                            ...responsiveSettings
+                        }
+                    },
+                    {
+                        breakpoint: 479,
+                        settings: {
+                            slidesToShow: 3,
+                            ...responsiveSettings
+                        }
                     }
-                },
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 4,
-                        ...responsiveSettings
-                    }
-                },
-                {
-                    breakpoint: 479,
-                    settings: {
-                        slidesToShow: 3,
-                        ...responsiveSettings
-                    }
-                }
-            ]
-        });
+                ]
+            });
+        }
 
         $('#alert-bottom .close').click(function(){
             closeAlertBottom();
