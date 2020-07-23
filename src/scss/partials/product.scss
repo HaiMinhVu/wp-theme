@@ -238,6 +238,13 @@ li.ng-star-inserted.img-thumbnail-insert * {
     padding: 0;
 
     .thumbnail-list {
+      .slick-list,
+      .slick-track {
+          width: 100% !important;
+      }
+      .slick-slide {
+          min-width: 79px !important;
+      }
       &:last-of-type li {
         &:first-child {
           margin-left: 0;
