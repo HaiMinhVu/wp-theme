@@ -297,12 +297,3 @@ $( document ).ready( function( $ ) {
     });
 
 });
-
-window.getCookie = (key = null) => {
-    if(!key) return null;
-    try {
-        return document.cookie.split(';').find(row => row.startsWith(key)).split('=')[1];
-    } catch(e) {
-        return null;
-    }
-}
