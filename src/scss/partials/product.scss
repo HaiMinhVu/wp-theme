@@ -238,13 +238,6 @@ li.ng-star-inserted.img-thumbnail-insert * {
     padding: 0;
 
     .thumbnail-list {
-      .slick-list,
-      .slick-track {
-          width: 100% !important;
-      }
-      .slick-slide {
-          min-width: 79px !important;
-      }
       &:last-of-type li {
         &:first-child {
           margin-left: 0;
@@ -588,6 +581,8 @@ li.ng-star-inserted.img-thumbnail-insert * {
         }
         .thumbnail-container {
           max-height: 90px;
+          display: flex;
+          justify-content: center;
             .icon-control {
               width: auto;
               height: 100%;
@@ -603,7 +598,10 @@ li.ng-star-inserted.img-thumbnail-insert * {
                 .img-thumbnail-insert {
                     width: 79px !important;
                     height: 80px !important;
-                    margin: 0;
+                    margin: 0 20px 0 0;
+                    &:last-child {
+                        margin: 0;
+                    }
                 }
                 .slick-slide {
                   > div {
