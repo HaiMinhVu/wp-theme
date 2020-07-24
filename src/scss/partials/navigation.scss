@@ -16,6 +16,7 @@ html {
         align-items: center;
         background-color: #ffffff;
         justify-content: space-between;
+        margin-bottom: -1px;
         display: flex;
         z-index: 9999;
         .navbar-brand {
@@ -36,6 +37,12 @@ html {
             justify-content: space-between;
             margin: 0;
             padding: 0;
+            > li:not(:last-child) {
+                transition: background-color 250ms;
+                &:hover {
+                    background-color: #f1f1f1;
+                }
+            }
             li {
                 display: none;
                 align-items: center;
@@ -358,7 +365,7 @@ html {
             }
         }
     }
-    @media screen and (max-width: 991px) {
+    @media screen and (max-width: 1200px) {
         .container {
             max-width: 100%;
         }
