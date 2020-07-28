@@ -118,7 +118,7 @@
                                                 {% for spec in product.specs %}
                                                 <tr class="ng-star-inserted">
                                                     <th>{{ spec.name }}</th>
-                                                    <td>{{ spec.value }}</td>
+                                                    <td>{{ spec.value }} {{ spec.suffix }}</td>
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>
