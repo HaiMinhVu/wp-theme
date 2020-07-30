@@ -12,9 +12,11 @@ html {
     &.admin-bar {
         margin-top: 45px;
     }
+    > nav {
+        background-color: #ffffff;
+    }
     nav {
         align-items: center;
-        background-color: #ffffff;
         justify-content: space-between;
         margin-bottom: -1px;
         display: flex;
@@ -103,7 +105,6 @@ html {
         bottom: 0;
         transform: translateY(calc(100% + 3px));
         .breadcrumb {
-            background-color: transparent;
             margin: 0;
             padding: 5px 0;
             font-size: 12px;
