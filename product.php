@@ -18,8 +18,7 @@ $product = Data::getProduct($productId);
 
 if(!$product) {
 	try {
-		$pageID = getTemplatePageId('product');
-		wp_redirect(get_permalink($pageID));
+		wp_redirect(get_site_url());
 		exit();
 	} catch(\Exception $e) {
 		// dd($e->getMessage());
