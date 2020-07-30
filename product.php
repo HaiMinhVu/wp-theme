@@ -18,14 +18,12 @@ $product = Data::getProduct($productId);
 
 if(!$product) {
 	try {
-		wp_redirect(get_site_url());
+		$parentCategoryPage = Data::parentCategoryPage();
+		wp_redirect($parentCategoryPage, 301);
 		exit();
 	} catch(\Exception $e) {
 		// dd($e->getMessage());
-		global $wp_query;
-		$wp_query->set_404();
-		status_header( 404 );
-		get_template_part( 404 );
+		wp_redirect(get_site_url());
 	}
 	exit();
 }
