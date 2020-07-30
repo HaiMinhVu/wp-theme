@@ -18,11 +18,11 @@ $product = Data::getProduct($productId);
 
 if(!$product) {
 	try {
-		$parentCategoryPage = Data::parentCategoryPage();
-		wp_redirect($parentCategoryPage, 301);
+		$pageID = getTemplatePageId('product');
+		wp_redirect(get_permalink($pageID));
 		exit();
 	} catch(\Exception $e) {
-		dd($e->getMessage());
+		// dd($e->getMessage());
 		global $wp_query;
 		$wp_query->set_404();
 		status_header( 404 );
