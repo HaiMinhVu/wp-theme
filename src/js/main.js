@@ -4,6 +4,32 @@ import 'jquery-zoom';
 import Vue from 'vue/dist/vue.js';
 import Search from './components/search.vue';
 import SLMKForm from './classes/SLMKForm';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+
+const checkIP = async (cb) => {
+    if(!Cookies.get('checked-ip')) {
+        try {
+            const { data } = await axios.get('https://ipinfo.io/');
+            const res = await axios.get(`http://demo.ip-api.com/json/${data.ip}`);
+            const canShowPrices = ['CA', 'US'].includes(res.data.countryCode);
+            Cookies.set('show-prices', canShowPrices);
+            Cookies.set('checked-ip', true);
+        } catch(e) {
+            Cookies.set('show-prices', true);
+            Cookies.set('checked-ip', false);
+        }
+    }
+    cb();
+}
+
+const checkIfPurchasable = () => {
+    if(Cookies.get('show-prices') == true) {
+        document.body.classList.add('cannot-purchase');
+    }
+}
 
 Vue.component('search', Search);
 
@@ -14,6 +40,10 @@ window.initSearch = () => {
 }
 
 $( document ).ready( function( $ ) {
+
+    // checkIP(function(){
+    //     checkIfPurchasable();
+    // });
 
     $('.owl-carousel-default').on('init', function(){
         setCardHeight();
@@ -145,12 +175,12 @@ $( document ).ready( function( $ ) {
             document.getElementById('shopping-counter-content').contentWindow.document.location.reload();
         }
 
-        function addToCart(nsid, cb) {
+        function addToCart(nsid, checkoutURL = 'https://checkout.netsuite.com/app/site/query/additemtocart.nl?qty=1&c=1247539&buyid=', cb) {
             const $cartButtons = $('.cart-action-buttons');
             $cartButtons.prop('disabled', true);
             $.ajax({
                 type: "POST",
-                url: `https://checkout.na1.netsuite.com/app/site/query/additemtocart.nl?qty=1&c=1247539&buyid=${nsid}`,
+                url: `${checkoutURL}${nsid}`,
                 contentType: 'text/html',
                 crossDomain: true,
                 dataType: "jsonp",
@@ -166,7 +196,8 @@ $( document ).ready( function( $ ) {
             e.preventDefault();
             const nsid = $(this).data('nsid');
             const productName = $(this).data('name');
-            addToCart(nsid, function(){
+            const checkoutURL = $(this).parent().data('checkout-url');
+            addToCart(nsid, checkoutURL, function(){
                 alertBottom(productName, 'Added to cart');
             });
         });
@@ -174,8 +205,10 @@ $( document ).ready( function( $ ) {
         $("#buy-now").click(function(e){
             e.preventDefault();
             const nsid = $(this).data('nsid');
-            addToCart(nsid, function(){
-                window.open("https://www.sellmarknexus.com/checkout/cart.ssp?ext=T&amp;whence=&amp;sc=3#cart", "_blank");
+            const checkoutURL = $(this).parent().data('checkout-url');
+            const viewCartURL = $(this).parent().data('view-cart-url');
+            addToCart(nsid, checkoutURL, function(){
+                window.open(viewCartURL, "_blank");
             });
         });
 
@@ -213,7 +246,7 @@ $( document ).ready( function( $ ) {
         $thumbnailList.on('init', function(event, slick, direction){
             loadThumbnailClick();
         });
-        console.log($thumbnailList.find('.img-thumbnail-insert').length);
+
         if($thumbnailList.find('.img-thumbnail-insert').length > 2) {
             $thumbnailList.slick({
                 vertical:true,
