@@ -1,11 +1,33 @@
+<pre style="display:none">{{ print_r(menu) }}</pre>
 <header id="main_navigation" class="fixed-top">
     <nav class="container">
         <a class="navbar-brand" routerlink="/" href="/">
-            <img class="img-fluid" alt="" src="{{ slmk_site_logo }}">
+            <img alt="" src="{{ slmk_site_logo }}">
         </a>
         <ul>
-            {% for item in nav_items %}
+            {% if menu.get_items|length > 0 %}
+            {% for item in menu.get_items %}
             <li>
+                <a href="{{ item.link }}">
+                    {{ item.title }}
+                    {% if item.children|length > 0 %}
+                    <i class="fa fa-angle-down ml-3"></i>
+                    {% endif %}
+                </a>
+                {% if item.children|length > 0 %}
+                <ul>
+                    {% for child in item.children %}
+                    <li>
+                        <a class="" href="{{ child.link }}">{{ child.title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+            {% endif %}
+            {% for item in nav_items %}
+            <li style="display:none">
                 <a href="{{ item.link }}">
                     {{ item.name }}
                     {% if item.children|length > 0 %}

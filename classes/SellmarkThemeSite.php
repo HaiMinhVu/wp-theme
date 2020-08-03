@@ -20,6 +20,7 @@ class SellmarkThemeSite extends Site {
         add_action( 'after_setup_theme', array( $this, 'theme_supports' ) );
         add_filter( 'timber/context', array( $this, 'add_to_context' ) );
         add_filter( 'timber/twig', array( $this, 'add_to_twig' ) );
+        add_filter( 'wp_get_nav_menu_items', array($this, 'add_to_nav_menu') );
         add_action( 'init', array($this, 'show_shopping_counter') );
         add_action( 'init', array($this, 'set_additional_debug_settings') );
         add_action('init', array($this, 'add_to_sitemap'));
@@ -34,11 +35,12 @@ class SellmarkThemeSite extends Site {
 
     public function remove_submenu_pages(){
         $submenu_pages = [
-            'themes.php' => 'nav-menus.php'
+            'themes.php' => 'theme-editor.php'
         ];
         foreach($submenu_pages as $menu => $submenu) {
             remove_submenu_page($menu, $submenu);
         }
+        remove_action('admin_menu', '_add_themes_utility_last', 101);
         $request = urlencode($_SERVER['REQUEST_URI']);
         remove_submenu_page('themes.php', 'customize.php?return='. $request);
     }
@@ -59,10 +61,9 @@ class SellmarkThemeSite extends Site {
     * @param string $context
     */
     public function add_to_context( $context ) {
-        $context['menu']  = new Menu();
+        $context = $this->prepareMenu($context);
         $context['site']  = $this;
         $context['product_categories'] = Data::productCategories();
-        $context['nav_items'] = $this->navItems();
         $context['footer_links'] = Data::getThemeOption('footer_links', 'theme_option');
         $context['addresses'] = Data::getThemeOption('addresses', 'theme_option');
         $context['phone_numbers'] = Data::getThemeOption('phone_numbers', 'theme_option');
@@ -78,6 +79,63 @@ class SellmarkThemeSite extends Site {
             $context["{$socialLink}_link"] = CarbonFields::get($socialLink);
         }
         return $context;
+    }
+
+    private function defaultMenu($menu) {
+        $productNavItem = $this->createNavItemObject('Product', '/product', 0, $idx = 0);
+        $productNavItem->children = $this->productNavItems($productNavItem->ID);
+        $items[] = $productNavItem;
+        $menu->items = $items;
+        return $menu;
+    }
+
+    private function prepareMenu($context) {
+        $menu = new Menu();
+        if($menu->name == '') {
+            $menu = $this->defaultMenu($menu);
+        }
+        $context['menu']  = $menu;
+        return $context;
+    }
+
+    public function add_to_nav_menu($items) {
+        $productPageTemplateID = $this->product_page_template_id();
+        $menuObjectIDs = array_map(function($item){
+            return $item->object_id;
+        }, $items);
+        if(in_array($productPageTemplateID, $menuObjectIDs) && !is_admin() && !is_customize_preview()) {
+            if($productPageObject = $items[array_search($productPageTemplateID, array_column($items, 'object_id'))]) {
+                $items = array_merge($items, $this->productNavItems($productPageObject->ID));
+           }
+       }
+       return $items;
+    }
+
+    private function productNavItems($productPageID = null) {
+        if(!$productPageID) return;
+        $productCategories = Data::productCategories();
+        $idx = 0;
+        return array_map(function($category) use ($productPageID, &$idx) {
+            $idx++;
+            return $this->createNavItemObject($category->label, Data::categoryPage($category), $productPageID, $idx);
+        }, Data::productCategories());
+    }
+
+    private function createNavItemObject($title, $url, $parentID, $idx = 1) {
+        return (object)[
+            'ID'                => 1000000000+$idx,
+            'title'             => $title,
+            'url'               => $url,
+            'menu_item_parent'  => $parentID,
+            'menu_order'        => 1000+$idx,
+            'type'              => '',
+            'object'            => '',
+            'object_id'         => '',
+            'db_id'             => '',
+            'classes'           => '',
+            'target'            => '',
+            'xfn'               => ''
+        ];
     }
 
     public function clear_breadcrumbs() {
@@ -181,13 +239,17 @@ class SellmarkThemeSite extends Site {
         return $twig;
     }
 
+    private function product_page_template_id() {
+        return Data::cacheRemember('product-page-id', function() {
+            return getTemplatePageId('product');
+        });
+    }
+
     /** Add rewrite rules for custom external data
     *
     */
     public function add_rewrites() {
-        $productPageID = Data::cacheRemember('product-page-id', function() {
-            return getTemplatePageId('product');
-        });
+        $productPageID = $this->product_page_id();
 
         add_rewrite_rule(
             '^products/([a-z_\-0-9]+)/?',
@@ -236,9 +298,10 @@ class SellmarkThemeSite extends Site {
         return Timber::compile( 'partial/contact.twig', $context );
     }
 
-    private function navItems() {
+    private function navItemsOld() {
         $items = Data::getThemeOption('menu_items', 'theme_option');
         $productCategories = Data::productCategories();
+        $context = Timber::context();
         if(count($productCategories) > 0) {
             $categoryDropdown =  [
                 'name' => 'Products',

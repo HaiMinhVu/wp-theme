@@ -8,7 +8,10 @@
  * @since    Timber 0.1
  */
 
-use SellmarkTheme\Data;
+use SellmarkTheme\{
+	CarbonFields,
+	Data
+};
 use SellmarkTheme\Yoast\Schema\Piece\Product as ProductPiece;
 
 $context = Timber::context();
@@ -35,6 +38,10 @@ if(array_key_exists('slmk_breadcrumbs', $_SESSION)) {
 $context['product'] = $product;
 $context['body_class'] = "{$context['body_class']} product-page";
 
+// Shopping URLs
+foreach(['netsuite_addcart_base_url', 'netsuite_viewcart_url'] as $key) {
+	$context[$key] = CarbonFields::get($key);
+}
 
 // Structured data filters
 $productUrl = get_site_url().productPage($product);

@@ -19,5 +19,5 @@
         }
     </style>
 </head>
-<body><script src="https://checkout.na1.netsuite.com/app/site/query/getcartitemcount.nl?c=1247539&n=1"></script></body>
+<body><script src="<?= \SellmarkTheme\CarbonFields::get('netsuite_cart_count_url') ?>"></script></body>
 </html>

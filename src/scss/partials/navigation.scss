@@ -1,3 +1,5 @@
+$default-transition-speed: 250ms;
+
 html {
     body.mobile-menu-visible & {
         overflow-y: hidden;
@@ -8,7 +10,7 @@ html {
     background-color: #ffffff;
     display: flex;
     height: 50px;
-    transition: height 250ms;
+    transition: height $default-transition-speed;
     &.admin-bar {
         margin-top: 45px;
     }
@@ -18,7 +20,6 @@ html {
     nav {
         align-items: center;
         justify-content: space-between;
-        margin-bottom: -1px;
         display: flex;
         z-index: 9999;
         .navbar-brand {
@@ -28,8 +29,11 @@ html {
             margin: 0;
             max-height: 100%;
             padding: 0;
-            .img-fluid {
+            img {
                 max-height: 80%;
+                max-width: 100%;
+                object-fit: contain;
+                width: auto;
             }
         }
         > ul {
@@ -40,7 +44,7 @@ html {
             margin: 0;
             padding: 0;
             > li:not(:last-child) {
-                transition: background-color 250ms;
+                transition: background-color $default-transition-speed;
                 &:hover {
                     background-color: #f1f1f1;
                 }
@@ -62,7 +66,8 @@ html {
                     padding: 0 0.5rem;
                     text-decoration: none;
                     text-transform: uppercase;
-                    transition: font-size 250ms;
+                    transition: font-size $default-transition-speed;
+                    white-space: nowrap;
                 }
                 .cart {
                     position: relative;
@@ -256,6 +261,7 @@ html {
             .breadcrumb {
                 font-size: 13px;
                 padding: 10px 0;
+                transition: all $default-transition-speed;
             }
         }
         &.reduced {
@@ -283,7 +289,7 @@ html {
                         position: absolute;
                         right: 0;
                         top: 70px;
-                        transition: all 250ms;
+                        transition: all $default-transition-speed;
                         z-index: 999;
                         li {
                             border-left: 1px solid #e7e7e7;
@@ -299,7 +305,7 @@ html {
                                 // text-transform: unset;
                                 width: 100%;
                                 padding: 0 1rem;
-                                transition: all 250ms;
+                                transition: all $default-transition-speed;
                                 &:hover {
                                     background-color: #f7f7f7;
                                 }
