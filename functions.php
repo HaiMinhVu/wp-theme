@@ -111,6 +111,16 @@ function dd($var) {
     exit();
 }
 
+add_action('admin_head', 'my_custom_fonts');
+
+function my_custom_fonts() {
+  echo '<style>
+     .hide-if-no-customize{
+        display: none;
+    }
+  </style>';
+}
+
 function rgbToHsl( $r, $g, $b ) {
     $oldR = $r;
     $oldG = $g;
@@ -172,3 +182,45 @@ function get_relative_link($post = null) {
     $permalink = ($post) ? get_permalink($post) : get_permalink();
     return str_replace(home_url(), '', $permalink);
 }
+
+function sellmark_update_product_cache($request) {
+    if($id = $request['product_id']) {
+        $product = Data::get("product_{$id}", "product/{$id}", true, true);
+        $response = new WP_REST_Response($product);
+        $response->set_status(200);
+        return $response;
+    }
+}
+
+function sellmark_update_products($request) {
+    $product = Data::get("products_api", "products", true, true);
+    $response = new WP_REST_Response($product);
+    $response->set_status(200);
+    return $response;
+}
+
+function sellmark_update_category_cache($request) {
+    if($id = $request['category_id']) {
+        $product = Data::get("category_{$id}_products", "category/{$id}/products", true, true);
+        $response = new WP_REST_Response($product);
+        $response->set_status(200);
+        return $response;
+    }
+}
+
+add_action('rest_api_init', function () {
+    register_rest_route( 'cache/v1', 'update/product/(?P<product_id>\d+)', [
+        'methods'  => 'GET',
+        'callback' => 'sellmark_update_product_cache'
+    ]);
+
+    register_rest_route( 'cache/v1', 'update/category/(?P<category_id>\d+)', [
+        'methods'  => 'GET',
+        'callback' => 'sellmark_update_category_cache'
+    ]);
+
+    register_rest_route( 'cache/v1', 'update/products', [
+        'methods'  => 'GET',
+        'callback' => 'sellmark_update_products'
+    ]);
+});

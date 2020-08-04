@@ -2,21 +2,27 @@
 {% extends "base.twig" %}
 
 {% block content %}
-  {# see `base.twig:27` for where this block's content will be inserted #}
-  <div class="content-wrapper container" id="search">
-		<article>
-			<section class="article-content" style="min-height: 60vh;">
-				<h1 class="article-h1">Search</h1>
-				<div class="article-body">
-					<search query="{{ search }}"></search>
-				</div>
-			</section>
-		</article>
-	</div><!-- /content-wrapper -->
+{# see `base.twig:27` for where this block's content will be inserted #}
+<div class="content-wrapper container" id="search">
+    <article>
+        <section class="article-content" style="min-height: 60vh;">
+            <h1 class="article-h1">Search</h1>
+            <div class="article-body">
+                <search query="{{ search }}"></search>
+            </div>
+        </section>
+    </article>
+</div><!-- /content-wrapper -->
+<div id="app">
+    <refresh-cache type="search" />
+</div>
 {% endblock %}
 
 {% block scripts %}
-	<script type="text/javascript">
-		initSearch();
-	</script>
+<script type="text/javascript">
+initSearch();
+{% if user %}
+refreshCache();
+{% endif %}
+</script>
 {% endblock %}

@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<section class="main">
+<section class="main" id="app">
     <div class="ng-star-inserted">
         <section class="section2 section-product ng-star-inserted">
             <div class="container">
@@ -87,58 +87,56 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8">
-                        <ngb-tabset>
-                            <ul role="tablist" id="tab-links" class="nav nav-tabs justify-content-start">
-                                <!---->
-                                <li class="nav-item ng-star-inserted">
-                                    <a class="nav-link active" data-content="#tab-content-description" role="tab" id="ngb-tab-4" aria-controls="ngb-tab-4-panel" aria-expanded="true" aria-disabled="false">Description</a>
-                                </li>
-                                <li class="nav-item ng-star-inserted">
-                                    <a class="nav-link" data-content="#tab-content-specifications" role="tab" id="ngb-tab-5" aria-expanded="false" aria-disabled="false">Specifications</a>
-                                </li>
-                                {% if product.videos|length > 0 %}
-                                <li class="nav-item ng-star-inserted">
-                                    <a class="nav-link" data-content="#tab-content-videos" role="tab" id="ngb-tab-7" aria-expanded="false" aria-disabled="false"> Product Videos<!---->
-                                    </a>
-                                </li>
-                                {% endif %}
-                            </ul>
-                            <div id="tab-content" class="tab-content">
-                                <div role="tabpanel" id="tab-content-description" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true">
-                                    <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Description</h5>
-                                    <span class="ng-star-inserted">
-                                        {{ product.description }}
-                                    </span>
-                                </div>
-                                <div role="tabpanel" id="tab-content-specifications" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true" style="display:none">
-                                    <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Specifications</h5>
-                                    <span class="ng-star-inserted">
-                                        <table class="table table-bordered table-striped ng-star-inserted">
-                                            <tbody>
-                                                {% for spec in product.specs %}
-                                                <tr class="ng-star-inserted">
-                                                    <th>{{ spec.name }}</th>
-                                                    <td>{{ spec.value }} {{ spec.suffix }}</td>
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </span>
-                                </div>
-                                <div role="tabpanel" id="tab-content-videos" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true" style="display:none">
-                                    <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Videos</h5>
-                                    <span class="ng-star-inserted owl-carousel video-carousel">
-                                        {% for video in product.videos %}
-                                        <div class="item">
-                                            <iframe id="ytplayer-{{ loop.index }}" type="text/html" width="100%" height="360" src="{{ video.url }}" autoplay="0" frameborder="0"></iframe>
-                                            <p>{{ video.description }}</p>
-                                            <br />
-                                        </div>
-                                        {% endfor %}
-                                    </span>
-                                </div>
+                        <ul role="tablist" id="tab-links" class="nav nav-tabs justify-content-start">
+                            <!---->
+                            <li class="nav-item ng-star-inserted">
+                                <a class="nav-link active" data-content="#tab-content-description" role="tab" id="ngb-tab-4" aria-controls="ngb-tab-4-panel" aria-expanded="true" aria-disabled="false">Description</a>
+                            </li>
+                            <li class="nav-item ng-star-inserted">
+                                <a class="nav-link" data-content="#tab-content-specifications" role="tab" id="ngb-tab-5" aria-expanded="false" aria-disabled="false">Specifications</a>
+                            </li>
+                            {% if product.videos|length > 0 %}
+                            <li class="nav-item ng-star-inserted">
+                                <a class="nav-link" data-content="#tab-content-videos" role="tab" id="ngb-tab-7" aria-expanded="false" aria-disabled="false"> Product Videos<!---->
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                        <div id="tab-content" class="tab-content">
+                            <div role="tabpanel" id="tab-content-description" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true">
+                                <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Description</h5>
+                                <span class="ng-star-inserted">
+                                    {{ product.description }}
+                                </span>
                             </div>
-                        </ngb-tabset>
+                            <div role="tabpanel" id="tab-content-specifications" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true" style="display:none">
+                                <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Specifications</h5>
+                                <span class="ng-star-inserted">
+                                    <table class="table table-bordered table-striped ng-star-inserted">
+                                        <tbody>
+                                            {% for spec in product.specs %}
+                                            <tr class="ng-star-inserted">
+                                                <th>{{ spec.name }}</th>
+                                                <td>{{ spec.value }} {{ spec.suffix }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </span>
+                            </div>
+                            <div role="tabpanel" id="tab-content-videos" class="tab-pane active ng-star-inserted" aria-labelledby="ngb-tab-4" id="ngb-tab-4-panel" aria-expanded="true" style="display:none">
+                                <h5 class="theme-color-dark font-weight-bold ng-star-inserted">Product Videos</h5>
+                                <span class="ng-star-inserted owl-carousel video-carousel">
+                                    {% for video in product.videos %}
+                                    <div class="item">
+                                        <iframe id="ytplayer-{{ loop.index }}" type="text/html" width="100%" height="360" src="{{ video.url }}" autoplay="0" frameborder="0"></iframe>
+                                        <p>{{ video.description }}</p>
+                                        <br />
+                                    </div>
+                                    {% endfor %}
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-4">
                         {% if (product.downloads|length > 0) %}
@@ -212,6 +210,17 @@
         <br /><br /><br />
         {% endif %}
     </div>
+    {% if user %}
+    <refresh-cache :item-id="{{ product.nsid }}" type="product" />
+    {% endif %}
 </section>
 
+{% endblock %}
+
+{% block scripts %}
+    {% if user %}
+        <script>
+            refreshCache();
+        </script>
+    {% endif %}
 {% endblock %}
