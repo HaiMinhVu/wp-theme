@@ -3,6 +3,7 @@ import 'slick-carousel';
 import 'jquery-zoom';
 import Vue from 'vue/dist/vue.js';
 import Search from './components/search.vue';
+import RefreshCache from './components/refresh-cache.vue';
 import SLMKForm from './classes/SLMKForm';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -32,11 +33,16 @@ const checkIfPurchasable = () => {
 }
 
 Vue.component('search', Search);
+Vue.component('refresh-cache', RefreshCache);
 
 window.$ = window.JQuery = $;
 window.SLMKForm = SLMKForm;
 window.initSearch = () => {
     new Vue({ el: '#search' });
+}
+
+window.refreshCache = () => {
+    new Vue({ el: '#app' });
 }
 
 $( document ).ready( function( $ ) {

@@ -57,19 +57,19 @@ class Data {
         return self::$instance;
     }
 
-    public static function get($cacheKey, $path, $isManufacturerPath = true) {
+    public static function get($cacheKey, $path, $isManufacturerPath = true, $forceDisableCache = false) {
         $instance = self::getInstance();
-        return $instance->_get($cacheKey, $path, $isManufacturerPath);
+        return $instance->_get($cacheKey, $path, $isManufacturerPath, $forceDisableCache);
     }
 
-    public function _get($cacheKey, $path, $isManufacturerPath = true) {
+    public function _get($cacheKey, $path, $isManufacturerPath = true, $forceDisableCache = false) {
         $cache = $this->cache;
         $client = $this->client;
         $url = ($isManufacturerPath) ? $this->getManufacturerEndpoint($path) : $this->getEndpoint($path);
-        $url = (self::DISABLE_REMOTE_CACHE) ? $url.'?force-update=1' : $url;
+        $url = (self::DISABLE_REMOTE_CACHE || $forceDisableCache) ? $url.'?force-update=1' : $url;
         $key = "{$this->manufacturer}_{$cacheKey}";
 
-        if($cache->isExpired($key) || self::DISABLE_CACHE) {
+        if($cache->isExpired($key) || self::DISABLE_CACHE || $forceDisableCache) {
             try {
                 $res = $client->get($url);
                 $data = $res->getBody()->getContents();

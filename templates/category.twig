@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<section class="section2 section-pro-cat">
+<section id="app" class="section2 section-pro-cat">
     <div class="container">
         <div class="row">
             <div class="col-lg">
@@ -51,6 +51,9 @@
             </div>
         </div>
     </div>
+    {% if user %}
+    <refresh-cache :item-id="{{ category.id }}" type="category" />
+    {% endif %}
 </section>
 {% endblock %}
 
@@ -59,5 +62,6 @@
     $('#mobileCategorySelector').change(function(){
         window.location.href = "/category/"+$(this).val();
     });
+    refreshCache();
 </script>
 {% endblock %}
