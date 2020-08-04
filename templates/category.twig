@@ -62,6 +62,8 @@
     $('#mobileCategorySelector').change(function(){
         window.location.href = "/category/"+$(this).val();
     });
+    {% if user %}
     refreshCache();
+    {% endif %}
 </script>
 {% endblock %}
