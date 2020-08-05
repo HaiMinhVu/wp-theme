@@ -50,10 +50,8 @@
                             <li class="ng-star-inserted">{{ feature }}</li>
                             {% endfor %}
                         </ul>
-                        <ul class="features-list">
-                            <!---->
-                        </ul>
-                        <div class="price-row">
+                        {% if show_prices|boolval %}
+                        <div class="price-row purchase-item">
                             <div class="row">
                                 <div class="col-md-auto">
                                     <h3 class="price">
@@ -70,7 +68,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center justify-content-sm-between flex-wrap" data-checkout-url="{{ netsuite_addcart_base_url }}" data-view-cart-url="{{ netsuite_viewcart_url }}">
+                        <div class="d-flex justify-content-center justify-content-sm-between flex-wrap purchase-item" data-checkout-url="{{ netsuite_addcart_base_url }}" data-view-cart-url="{{ netsuite_viewcart_url }}">
                             <button {{ allow_purchase(product.in_stock, product.allow_backorders) ? '' : 'disabled' }} id="add-to-cart" data-name="{{ product.name }}" data-nsid="{{ product.nsid }}" class="btn btn-warning rounded mt-4 cart-action-buttons mx-1">
                                 Add To Cart <i class="fa fa-shopping-cart"></i>
                             </button>
@@ -78,6 +76,7 @@
                                 Buy Now <i class="fa fa-shopping-cart"></i>
                             </button>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -86,7 +85,7 @@
         <section class="section2 section-pro-details pt-0 pb-0 ng-star-inserted">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 pb-4">
                         <ul role="tablist" id="tab-links" class="nav nav-tabs justify-content-start">
                             <!---->
                             <li class="nav-item ng-star-inserted">
@@ -153,7 +152,7 @@
                             </div>
                         </div>
                         {% endif %}
-                        {% if (product.included_items|length > 0) %}
+                        {% if (product.included_items|length > 0 and product.included_items[0]) %}
                         <div class="card bg-light border-0 mb-4">
                             <div class="card-body">
                                 <h5 class="card-title font-weight-bold theme-color-dark">Included in Package</h5>

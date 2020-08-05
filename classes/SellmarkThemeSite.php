@@ -72,6 +72,9 @@ class SellmarkThemeSite extends Site {
         $context['slmk_brand_color_hsl'] = rgbToHsl($context['slmk_brand_color_rgba']['red'], $context['slmk_brand_color_rgba']['green'], $context['slmk_brand_color_rgba']['blue']);
         $context['slmk_site_brand'] = ucwords(CarbonFields::get('slmk_site_brand'));
         $context['slmk_analytics'] = CarbonFields::get('slmk_analytics');
+        $context['show_prices'] = array_key_exists('show-prices', $_COOKIE) ? $_COOKIE['show-prices'] : "true";
+        // $context['show_prices_bool'] = boolval($context['show_prices']);
+        $context['netsuite_viewcart_url'] = CarbonFields::get('netsuite_viewcart_url');
         foreach(['slmk_site_favicon', 'slmk_site_logo'] as $imageSetting) {
             $context[$imageSetting] = (new Image(Data::getSetting($imageSetting)))->src;
         }
@@ -221,6 +224,9 @@ class SellmarkThemeSite extends Site {
             return allowPurchase($bool, $allow_backorders);
         }));
         $twig->addFunction( new Twig_Function('print_r', 'print_r'));
+        $twig->addFilter( new Twig_Filter('boolval', function($str){
+            return boolval($str) && $str !== 'false';
+        }));
         $twig->addFunction( new Twig_Function('dd', function($var) {
             echo '<pre>';
             print_r($var);

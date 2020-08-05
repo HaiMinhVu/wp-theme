@@ -1,4 +1,3 @@
-<pre style="display:none">{{ print_r(menu) }}</pre>
 <header id="main_navigation" class="fixed-top">
     <nav class="container">
         <a class="navbar-brand" routerlink="/" href="/">
@@ -6,50 +5,31 @@
         </a>
         <ul>
             {% if menu.get_items|length > 0 %}
-            {% for item in menu.get_items %}
-            <li>
-                <a href="{{ item.link }}">
-                    {{ item.title }}
+                {% for item in menu.get_items %}
+                <li>
+                    <a href="{{ item.link }}">
+                        {{ item.title }}
+                        {% if item.children|length > 0 %}
+                        <i class="fa fa-angle-down ml-3"></i>
+                        {% endif %}
+                    </a>
                     {% if item.children|length > 0 %}
-                    <i class="fa fa-angle-down ml-3"></i>
+                    <ul>
+                        {% for child in item.children %}
+                        <li>
+                            <a class="" href="{{ child.link }}">{{ child.title }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
                     {% endif %}
-                </a>
-                {% if item.children|length > 0 %}
-                <ul>
-                    {% for child in item.children %}
-                    <li>
-                        <a class="" href="{{ child.link }}">{{ child.title }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </li>
-            {% endfor %}
+                </li>
+                {% endfor %}
             {% endif %}
-            {% for item in nav_items %}
-            <li style="display:none">
-                <a href="{{ item.link }}">
-                    {{ item.name }}
-                    {% if item.children|length > 0 %}
-                    <i class="fa fa-angle-down ml-3"></i>
-                    {% endif %}
-                </a>
-                {% if item.children|length > 0 %}
-                <ul>
-                    {% for child in item.children %}
-                    <li>
-                        <a class="" href="{{ child.link }}">{{ child.name }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </li>
-            {% endfor %}
             <li>
                 <a class="nav-link search search-toggle" aria-controls="collapseExample" href="javascript:void(0)" aria-expanded="false">
                     <i class="fa fa-search"></i>
                 </a>
-                <a class="nav-link cart" target="_blank" href="http://www.sellmarknexus.com/checkout/cart.ssp?sc=3&amp;ck=RLi-rpzgAVWwmaRg&amp;vid=RLi-ruHgAQOKmrLj&amp;cktime=131820&amp;cart=5623&amp;ext=T">
+                <a class="nav-link cart" target="_blank" href="{{ netsuite_viewcart_url }}">
                     <i class="fa fa-shopping-cart"></i>
                     <span class="badge badge-secondary" id="shopping-counter" style="display: none"></span>
                     <iframe id="shopping-counter-content" src="/?show_shopping_counter=true" style="border: 0;width: 1px;height: 1px;pointer-events: none; position: fixed;top:0;left:0;"></iframe>
@@ -82,24 +62,6 @@
             </div>
         </form>
     </div>
-    {% if breadcrumbs is defined and breadcrumbs|length > 0 %}
-    <div class="theme-bread ng-star-inserted nav-breadcrumbs">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb bg-transparent">
-                            {% for breadcrumb in breadcrumbs %}
-                            <li class="breadcrumb-item">
-                                <a href="/category/{{ breadcrumb.id }}">{{ breadcrumb.label }}</a>
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
+    {% include 'partial/breadcrumbs.twig' %}
     {% include 'partial/overlay-menu.twig' %}
 </header>

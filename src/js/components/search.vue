@@ -8,7 +8,7 @@
     		<section v-if="hasProducts">
 				<div class="row">
 					<div class="col-md-4 col-sm-6" v-for="product in productsInView">
-						<ProductCard :key="product.nsid" :product="product" />
+						<ProductCard :key="product.nsid" :product="product" :show-price="showPrices" />
 					</div>
 				</div>
 				<br />
@@ -46,7 +46,13 @@
 	const meanPaginationRange = (1 + paginationRangeCount) / 2;
 
 	export default {
-		props: ['query'],
+		props: {
+			query: '',
+			showPrices: {
+				type: Boolean,
+				default: true
+			}
+		},
 		created() {
 			axios.get('/wp-json/slmk/products').then(res => {
 				this.products = res.data;

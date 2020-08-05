@@ -15,7 +15,7 @@ class Redirection {
     {
         $this->options = $options;
         $this->products = Data::getProducts();
-     }
+    }
 
     public static function init(array $options) : void
     {
@@ -59,7 +59,10 @@ class Redirection {
                 $url = $this->getItemPage($items[$key]);
                 $url = $url.'?'.$queryVars;
                 $this->redirect($url);
+            } else {
+                wp_redirect(get_site_url(), 302);
             }
+            exit();
         }
     }
 
@@ -68,7 +71,7 @@ class Redirection {
         return $this->products;
     }
 
-    protected function getItemPage(object $item)
+    protected function getItemPage(object $item) : ?string
     {
         return Data::productPage($item);
     }
@@ -80,7 +83,7 @@ class Redirection {
         }
     }
 
-    protected function buildQueryVars(array $without_keys = [])
+    protected function buildQueryVars(array $without_keys = []) : string
     {
         $getVars = $_GET;
         foreach($without_keys as $key) {

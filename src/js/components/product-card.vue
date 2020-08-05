@@ -6,15 +6,17 @@
         <div class="card-body text-center">
             <p class="card-title">{{ product.name }}</p>
             <p class="sub-title">{{ product.sku }}</p>
-            <p class="status" v-html="product.in_stock_html"></p>
-            <p class="price">${{ product.price }}</p>
+            <div class="purchase-item" v-if="showPrice">
+                <p class="status" v-html="product.in_stock_html"></p>
+                <p class="price">${{ product.price }}</p>
+            </div>
         </div>
     </a>
 </template>
 
 <script>
     export default {
-        props: ['product'],
+        props: ['product', 'showPrice'],
         methods: {
             inStock(stockStatus, backOrdered = true) {
                 return stockStatus || backOrdered;

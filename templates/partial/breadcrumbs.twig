@@ -1,0 +1,19 @@
+{% if breadcrumbs is defined and breadcrumbs|length > 0 %}
+<div class="theme-bread ng-star-inserted nav-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent">
+                        {% for breadcrumb in breadcrumbs %}
+                        <li class="breadcrumb-item">
+                            <a href="/category/{{ breadcrumb.id }}">{{ breadcrumb.label }}</a>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
