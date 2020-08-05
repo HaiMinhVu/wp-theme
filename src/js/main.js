@@ -15,7 +15,7 @@ const checkIP = async (cb) => {
         try {
             const { data } = await axios.get('https://ipinfo.io/');
             const res = await axios.get(`http://demo.ip-api.com/json/${data.ip}`);
-            const canShowPrices = ['CA', 'US'].includes(res.data.countryCode);
+            const canShowPrices = ['CA','US'].includes(res.data.countryCode);
             Cookies.set('show-prices', canShowPrices);
             Cookies.set('checked-ip', true);
         } catch(e) {
@@ -27,7 +27,7 @@ const checkIP = async (cb) => {
 }
 
 const checkIfPurchasable = () => {
-    if(Cookies.get('show-prices') == true) {
+    if(Cookies.get('show-prices') == "false") {
         document.body.classList.add('cannot-purchase');
     }
 }
@@ -47,9 +47,7 @@ window.refreshCache = () => {
 
 $( document ).ready( function( $ ) {
 
-    // checkIP(function(){
-    //     checkIfPurchasable();
-    // });
+    checkIP(() => checkIfPurchasable());
 
     $('.owl-carousel-default').on('init', function(){
         setCardHeight();
@@ -81,11 +79,6 @@ $( document ).ready( function( $ ) {
     $('#hamburger-menu').click(function(){
         $('#overlay-menu .has-children').removeClass('show-children');
         $('body').toggleClass('mobile-menu-visible');
-    });
-
-    // setContentPadding();
-    $(window).on('load resize', function(){
-        // setContentPadding();
     });
 
     function setContentPadding() {
@@ -312,8 +305,6 @@ $( document ).ready( function( $ ) {
         $('#search-bar').toggleClass('active');
     });
 
-    // $('body').scroll()
-
     if (
         "IntersectionObserver" in window &&
         "IntersectionObserverEntry" in window &&
@@ -328,9 +319,6 @@ $( document ).ready( function( $ ) {
         });
         observer.observe(document.getElementById('scroll-anchor'));
     }
-
-    // Temporary
-    // $('.dropdown-toggle').click(e => e.preventDefault());
 
     $('#overlay-menu .has-children').click(function(){
         $(this).siblings().removeClass('show-children');

@@ -39,9 +39,7 @@ $context['product'] = $product;
 $context['body_class'] = "{$context['body_class']} product-page";
 
 // Shopping URLs
-foreach(['netsuite_addcart_base_url', 'netsuite_viewcart_url'] as $key) {
-	$context[$key] = CarbonFields::get($key);
-}
+$context['netsuite_addcart_base_url'] = CarbonFields::get('netsuite_addcart_base_url');
 
 // Structured data filters
 $productUrl = get_site_url().productPage($product);

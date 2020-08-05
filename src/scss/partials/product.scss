@@ -1,3 +1,9 @@
+body.cannot-purchase {
+    .purchase-item {
+        display: none !important;
+    }
+}
+
 .product-list-row {
   // display: -ms-grid;
   // display: grid;

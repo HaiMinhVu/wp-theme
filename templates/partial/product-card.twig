@@ -5,9 +5,13 @@
     <div class="card-body text-center">
         <p class="card-title">{{ product.name }}</p>
         <p class="sub-title">{{ product.sku }}</p>
-        <p class="status">
-            {{ in_stock(product.in_stock, product.allow_backorders) }}
-        </p>
-        <p class="price">{{ product.price|format_currency }}</p>
+        {% if show_prices|boolval %}
+        <div class="purchase-item">
+            <p class="status">
+                {{ in_stock(product.in_stock, product.allow_backorders) }}
+            </p>
+            <p class="price">{{ product.price|format_currency }}</p>
+        </div>
+        {% endif %}
     </div>
 </a>
