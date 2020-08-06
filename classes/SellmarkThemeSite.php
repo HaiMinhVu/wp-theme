@@ -255,7 +255,7 @@ class SellmarkThemeSite extends Site {
     *
     */
     public function add_rewrites() {
-        $productPageID = $this->product_page_id();
+        $productPageID = $this->product_page_template_id();
 
         add_rewrite_rule(
             '^products/([a-z_\-0-9]+)/?',
