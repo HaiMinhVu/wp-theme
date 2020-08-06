@@ -29,7 +29,7 @@ class CarbonFields {
 		Container::make('theme_options', __( 'Theme Options', 'crb' ))
 		    ->add_tab(__( 'Global' ), $this->globalSettingsFields())
 		    ->add_tab(__( 'Homepage' ), $this->homepageFields())
-		    ->add_tab(__( 'Menu' ), $this->menuFields())
+		    // ->add_tab(__( 'Menu' ), $this->menuFields())  Now handled in Appearance -> Menus
 		    ->add_tab(__('Footer'), $this->footerFields())
 		    ->add_tab(__('Social'), $this->socialFields())
 			->add_tab(__('Store'), $this->storeFields())
