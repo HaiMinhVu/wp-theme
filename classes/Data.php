@@ -301,8 +301,11 @@ class Data {
         return '';
     }
 
-    public static function getProducts()
+    public static function getProducts($forceDisableCache = false)
     {
+        return self::getProductsByCategoryId(self::parentCategoryId(), $forceDisableCache);
+
+        // Using dedicated endpoint
         return self::get('products_api', 'products')->data;
     }
 
@@ -325,12 +328,12 @@ class Data {
 
     public static function getProduct($id)
     {
-        return self::get("product_{$id}", "product/{$id}")->data;
+        return self::get("product_{$id}", "product/{$id}", false)->data;
     }
 
-    public static function getProductsByCategoryId($categoryId)
+    public static function getProductsByCategoryId($categoryId, $forceDisableCache = false)
     {
-        return self::get("category_{$categoryId}_products", "category/{$categoryId}/products")->data;
+        return self::get("category_{$categoryId}_products", "category/{$categoryId}/products", true, $forceDisableCache)->data;
     }
 
     public static function getCategory($categoryId)
@@ -397,6 +400,17 @@ class Data {
             return get_site_url().'/category/'.$id;
         }
         return null;
+    }
+
+    public static function doesProductBelongOnSite($productId = null)
+    {
+        if($productId) {
+            $validIds = array_map(function($product) {
+                return $product->nsid;
+            },self::getProducts());
+            return in_array($productId, $validIds);
+        }
+        return false;
     }
 
     public static function productPageUrl($product) {

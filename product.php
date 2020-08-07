@@ -17,12 +17,12 @@ use SellmarkTheme\Yoast\Schema\Piece\Product as ProductPiece;
 $context = Timber::context();
 $productSlug = get_query_var('product');
 $productId = (is_numeric($productSlug)) ? $productSlug : Data::getProductIDBySlug($productSlug);
-$product = Data::getProduct($productId);
+$product = (Data::doesProductBelongOnSite($productId)) ? Data::getProduct($productId) : null;
 
 if(!$product) {
 	try {
 		$parentCategoryPage = Data::parentCategoryPage();
-		wp_redirect($parentCategoryPage, 301);
+		wp_redirect($parentCategoryPage, 302);
 		exit();
 	} catch(\Exception $e) {
 		// dd($e->getMessage());

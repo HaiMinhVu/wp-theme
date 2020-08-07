@@ -73,14 +73,20 @@ class SellmarkThemeSite extends Site {
         $context['slmk_site_brand'] = ucwords(CarbonFields::get('slmk_site_brand'));
         $context['slmk_analytics'] = CarbonFields::get('slmk_analytics');
         $context['show_prices'] = array_key_exists('show-prices', $_COOKIE) ? $_COOKIE['show-prices'] : "true";
-        // $context['show_prices_bool'] = boolval($context['show_prices']);
+        $context['slmk_newsletter_html'] = CarbonFields::get('slmk_newsletter_html');
         $context['netsuite_viewcart_url'] = CarbonFields::get('netsuite_viewcart_url');
         foreach(['slmk_site_favicon', 'slmk_site_logo'] as $imageSetting) {
             $context[$imageSetting] = (new Image(Data::getSetting($imageSetting)))->src;
         }
+        $hasSocialLinks = false;
         foreach(['facebook', 'youtube','twitter','instagram'] as $socialLink) {
-            $context["{$socialLink}_link"] = CarbonFields::get($socialLink);
+            $link = CarbonFields::get($socialLink);
+            $context["{$socialLink}_link"] = $link;
+            if($link) {
+                $hasSocialLinks = true;
+            }
         }
+        $context['has_social_links'] = $hasSocialLinks;
         return $context;
     }
 

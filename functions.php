@@ -185,7 +185,7 @@ function get_relative_link($post = null) {
 
 function sellmark_update_product_cache($request) {
     if($id = $request['product_id']) {
-        $product = Data::get("product_{$id}", "product/{$id}", true, true);
+        $product = Data::get("product_{$id}", "product/{$id}", false, true);
         $response = new WP_REST_Response($product);
         $response->set_status(200);
         return $response;
@@ -193,7 +193,7 @@ function sellmark_update_product_cache($request) {
 }
 
 function sellmark_update_products($request) {
-    $product = Data::get("products_api", "products", true, true);
+    $products = Data::getProducts(true);
     $response = new WP_REST_Response($product);
     $response->set_status(200);
     return $response;
