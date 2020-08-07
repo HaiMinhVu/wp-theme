@@ -8,16 +8,6 @@ use Carbon_Fields\Carbon_Fields;
 
 class CarbonFields {
 
-	const DEFAULTS = [
-        'slmk_api_key' => 'Y4=nsSabrJ6C8q-6XvYVMp6zDX@BYPnFmPP2k7$G%txKm%@5X4ku5rJE2ap?ZwyZYjcn^8BJZ*P7y@hPwp+r$@KMTfynkXP-a98DRBYGH%AU^?!R6+SM7?S8aRM?v_TK',
-        'slmk_site_brand' => 'pulsar',
-        'slmk_api_endpoint' => 'https://api-staging.slmk.dev/v1',
-        'slmk_home_slider' => 257,
-        'slmk_featured_products' => 105,
-        'slmk_site_logo' => 5486,
-        'slmk_site_favicon' => 548
-    ];
-
 	public function __construct()
 	{
 		add_action('after_setup_theme', [$this, 'crb_load']);
@@ -29,10 +19,10 @@ class CarbonFields {
 		Container::make('theme_options', __( 'Theme Options', 'crb' ))
 		    ->add_tab(__( 'Global' ), $this->globalSettingsFields())
 		    ->add_tab(__( 'Homepage' ), $this->homepageFields())
-		    // ->add_tab(__( 'Menu' ), $this->menuFields())  Now handled in Appearance -> Menus
 		    ->add_tab(__('Footer'), $this->footerFields())
 		    ->add_tab(__('Social'), $this->socialFields())
 			->add_tab(__('Store'), $this->storeFields())
+			->add_tab(__('Newsletter'), $this->newsletterFields())
 		    ->add_tab(__('Developer'), $this->developerFields());
 	}
 
@@ -43,7 +33,7 @@ class CarbonFields {
 			$brands[$brand->slug] = $brand->name;
 		}
 		return [
-			Field::make( 'select', 'slmk_site_brand', 'Site Brand' )->add_options($brands),
+			Field::make( 'select', 'slmk_site_brand', 'Site Brand' )->add_options($brands)->set_default_value('pulsar'),
 			Field::make( 'color', 'slmk_brand_color', __( 'Site Primary Brand Color' ) )->set_alpha_enabled( true ),
 			Field::make( 'image', 'slmk_site_favicon', __( 'Site Favicon' ) ),
 			Field::make( 'image', 'slmk_site_logo', __( 'Site Logo' ) )
@@ -94,22 +84,6 @@ class CarbonFields {
 					}, ['left', 'right'])
 				)
 
-		];
-	}
-
-	private function menuFields()
-	{
-		return [
-			Field::make( 'complex', 'menu_items', __( 'Menu Items' ) )
-				->add_fields([
-					Field::make( 'text', 'name', __( 'Name' ) ),
-					Field::make( 'text', 'link', __( 'Link' ) ),
-					Field::make( 'complex', 'children', __( 'Menu Items' ) )
-						->add_fields([
-							Field::make( 'text', 'name', __( 'Name' ) ),
-							Field::make( 'text', 'link', __( 'Link' ) ),
-						])->set_max(10)
-				])->set_max(4)
 		];
 	}
 
@@ -168,12 +142,24 @@ class CarbonFields {
 		];
 	}
 
+	private function newsletterFields()
+	{
+		return [
+			Field::make( 'textarea', 'slmk_newsletter_html', 'Newsletter html snippet' )
+				 ->set_rows(12)
+		];
+	}
+
 	private function developerFields()
 	{
 		return [
-			Field::make( 'text', 'slmk_api_endpoint', 'Sellmark API Endpoint' ),
-			Field::make( 'text', 'slmk_api_form_endpoint', 'Sellmark API Form Endpoint' )->set_help_text('If form API endpoint/version differs, specify here, defaults to Sellmark API Enpoint declared above'),
-			Field::make( 'textarea', 'slmk_api_key', 'Sellmark API Key' )->set_rows(2),
+			Field::make( 'text', 'slmk_api_endpoint', 'Sellmark API Endpoint' )
+			     ->set_default_value('https://api-staging.slmk.dev/v1'),
+			Field::make( 'text', 'slmk_api_form_endpoint', 'Sellmark API Form Endpoint' )
+			     ->set_help_text('If form API endpoint/version differs, specify here, defaults to Sellmark API Enpoint declared above'),
+			Field::make( 'textarea', 'slmk_api_key', 'Sellmark API Key' )
+				 ->set_default_value('Y4=nsSabrJ6C8q-6XvYVMp6zDX@BYPnFmPP2k7$G%txKm%@5X4ku5rJE2ap?ZwyZYjcn^8BJZ*P7y@hPwp+r$@KMTfynkXP-a98DRBYGH%AU^?!R6+SM7?S8aRM?v_TK')
+				 ->set_rows(2),
 			Field::make( 'textarea', 'slmk_analytics', 'Sellmark Analytics Scripts' )->set_rows(8),
 			Field::make( 'text', 'slmk_redirect_product_path', 'Redirect Product Path' ),
 			Field::make( 'text', 'slmk_redirect_product_var', 'Redirect Product GET URL Variable' )
@@ -185,27 +171,14 @@ class CarbonFields {
 	    Carbon_Fields::boot();
 	}
 
-	private static function getDefault($option)
-	{
-		if(array_key_exists($option, self::DEFAULTS)) {
-			return self::DEFAULTS[$option];
-		}
-		return '';
-	}
-
 	public static function get($option, $type = 'option') : ?string
 	{
 		if($type == 'option') {
-			$optionValue = get_option("_{$option}");
-			return $optionValue ? $optionValue : self::getDefault($option);
+			return get_option("_{$option}");
 		} elseif ($type == 'theme_option') {
 			return json_encode(carbon_get_theme_option($option));
 		}
-	}
-
-	public function generate_env_file()
-	{
-		//
+		return null;
 	}
 
 }
