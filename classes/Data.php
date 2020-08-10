@@ -328,7 +328,7 @@ class Data {
 
     public static function getProduct($id)
     {
-        return self::get("product_{$id}", "product/{$id}", false)->data;
+        return self::get("product_{$id}", "product/{$id}")->data;
     }
 
     public static function getProductsByCategoryId($categoryId, $forceDisableCache = false)
