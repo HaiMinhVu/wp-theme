@@ -17,7 +17,8 @@ use SellmarkTheme\Yoast\Schema\Piece\Product as ProductPiece;
 $context = Timber::context();
 $productSlug = get_query_var('product');
 $productId = (is_numeric($productSlug)) ? $productSlug : Data::getProductIDBySlug($productSlug);
-$product = (Data::doesProductBelongOnSite($productId)) ? Data::getProduct($productId) : null;
+// $product = (Data::doesProductBelongOnSite($productId)) ? Data::getProduct($productId) : null;
+$product = Data::getProduct($productId);
 
 if(!$product) {
 	try {
