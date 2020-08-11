@@ -8,6 +8,8 @@ use Carbon_Fields\Carbon_Fields;
 
 class CarbonFields {
 
+	private $optionsContainer;
+
 	public function __construct()
 	{
 		add_action('after_setup_theme', [$this, 'crb_load']);
@@ -16,14 +18,25 @@ class CarbonFields {
 
 	public function register_fields()
 	{
-		Container::make('theme_options', __( 'Theme Options', 'crb' ))
-		    ->add_tab(__( 'Global' ), $this->globalSettingsFields())
-		    ->add_tab(__( 'Homepage' ), $this->homepageFields())
-		    ->add_tab(__('Footer'), $this->footerFields())
-		    ->add_tab(__('Social'), $this->socialFields())
-			->add_tab(__('Store'), $this->storeFields())
-			->add_tab(__('Newsletter'), $this->newsletterFields())
-		    ->add_tab(__('Developer'), $this->developerFields());
+		$this->registerOptionsContainer();
+		$this->registerPage('Homepage', $this->homepageFields());
+		$this->registerPage('Footer', $this->footerFields());
+		$this->registerPage('Social', $this->socialFields());
+		$this->registerPage('Store', $this->storeFields());
+		$this->registerPage('Newsletter', $this->newsletterFields());
+		$this->registerPage('Developer', $this->developerFields());
+	}
+
+	private function registerOptionsContainer()
+	{
+		$this->optionsContainer = Container::make('theme_options', __('Sellmark Options'))->add_fields($this->globalSettingsFields());
+	}
+
+	private function registerPage(string $title, array $fields) : void
+	{
+		Container::make('theme_options', __($title))
+				 ->set_page_parent($this->optionsContainer)
+				 ->add_fields($fields);
 	}
 
 	private function globalSettingsFields() : array
@@ -147,6 +160,7 @@ class CarbonFields {
 		return [
 			Field::make( 'textarea', 'slmk_newsletter_html', 'Newsletter html snippet' )
 				 ->set_rows(12)
+				 ->set_help_text('Can use Bootstrap 4 classes for styling')
 		];
 	}
 

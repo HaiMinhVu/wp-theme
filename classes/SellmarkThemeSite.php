@@ -226,6 +226,11 @@ class SellmarkThemeSite extends Site {
         $twig->addFunction( new Twig_Function('in_stock', function($bool, $allow_backorders = false){
             return inStock($bool, $allow_backorders);
         }));
+
+        $twig->addFunction( new Twig_Function('category_page', function($category){
+            return Data::categoryPage($category);
+        }));
+
         $twig->addFunction( new Twig_Function('allow_purchase', function($bool, $allow_backorders = false){
             return allowPurchase($bool, $allow_backorders);
         }));

@@ -328,7 +328,7 @@ class Data {
 
     public static function getProduct($id)
     {
-        return self::get("product_{$id}", "product/{$id}")->data;
+        return self::get("product_{$id}", "product/{$id}", false)->data;
     }
 
     public static function getProductsByCategoryId($categoryId, $forceDisableCache = false)
@@ -390,7 +390,7 @@ class Data {
 
     public static function categoryPage($category = null) {
         if($category) {
-            return self::categoryPageById($category->id);
+            return self::categoryPageById($category->id).'/'.sanitize_title($category->label);
         }
         return null;
     }
