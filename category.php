@@ -25,7 +25,7 @@ $breadcrumbs = Data::getCategoryBreadcrumbs($categoryId);
 $context['breadcrumbs'] = $breadcrumbs;
 $_SESSION['slmk_breadcrumbs'] = $breadcrumbs;
 
-$categoryUrl = get_site_url().'/category/'.$categoryId;
+$categoryUrl = Data::categoryPage($category);
 
 add_filter( 'wpseo_schema_webpage', function($data) use ($category, $categoryUrl) {
 	$data['url'] = $categoryUrl;

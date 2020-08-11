@@ -8,22 +8,24 @@ import SLMKForm from './classes/SLMKForm';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+// axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
-const checkIP = async (cb) => {
+const checkIP = async (cb = null) => {
     if(!Cookies.get('checked-ip')) {
         try {
-            const { data } = await axios.get('https://ipinfo.io/');
-            const res = await axios.get(`http://demo.ip-api.com/json/${data.ip}`);
-            const canShowPrices = ['CA','US'].includes(res.data.countryCode);
+            const { data: ipData } = await axios.get('https://api.ipify.org/?format=json');
+            const { data: locData } = await axios.get(`https://ipapi.co/${ipData.ip}/json`);
+            console.log([ipData, locData]);
+            const canShowPrices = ['CA','US'].includes(locData.country_code);
             Cookies.set('show-prices', canShowPrices);
             Cookies.set('checked-ip', true);
         } catch(e) {
+            console.error(e);
             Cookies.set('show-prices', true);
             Cookies.set('checked-ip', false);
         }
     }
-    cb();
+    if(cb) cb();
 }
 
 const checkIfPurchasable = () => {
@@ -43,6 +45,10 @@ window.initSearch = () => {
 
 window.refreshCache = () => {
     new Vue({ el: '#app' });
+}
+
+function reloadShoppingCart() {
+    document.getElementById('shopping-counter-content').contentWindow.document.location.reload();
 }
 
 $( document ).ready( function( $ ) {
@@ -105,6 +111,10 @@ $( document ).ready( function( $ ) {
         updateCount();
     }
 
+    setInterval(() => {
+        reloadShoppingCart();
+    }, 10000);
+
     function updateCount() {
         const shippingCounterEl = $('#shopping-counter-content')[0];
         const count = shippingCounterEl.contentWindow.document.body.innerText;
@@ -112,11 +122,6 @@ $( document ).ready( function( $ ) {
             $('#shopping-counter').text(count).show();
         }
     }
-
-    $('.slic').click(function(){
-        alert('test');
-
-    });
 
     if($('body').hasClass('product-page')) {
         $('#tab-links .nav-link').click(function(e){
@@ -168,10 +173,6 @@ $( document ).ready( function( $ ) {
                 });
             }
             $('#enlarged-image-loading').hide();
-        }
-
-        function reloadShoppingCart() {
-            document.getElementById('shopping-counter-content').contentWindow.document.location.reload();
         }
 
         function addToCart(nsid, checkoutURL = 'https://checkout.netsuite.com/app/site/query/additemtocart.nl?qty=1&c=1247539&buyid=', cb) {

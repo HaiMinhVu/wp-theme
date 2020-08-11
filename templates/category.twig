@@ -1,13 +1,7 @@
 {% extends "base.twig" %}
 
-{% block head %}
-<style>
-    .product-list-row{display:-ms-grid;display:grid;-ms-grid-columns:1fr 1fr 1fr 1fr 1fr;grid-template-columns:1fr 1fr 1fr 1fr 1fr;grid-gap:10px}  .product-list-row .product-card{border:0}  .product-list-row .product-card .image{height:150px;padding:15px;display:flex;align-items:center;justify-content:center}  .product-list-row .product-card .image .img-fluid{max-height:100%}  .product-list-row .product-card .card-body{padding-top:0}  .product-list-row .product-card .card-body .card-title{color:#3a4559;font-weight:500;font-size:20px}  .product-list-row .product-card .card-body .btn-primary{visibility:hidden;transition:.2s ease-in-out}  .product-list-row .product-card:hover .card-body .btn-primary{visibility:visible}@media (max-width:1024px){  .product-list-row{-ms-grid-columns:1fr 1fr 1fr 1fr;grid-template-columns:1fr 1fr 1fr 1fr}  .product-list-row .product-card .card-body .btn-primary{visibility:visible}}@media (max-width:800px){  .product-list-row{-ms-grid-columns:1fr 1fr 1fr;grid-template-columns:1fr 1fr 1fr}}@media (max-width:600px){  .product-list-row{-ms-grid-columns:1fr 1fr;grid-template-columns:1fr 1fr}}@media (max-width:400px){  .product-list-row{-ms-grid-columns:1fr;grid-template-columns:1fr}}  .product-card .card-title{font-size:16px;line-height:22px;margin-bottom:5px}  .product-card .sub-title{font-size:14px;color:#8ea7d4;margin-bottom:0;line-height:20px}  .product-card .status{font-size:14px;margin-bottom:0;line-height:20px}  .product-card .price{color:#3a4559;font-size:22px;font-weight:600}  .nav-tabs.sub-category{padding:20px 0;border-bottom:1px solid #ddd;display:-ms-grid;display:grid;-ms-grid-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr;grid-gap:10px}  .nav-tabs.sub-category .nav-item{margin-bottom:0}  .nav-tabs.sub-category .nav-item .nav-link{text-align:center;border-radius:.25rem;border:2px solid #ddd;height:100%}  .nav-tabs.sub-category .nav-item .nav-link figure{width:100px;height:100px;margin:auto;display:flex;justify-content:center;align-items:center}  .nav-tabs.sub-category .nav-item .nav-link figure img{max-width:100%;max-height:100%}  .nav-tabs.sub-category .nav-item .nav-link h5{font-size:16px}  .nav-tabs.sub-category .nav-item .nav-link.active{border-color:#006fba}  .product-category-dropdown{display:none}  .product-category-dropdown button{display:flex;padding:.5rem .6rem;width:100%;text-align:left;align-items:center;justify-content:space-between}  .product-category-dropdown button:focus{color:#fff!important;box-shadow:none!important;outline:0!important}  .product-category-dropdown button:active{color:#fff!important}  .product-category-dropdown button img{width:40px}  .product-category-dropdown .product-category-dropdownmenu{width:100%;padding:0}  .product-category-dropdown .product-category-dropdownmenu ul{margin:0;padding:0;list-style:none}  .product-category-dropdown .product-category-dropdownmenu ul li{display:block;padding:.5rem .6rem;width:100%;text-align:left;color:#818182;border-bottom:1px solid #ddd}  .product-category-dropdown .product-category-dropdownmenu ul li:last-child{border-bottom:0}  .product-category-dropdown .product-category-dropdownmenu ul li img{width:40px}@media (max-width:600px){  .nav-tabs.sub-category{display:none}  .product-category-dropdown{display:block}}
-</style>
-{% endblock %}
-
 {% block content %}
-<section id="app" class="section2 section-pro-cat">
+<section class="section2 section-pro-cat">
     <div class="container">
         <div class="row">
             <div class="col-lg">
@@ -22,48 +16,44 @@
                 <div class="product-category-dropdown dropdown">
                     <div class="form-group">
                         <select class="form-control" id="mobileCategorySelector">
+                          <option value="{{ category.id }}">All</option>
                           {% for category in sub_categories %}
                           <option value="{{ category.id }}">{{ category.label }}</option>
                           {% endfor %}
                         </select>
                     </div>
                 </div>
-                <div class="row category-thumbs">
+                <ul class="nav nav-tabs sub-category justify-content-start row" role="tablist">
                     {% for category in sub_categories %}
-                    <div class="col-lg-2 col-md-3  col-sm-4 mb-4">
-                        <a href="/category/{{ category.id }}" class="card py-1 w-100">
-                          {% if category.remote_path %}
-                          <img class="card-img-top mx-auto" src="{{ category.remote_path|cdn_link(200) }}">
-                          {% endif %}
-                          <div class="card-body p-1">
-                            <p class="card-title text-center mb-1">{{ category.label }}</p>
-                          </div>
+                    <li class="nav-item ng-star-inserted{{ category.id == category_id ? 'active' : '' }}">
+                        <a href="{{ category_page(category) }}" class="nav-link sub-category-link">
+                            <figure class="ng-star-inserted">
+                                <img alt="" src="{{ category.remote_path|cdn_link(200) }}">
+                            </figure>
+                            <h5>{{ category.label }}</h5>
                         </a>
-                    </div>
+                    </li>
                     {% endfor %}
-                </div>
+                </ul>
                 {% endif %}
             </div>
-            <div class="product-list-row col-12">
+            <div class="product-list-row row">
                 {% for product in products %}
-                {% include 'partial/product-card.twig' %}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    {% include 'partial/product-card.twig' %}
+                </div>
                 {% endfor %}
             </div>
         </div>
     </div>
-    {% if user %}
-    <refresh-cache :item-id="{{ category.id }}" type="category" />
-    {% endif %}
 </section>
 {% endblock %}
 
 {% block scripts %}
 <script type="text/javascript">
+    console.log('loaded');
     $('#mobileCategorySelector').change(function(){
         window.location.href = "/category/"+$(this).val();
     });
-    {% if user %}
-    refreshCache();
-    {% endif %}
 </script>
 {% endblock %}
