@@ -146,12 +146,11 @@ class CarbonFields {
 	{
 		return  [
 			Field::make( 'text', 'netsuite_addcart_base_url', 'NetSuite base cart url' )
-				 ->set_default_value('https://checkout.netsuite.com/app/site/query/additemtocart.nl?qty=1&c=1247539&buyid=')
-				 ->set_help_text( 'Product ID is dynamically appended to the end of URL' ),
+				 ->set_default_value('https://www.sellmarknexus.com/app/site/query/additemtocart.nl?c=1247539&n=1&ext=T&sc=3'),
 			Field::make( 'text', 'netsuite_viewcart_url', 'View Cart URL')
 			     ->set_default_value('https://www.sellmarknexus.com/checkout/cart.ssp?ext=T&amp;whence=&amp;sc=3#cart'),
 		    Field::make( 'text', 'netsuite_cart_count_url', 'Cart Count URL')
-			     ->set_default_value('https://checkout.netsuite.com/app/site/query/getcartitemcount.nl?c=1247539&n=1')
+			     ->set_default_value('https://www.sellmarknexus.com/app/site/query/getcartitemcount.nl?c=1247539&sc=3&n=1')
 		];
 	}
 
