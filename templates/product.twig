@@ -62,7 +62,7 @@
                                     </h3>
                                 </div>
                                 <div class="col-sm-auto py-1">
-                                    <form name="form2582" action="{{ netsuite_addcart_base_url }}" method="post">
+                                    <form name="form2582" id="add-to-cart-form" action="{{ netsuite_addcart_base_url }}" method="post">
                                         <input type="hidden" name="buyid" value="{{ product.nsid }}">
                                         <button formtarget="_blank" class="btn btn-primary" {{ allow_purchase(product.in_stock, product.allow_backorders) ? '' : 'disabled' }}>
                                             <i class="fa fa-shopping-cart"></i> Add to Cart

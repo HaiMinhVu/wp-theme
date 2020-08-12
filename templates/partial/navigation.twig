@@ -29,11 +29,13 @@
                 <a class="nav-link search search-toggle" aria-controls="collapseExample" href="javascript:void(0)" aria-expanded="false">
                     <i class="fa fa-search"></i>
                 </a>
-                <a class="nav-link cart" target="_blank" href="{{ netsuite_viewcart_url }}">
+                {% if show_prices|boolval %}
+                <a class="nav-link cart purchase-item" target="_blank" href="{{ netsuite_viewcart_url }}">
                     <i class="fa fa-shopping-cart"></i>
                     <span class="badge badge-secondary" id="shopping-counter" style="display: none"></span>
                     <iframe id="shopping-counter-content" src="/?show_shopping_counter=true" style="border: 0;width: 1px;height: 1px;pointer-events: none; position: fixed;top:0;left:0;"></iframe>
                 </a>
+                {% endif %}
                 <button id="hamburger-menu" class="navbar-toggler nav-link" type="button">
                     <span class="navbar-toggler-icon">
                         <i class="fa fa-bars" aria-hidden="true"></i>

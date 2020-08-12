@@ -15,12 +15,10 @@ const checkIP = async (cb = null) => {
         try {
             const { data: ipData } = await axios.get('https://api.ipify.org/?format=json');
             const { data: locData } = await axios.get(`https://ipapi.co/${ipData.ip}/json`);
-            console.log([ipData, locData]);
             const canShowPrices = ['CA','US'].includes(locData.country_code);
             Cookies.set('show-prices', canShowPrices);
             Cookies.set('checked-ip', true);
         } catch(e) {
-            console.error(e);
             Cookies.set('show-prices', true);
             Cookies.set('checked-ip', false);
         }
@@ -107,13 +105,22 @@ $( document ).ready( function( $ ) {
         autoplaySpeed: 4000,
     });
 
-    document.getElementById('shopping-counter-content').onload = function(){
-        updateCount();
+    if(document.getElementById('shopping-counter-content')) {
+        document.getElementById('shopping-counter-content').onload = function(){
+            updateCount();
+        }
     }
 
-    setInterval(() => {
-        reloadShoppingCart();
-    }, 10000);
+    function loadShoppingCount() {
+        // No way to detect shopping count updated on NetSuite side, for now just using a timeout
+        setTimeout(() => {
+            reloadShoppingCart();
+        }, 1000);
+    }
+
+    $('#add-to-cart-form').submit(function(){
+        loadShoppingCount();
+    });
 
     function updateCount() {
         const shippingCounterEl = $('#shopping-counter-content')[0];
