@@ -1,5 +1,12 @@
+# SellmarkDev/sdk
 
-# The Timber Starter Theme
+The Sellmark theme is based on The Timber started theme (see below)
+
+NOTE: There is a depemdency in the composer.json file to the SellmarkDev/utilities repo.  
+
+A project is underway to remove the extensive use of Redis caching
+
+## The Timber Starter Theme
 
 The "_s" for Timber: a dead-simple theme that you can build from. The primary purpose of this theme is to provide a file structure rather than a framework for markup or styles. Configure your Sass, scripts, and task runners however you would like!
 
