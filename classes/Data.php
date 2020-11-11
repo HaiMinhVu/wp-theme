@@ -2,17 +2,10 @@
 
 namespace SellmarkTheme;
 
-use Sellmark\Cache\Connector as SellmarkCache;
 use GuzzleHttp\Client;
 
 class Data {
 
-    const TIMEOUT_SECONDS = 3600;
-    const PERSIST_SECONDS = 300;
-    const DISABLE_CACHE = false;
-    const DISABLE_REMOTE_CACHE = false;
-
-    protected $cache;
     protected $client;
     protected $manufacturer;
     protected $apiEndpoint;
@@ -21,10 +14,6 @@ class Data {
 
     protected function __construct()
     {
-        $this->cache = new SellmarkCache([
-        	 'host' => REDIS_HOST,
-        	 'port' => 6379
-        ]);
         $this->client = new Client([
             'headers' => [
                 'X-Api-Key' => CarbonFields::get('slmk_api_key')
@@ -37,15 +26,7 @@ class Data {
     }
 
     public static function cacheRemember($key, $method) {
-        $instance = self::getInstance();
-        $cache = $instance->cache;
-
-        if($cache->isExpired($key) || self::DISABLE_CACHE) {
-            $value = $method();
-            $cache->set($key, $value);
-        }
-
-        return $cache->get($key);
+        return $method();
     }
 
     protected static function getInstance()
@@ -53,7 +34,6 @@ class Data {
         if(self::$instance == null) {
             self::$instance = new self();
         }
-
         return self::$instance;
     }
 
@@ -63,24 +43,10 @@ class Data {
     }
 
     public function _get($cacheKey, $path, $isManufacturerPath = true, $forceDisableCache = false) {
-        $cache = $this->cache;
-        $client = $this->client;
         $url = ($isManufacturerPath) ? $this->getManufacturerEndpoint($path) : $this->getEndpoint($path);
-        $url = (self::DISABLE_REMOTE_CACHE || $forceDisableCache) ? $url.'?force-update=1' : $url;
-        $key = "{$this->manufacturer}_{$cacheKey}";
-
-        if($cache->isExpired($key) || self::DISABLE_CACHE || $forceDisableCache) {
-            try {
-                $res = $client->get($url);
-                $data = $res->getBody()->getContents();
-                $cache->set($key, $data, self::TIMEOUT_SECONDS);
-            } catch(\Exception $e) {
-                print_r($e->getMessage());
-                $cache->expire($key, self::PERSIST_SECONDS);
-            }
-        }
-
-        return $cache->get($key);
+        $res = $this->client->get($url);
+        $data = json_decode($res->getBody()->getContents());
+        return $data;
     }
 
     public static function getSetting($key) {
@@ -98,14 +64,7 @@ class Data {
     }
 
     private static function getCarbonField($key, $type = 'option') {
-        $instance = self::getInstance();
-        $cache = $instance->cache;
-
-        if($cache->isExpired($key) || self::DISABLE_CACHE) {
-            $cache->set($key, CarbonFields::get($key, $type));
-        }
-
-        return $cache->get($key);
+        return json_decode(CarbonFields::get($key, $type));
     }
 
     private function getEndpoint($path)

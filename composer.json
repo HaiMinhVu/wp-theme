@@ -13,21 +13,7 @@
     {
       "type": "composer",
       "url": "https://wpackagist.org"
-    },
-  {
-    "type": "package",
-    "package": {
-      "name": "sellmark/utilities",
-      "version": "0.0.1",
-      "type": "package",
-      "source": {
-        "url": "git@github.com:SellmarkDev/SellmarkUtilities.git",
-        "type": "git",
-        "reference": "master"
-      }
     }
-  }
-
   ],
   "require": {
 	  "timber/timber": "1.*",
