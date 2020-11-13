@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 
 class Data {
 
-    const TIMEOUT_SECONDS = 3600;
+    const TIMEOUT_SECONDS = 900;
     const PERSIST_SECONDS = 300;
     const DISABLE_CACHE = false;
     const DISABLE_REMOTE_CACHE = false;
