@@ -70,7 +70,8 @@ function cdnLink($filename, $imageWidth = null, $additionalOptions = []){
 }
 
 function fileLink($filename) {
-    $url = parse_url(Data::getSetting('slmk_api_endpoint'));
+    // $url = parse_url(Data::getSetting('slmk_api_endpoint'));
+    $url = parse_url(CarbonFields::get('slmk_api_endpoint'));
     return "{$url['scheme']}://{$url['host']}/file/{$filename}";
 }
 
