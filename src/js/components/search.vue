@@ -55,7 +55,7 @@
 		},
 		created() {
 			axios.get('/wp-json/slmk/products').then(res => {
-				this.products = res.data;
+				this.products = JSON.parse(res.data);
 				this.productsLoaded = true;
 			});
 			this.searchQuery = this.query;
