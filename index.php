@@ -12,6 +12,9 @@
  * @subpackage  Timber
  * @since   Timber 0.1
  */
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 use SellmarkTheme\Data;
 

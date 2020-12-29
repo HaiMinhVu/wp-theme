@@ -39,13 +39,19 @@ class Data {
 
     public static function get($cacheKey, $path, $isManufacturerPath = true, $forceDisableCache = false) {
         $instance = self::getInstance();
-        return $instance->_get($cacheKey, $path, $isManufacturerPath, $forceDisableCache);
+        if(!isset($_SESSION[$cacheKey])){
+            return $instance->_get($cacheKey, $path, $isManufacturerPath, $forceDisableCache);
+        }
+        else{
+            return $_SESSION[$cacheKey];
+        }
     }
 
     public function _get($cacheKey, $path, $isManufacturerPath = true, $forceDisableCache = false) {
         $url = ($isManufacturerPath) ? $this->getManufacturerEndpoint($path) : $this->getEndpoint($path);
         $res = $this->client->get($url);
         $data = json_decode($res->getBody()->getContents());
+        $_SESSION[$cacheKey] = $data;
         return $data;
     }
 
