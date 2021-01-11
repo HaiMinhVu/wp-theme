@@ -69,10 +69,22 @@ class Data {
         return ucwords($brandSlug);
     }
 
+    public static function getBrandSlug() {
+        $brandSlug = CarbonFields::get('slmk_site_brand');
+        $brandSlug = str_replace('-', ' ', $brandSlug);
+        return $brandSlug;
+    }
+
     private static function getCarbonField($key, $type = 'option') {
         return json_decode(CarbonFields::get($key, $type));
     }
 
+    public static function getFormEndpoint()
+    {
+        $endpoint = CarbonFields::get('slmk_api_form_endpoint') == '' ? CarbonFields::get('slmk_api_endpoint') : CarbonFields::get('slmk_api_form_endpoint');
+        return $endpoint;
+    }
+    
     private function getEndpoint($path)
     {
         return "{$this->apiEndpoint}/{$path}";

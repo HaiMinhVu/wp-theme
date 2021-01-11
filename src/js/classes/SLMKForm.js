@@ -53,10 +53,10 @@ export default class SLMKForm {
 
     submissionListener() {
         this.$form.submit(e => {
+            this.setLoading();
             e.preventDefault();
             this.hideErrors();
             this.compileFormData();
-
             this.submitSLMKForm().done(() => {
                 this.handleDone();
             }).fail((jqXHR, textStatus, errorThrown) => {

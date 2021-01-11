@@ -41,8 +41,8 @@ function getSLMKForm($atts) {
         return $field->required;
     });
     $context['has_required_fields'] = (count($requiredArray) > 0);
-    $context['brand_slug'] = Data::getSetting('slmk_site_brand');
-    $endpoint = (Data::getSetting('slmk_api_form_endpoint') != '') ? Data::getSetting('slmk_api_form_endpoint') : Data::getSetting('slmk_api_endpoint');
+    $endpoint = Data::getFormEndpoint();
+    $context['brand_slug'] = Data::getBrandSlug();
     $context['slmk_api_form_endpoint'] = $endpoint;
     return Timber::compile('partial/form-render.twig', $context);
 }
